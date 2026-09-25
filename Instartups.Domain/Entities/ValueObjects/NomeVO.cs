@@ -1,19 +1,16 @@
 ﻿namespace Instartups.Domain.Entities.ValueObjects;
 
-public class NomeVO
+public sealed record NomeVO
 {
-    public string PrimeiroNome { get; }
-    public string Sobrenome { get; }
-    public string NomeCompleto => $"{PrimeiroNome} {Sobrenome}";
+    public string Nome { get; }
 
-    private NomeVO(string primeiroNome, string sobrenome)
+    private NomeVO(string nome)
     {
-        PrimeiroNome = primeiroNome.ToUpperInvariant();
-        Sobrenome = sobrenome.ToUpperInvariant();
+        Nome = nome.ToUpperInvariant();
     }
 
-    public static NomeVO Create(string primeiroNome, string sobrenome)
+    public static NomeVO Create(string nome)
     {
-        return new NomeVO(primeiroNome, sobrenome);
+        return new NomeVO(nome);
     }
 }

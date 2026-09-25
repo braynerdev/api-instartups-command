@@ -1,4 +1,4 @@
-﻿namespace Instartups.Domain.Entities;
+﻿namespace Instartups.Domain.Entities.Base;
 
 public class BaseEntity
 {
