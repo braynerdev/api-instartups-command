@@ -2,6 +2,6 @@
 
 public enum TiposPerfisEnum
 {
-    STARTUPS,
-    INVESTORS
+    STARTUP,
+    INVESTIDOR
 }

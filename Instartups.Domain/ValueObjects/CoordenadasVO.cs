@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instartups.Domain.Entities.ValueObjects;
+﻿namespace Instartups.Domain.ValueObjects;
 
 public sealed record CoordenadasVO
 {
-    public double Latitude { get; private set; }
-    public double Longitude { get; private set; }
+    public double Latitude { get; }
+    public double Longitude { get; }
 
+    private CoordenadasVO() { }
     private CoordenadasVO(double latitude, double longitude)
     {
         Latitude = latitude;

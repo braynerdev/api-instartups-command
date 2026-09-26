@@ -1,10 +1,10 @@
 ﻿using Instartups.Domain.Entities.Base;
-using Instartups.Domain.Entities.ValueObjects;
 using Instartups.Domain.Enums;
+using Instartups.Domain.ValueObjects;
 
 namespace Instartups.Domain.Entities;
 
-public sealed class PerfilEntity : BaseEntity
+public sealed sealed class PerfilEntity : BaseEntity
 {
     public NomeVO Nome { get; private set; } = null!;
     public TiposPerfisEnum TipoPerfil { get; private set; }
@@ -12,21 +12,25 @@ public sealed class PerfilEntity : BaseEntity
     public string? ImagemFundoUrl { get; private set; }
     public CoordenadasVO Coordenadas { get; private set; } = null!;
     public TotalVO TotalCurtidas { get; private set; } = null!;
-    public TotalVO TotalComentarios { get; private set; } = null!;
     public TotalVO TotalSeguidores { get; private set; } = null!;
-    public TotalVO TotalSeguido { get; private set; } = null!;
+    public TotalVO TotalSeguindo { get; private set; } = null!;
     public Guid UsuarioId { get; private set; }
 
     public StartupEntity? Startup { get; private set; }
     public InvestidorEntity? Investidor { get; private set; }
 
 
+    private PerfilEntity() { } 
     private PerfilEntity(NomeVO nome, TiposPerfisEnum tipoPerfil, CoordenadasVO coordenadas, Guid usuarioId)
+        : base()
     {
         Nome = nome;
         TipoPerfil = tipoPerfil;
         Coordenadas = coordenadas;
         UsuarioId = usuarioId;
+        TotalCurtidas = TotalVO.Zero();
+        TotalSeguidores = TotalVO.Zero();
+        TotalSeguindo = TotalVO.Zero();
     }
 
 
@@ -37,10 +41,11 @@ public sealed class PerfilEntity : BaseEntity
         return new PerfilEntity(NomeVO.Create(nome), tipoPerfil, coordenadas, usuarioId);
     }
 
-    private void EditarPerfil(string nome, double latitude, double longitude)
+    private PerfilEntity EditarPerfil(string nome, double latitude, double longitude)
     {
         Nome = NomeVO.Create(nome);
         EditarCoordenadas(latitude, longitude);
+        return this;
     }
 
     public PerfilEntity EditarCoordenadas(double latitude, double longitude)
@@ -51,28 +56,38 @@ public sealed class PerfilEntity : BaseEntity
 
 
 
-    public static StartupEntity CriarStartup(string nome, TiposPerfisEnum tipoPerfil, double latitude, double longitude, Guid usuarioId, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
+    public static PerfilEntity CriarStartup(string nome, double latitude, double longitude, Guid usuarioId, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
     {
-        var perfil = CriarPerfil(nome, tipoPerfil, latitude, longitude, usuarioId);
-        return StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, perfil.Id);
+        var perfil = CriarPerfil(nome, TiposPerfisEnum.STARTUP, latitude, longitude, usuarioId);
+        StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, perfil.Id);
+        return perfil;
     }
-    public StartupEntity EditarStartup(string nome, double latitude, double longitude, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
+    public PerfilEntity EditarStartup(string nome, double latitude, double longitude, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
     {
-        EditarPerfil(nome, latitude, longitude);
-        return Startup!.Editar(pitch, dataFundacao, tamanhoEquipe, valorBuscado);
+        if(TipoPerfil != TiposPerfisEnum.STARTUP)
+            throw new Exception("O perfil não é do tipo STARTUP."); // ajustar
+
+        var perfil = EditarPerfil(nome, latitude, longitude);
+        Startup!.Editar(pitch, dataFundacao, tamanhoEquipe, valorBuscado);
+        return perfil;
     }
     
 
 
-    public static InvestidorEntity CriarInvestidor(string nome, TiposPerfisEnum tipoPerfil, double latitude, double longitude, Guid usuarioId, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
+    public static PerfilEntity CriarInvestidor(string nome, double latitude, double longitude, Guid usuarioId, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
     {
-        var perfil = CriarPerfil(nome, tipoPerfil, latitude, longitude, usuarioId);
-        return InvestidorEntity.Criar(teseInvestimento, ticketMinimo, ticketMaximo, perfil.Id);
+        var perfil = CriarPerfil(nome, TiposPerfisEnum.INVESTIDOR, latitude, longitude, usuarioId);
+        InvestidorEntity.Criar(teseInvestimento, ticketMinimo, ticketMaximo, perfil.Id);
+        return perfil;
     }
-    public InvestidorEntity EditarInvestidor(string nome, double latitude, double longitude, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
+    public PerfilEntity EditarInvestidor(string nome, double latitude, double longitude, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
     {
-        EditarPerfil(nome, latitude, longitude);
-        return Investidor!.Editar(teseInvestimento, ticketMinimo, ticketMinimo);
+        if (TipoPerfil != TiposPerfisEnum.INVESTIDOR)
+            throw new InvalidOperationException("O perfil não é do tipo INVESTIDOR."); // ajustar
+
+        var perfil = EditarPerfil(nome, latitude, longitude);
+        Investidor!.Editar(teseInvestimento, ticketMinimo, ticketMaximo);
+        return perfil;
     }
 
 
@@ -100,25 +115,14 @@ public sealed class PerfilEntity : BaseEntity
     }
 
 
-    public void AdicionarComentario()
+    public void AdicionarSeguindo()
     {
-        TotalComentarios = TotalComentarios.Adicionar();
+        TotalSeguindo = TotalSeguindo.Adicionar();
     }
 
-    public void RemoverComentario()
+    public void RemoverSeguindo()
     {
-        TotalComentarios = TotalComentarios.Remover();
-    }
-
-
-    public void AdicionarSeguido()
-    {
-        TotalSeguido = TotalSeguido.Adicionar();
-    }
-
-    public void RemoverSeguido()
-    {
-        TotalSeguido = TotalSeguido.Remover();
+        TotalSeguindo = TotalSeguindo.Remover();
     }
 
 

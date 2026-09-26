@@ -2,14 +2,16 @@
 
 namespace Instartups.Domain.Entities;
 
-public class PerfilSeguidorEntity : BaseEntity
+public sealed class PerfilSeguidorEntity : BaseEntity
 {
     public Guid SeguidorId { get; private set; }
     public PerfilEntity Seguidor { get; private set; } = null!;
     public Guid SeguidoId { get; private set; }
     public PerfilEntity Seguido { get; private set; } = null!;
 
+    private PerfilSeguidorEntity() { }
     private PerfilSeguidorEntity(Guid seguidorId, Guid seguidoId)
+        : base()
     {
         SeguidorId = seguidorId;
         SeguidoId = seguidoId;

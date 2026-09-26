@@ -1,9 +1,8 @@
 ﻿using Instartups.Domain.Entities.Base;
-using Instartups.Domain.Entities.ValueObjects;
 
 namespace Instartups.Domain.Entities;
 
-public class StartupEntity : BaseEntity
+public sealed class StartupEntity : BaseEntity
 {
     public string Pitch { get; private set; } = null!;
     public DateOnly DataFundacao { get; private set; }
@@ -12,7 +11,9 @@ public class StartupEntity : BaseEntity
     public Guid PerfilId { get; private set; }
     public PerfilEntity Perfil { get; private set; } = null!;
 
+    private StartupEntity() { }
     private StartupEntity(string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado, Guid perfilId)
+        : base()
     {
         Pitch = pitch;
         DataFundacao = dataFundacao;

@@ -1,6 +1,6 @@
 ﻿namespace Instartups.Domain.Entities.Base;
 
-public class BaseEntity
+public abstract class BaseEntity
 {
     public Guid Id { get; private set; } = Guid.CreateVersion7();
     public DateTimeOffset CreatedAt { get; private set; } = DateTimeOffset.UtcNow;
@@ -12,18 +12,21 @@ public class BaseEntity
 
     }
 
-    protected void Update()
+    protected void Atualizar()
     {
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 
-    protected void Activate()
+    public void Ativar()
     {
         Active = true;
     }
 
-    protected void Deactivate()
+    public void Desativar()
     {
         Active = false;
     }
+
+    public override bool Equals(object? obj) => obj is BaseEntity entity && Id.Equals(entity.Id);
+    public override int GetHashCode() => HashCode.Combine(Id);
 }

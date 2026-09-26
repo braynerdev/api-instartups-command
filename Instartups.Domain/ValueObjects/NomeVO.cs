@@ -1,12 +1,13 @@
-﻿namespace Instartups.Domain.Entities.ValueObjects;
+﻿namespace Instartups.Domain.ValueObjects;
 
 public sealed record NomeVO
 {
     public string Nome { get; }
 
+    private NomeVO() { }
     private NomeVO(string nome)
     {
-        Nome = nome.ToUpperInvariant();
+        Nome = nome.Trim();
     }
 
     public static NomeVO Create(string nome)

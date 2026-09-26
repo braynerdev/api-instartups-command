@@ -2,7 +2,7 @@
 
 namespace Instartups.Domain.Entities;
 
-public class InvestidorEntity : BaseEntity
+public sealed class InvestidorEntity : BaseEntity
 {
     public string TeseInvestimento { get; private set; } = null!;
     public decimal TicketMinimo { get; private set; }
@@ -10,7 +10,9 @@ public class InvestidorEntity : BaseEntity
     public Guid PerfilId { get; private set; }
     public PerfilEntity Perfil { get; private set; } = null!;
 
+    private InvestidorEntity() { }
     private InvestidorEntity(string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo, Guid perfilId)
+        : base()
     {
         TeseInvestimento = teseInvestimento;
         TicketMinimo = ticketMinimo;

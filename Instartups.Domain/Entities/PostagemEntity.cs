@@ -1,20 +1,74 @@
 ﻿using Instartups.Domain.Entities.Base;
-using Instartups.Domain.Entities.ValueObjects;
+using Instartups.Domain.Enums;
+using Instartups.Domain.ValueObjects;
 using System.Collections.ObjectModel;
 
 
 namespace Instartups.Domain.Entities;
 
-public class PostagemEntity : BaseEntity
+public sealed class PostagemEntity : BaseEntity
 {
+    private const int MaxMidias = 5;
     public string Descricao { get; private set; } = null!;
     public TotalVO TotalCurtidas { get; private set; } = null!;
-    public TotalVO TotalComentarios { get; private set; } = null!;
-
     public Guid AutorId { get; private set; }
     public PerfilEntity Autor { get; private set; } = null!;
-    private readonly List<MidiaPostagem> _midiasPostagem = [];
-    public ReadOnlyCollection<MidiaPostagem> MidiasPostagem => _midiasPostagem.AsReadOnly();
+
+    private readonly List<MidiaPostagemEntity> _midiasPostagem = [];
+    public IReadOnlyCollection<MidiaPostagemEntity> MidiasPostagem => _midiasPostagem.AsReadOnly();
 
 
+    private PostagemEntity() { }
+    private PostagemEntity(string descricao, Guid autorId)
+        : base()
+    {
+        Descricao = descricao;
+        AutorId = autorId;
+        TotalCurtidas = TotalVO.Zero();
+    }
+
+
+
+
+    public static PostagemEntity Criar(string descricao, Guid autorId)
+    {
+        return new PostagemEntity(descricao, autorId);
+    }
+
+    public void EditarDescricao(string descricao)
+    {
+        Descricao = descricao;
+    }
+
+    public void AdicionarMidiaPostagem(string url, TiposMidiaEnum tipoMidia)
+    {
+        if (_midiasPostagem.Count >= MaxMidias)
+            throw new Exception($"Não é possível adicionar mais de {MaxMidias} mídias a uma postagem."); // ajustar
+
+        var midiaPostagem = MidiaPostagemEntity.Criar(url, tipoMidia, Id);
+        _midiasPostagem.Add(midiaPostagem);
+    }
+
+    public void RemoverMidiaPostagem(Guid midiaPostagemId)
+    {
+        var midiaPostagem = _midiasPostagem.FirstOrDefault(m => m.Id == midiaPostagemId)
+            ?? throw new Exception("Mídia da postagem não encontrada."); // ajustar
+
+        _midiasPostagem.Remove(midiaPostagem);
+    }
+
+
+
+
+    public void AdicionarCurtida()
+    {
+        TotalCurtidas = TotalCurtidas.Adicionar();
+        Autor.AdicionarCurtida();
+    }
+
+    public void RemoverCurtida()
+    {
+        TotalCurtidas = TotalCurtidas.Remover();
+        Autor.RemoverCurtida();
+    }
 }
