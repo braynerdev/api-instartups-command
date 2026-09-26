@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Instartups.Infrastructure\Instartups.Infrastructure.csproj" />
   </ItemGroup>
 
+
+	<Target Name="HuskyInstall" BeforeTargets="Restore" Condition="'$(HUSKY)' != '0' AND !Exists('$(MSBuildThisFileDirectory)..\\.husky\\_\\husky.sh')">
+		<Exec Command="dotnet tool restore" WorkingDirectory="$(MSBuildThisFileDirectory).." />
+		<Exec Command="dotnet husky install" WorkingDirectory="$(MSBuildThisFileDirectory).." />
+	</Target>
+
 </Project>
