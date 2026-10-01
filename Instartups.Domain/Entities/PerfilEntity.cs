@@ -4,13 +4,13 @@ using Instartups.Domain.ValueObjects;
 
 namespace Instartups.Domain.Entities;
 
-public sealed sealed class PerfilEntity : BaseEntity
+public sealed class PerfilEntity : BaseEntity
 {
     public NomeVO Nome { get; private set; } = null!;
     public TiposPerfisEnum TipoPerfil { get; private set; }
     public string? ImagemPerfilUrl { get; private set; }
     public string? ImagemFundoUrl { get; private set; }
-    public CoordenadasVO Coordenadas { get; private set; } = null!;
+    public CoordenadaVO Coordenada { get; private set; } = null!;
     public TotalVO TotalCurtidas { get; private set; } = null!;
     public TotalVO TotalSeguidores { get; private set; } = null!;
     public TotalVO TotalSeguindo { get; private set; } = null!;
@@ -21,12 +21,12 @@ public sealed sealed class PerfilEntity : BaseEntity
 
 
     private PerfilEntity() { } 
-    private PerfilEntity(NomeVO nome, TiposPerfisEnum tipoPerfil, CoordenadasVO coordenadas, Guid usuarioId)
+    private PerfilEntity(NomeVO nome, TiposPerfisEnum tipoPerfil, CoordenadaVO coordenada, Guid usuarioId)
         : base()
     {
         Nome = nome;
         TipoPerfil = tipoPerfil;
-        Coordenadas = coordenadas;
+        Coordenada = coordenada;
         UsuarioId = usuarioId;
         TotalCurtidas = TotalVO.Zero();
         TotalSeguidores = TotalVO.Zero();
@@ -37,8 +37,8 @@ public sealed sealed class PerfilEntity : BaseEntity
 
     private static PerfilEntity CriarPerfil(string nome, TiposPerfisEnum tipoPerfil, double latitude, double longitude, Guid usuarioId)
     {
-        var coordenadas = CoordenadasVO.Create(latitude, longitude);
-        return new PerfilEntity(NomeVO.Create(nome), tipoPerfil, coordenadas, usuarioId);
+        var coordenada = CoordenadaVO.Create(latitude, longitude);
+        return new PerfilEntity(NomeVO.Create(nome), tipoPerfil, coordenada, usuarioId);
     }
 
     private PerfilEntity EditarPerfil(string nome, double latitude, double longitude)
@@ -50,7 +50,7 @@ public sealed sealed class PerfilEntity : BaseEntity
 
     public PerfilEntity EditarCoordenadas(double latitude, double longitude)
     {
-        Coordenadas = CoordenadasVO.Create(latitude, longitude);
+        Coordenada = CoordenadaVO.Create(latitude, longitude);
         return this;
     }
 

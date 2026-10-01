@@ -1,7 +1,6 @@
 ﻿using Instartups.Domain.Entities.Base;
 using Instartups.Domain.Enums;
 using Instartups.Domain.ValueObjects;
-using System.Collections.ObjectModel;
 
 
 namespace Instartups.Domain.Entities;

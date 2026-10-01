@@ -3,9 +3,9 @@
 public abstract class BaseEntity
 {
     public Guid Id { get; private set; } = Guid.CreateVersion7();
-    public DateTimeOffset CreatedAt { get; private set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? UpdatedAt { get; private set; }
-    public bool Active { get; private set; } = true;
+    public DateTimeOffset DataCriacao { get; private set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? DataAtualizacao { get; private set; }
+    public bool Ativo { get; private set; } = true;
 
     public BaseEntity()
     {
@@ -14,17 +14,17 @@ public abstract class BaseEntity
 
     protected void Atualizar()
     {
-        UpdatedAt = DateTimeOffset.UtcNow;
+        DataAtualizacao = DateTimeOffset.UtcNow;
     }
 
     public void Ativar()
     {
-        Active = true;
+        Ativo = true;
     }
 
     public void Desativar()
     {
-        Active = false;
+        Ativo = false;
     }
 
     public override bool Equals(object? obj) => obj is BaseEntity entity && Id.Equals(entity.Id);
