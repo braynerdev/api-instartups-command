@@ -5,7 +5,6 @@ public sealed record CoordenadaVO
     public double Latitude { get; }
     public double Longitude { get; }
 
-    private CoordenadaVO() { }
     private CoordenadaVO(double latitude, double longitude)
     {
         Latitude = latitude;
