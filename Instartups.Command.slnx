@@ -7,10 +7,10 @@
     <File Path="global.json" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="Instartups.Api/Instartups.Command.Api.csproj" Id="99bdb424-2857-449f-913e-70e0f2567f39" />
-    <Project Path="Instartups.Application/Instartups.Command.Application.csproj" />
-    <Project Path="Instartups.Domain/Instartups.Command.Domain.csproj" />
-    <Project Path="Instartups.Infrastructure/Instartups.Command.Infrastructure.csproj" />
+    <Project Path="Instartups.Command.Api/Instartups.Command.Api.csproj" Id="99bdb424-2857-449f-913e-70e0f2567f39" />
+    <Project Path="Instartups.Command.Application/Instartups.Command.Application.csproj" />
+    <Project Path="Instartups.Command.Domain/Instartups.Command.Domain.csproj" />
+    <Project Path="Instartups.Command.Infrastructure/Instartups.Command.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/" />
 </Solution>

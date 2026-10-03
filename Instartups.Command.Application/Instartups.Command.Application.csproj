@@ -7,6 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Instartups.Domain\Instartups.Command.Domain.csproj" />
+    <ProjectReference Include="..\Instartups.Command.Domain\Instartups.Command.Domain.csproj" />
   </ItemGroup>
 </Project>
