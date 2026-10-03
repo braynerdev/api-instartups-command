@@ -1,11 +1,11 @@
-﻿using Instartups.Domain.Entities;
-using Instartups.Domain.Enums;
-using Instartups.Domain.ValueObjects;
+﻿using Instartups.Command.Domain.Entities;
+using Instartups.Command.Domain.Enums;
+using Instartups.Command.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NpgsqlTypes;
 
-namespace Instartups.Infrastructure.Persistence.Configurations;
+namespace Instartups.Command.Infrastructure.Persistence.Configurations;
 
 public class PerfilConfig : BaseConf<PerfilEntity>
 {

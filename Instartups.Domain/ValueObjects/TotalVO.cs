@@ -1,4 +1,4 @@
-﻿namespace Instartups.Domain.ValueObjects;
+﻿namespace Instartups.Command.Domain.ValueObjects;
 
 public sealed record TotalVO
 {

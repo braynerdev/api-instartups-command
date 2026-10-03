@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -8,10 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+    <PackageReference Include="WolverineFx" Version="6.45.0" />
+    <PackageReference Include="WolverineFx.FluentValidation" Version="6.45.0" />
+    <PackageReference Include="WolverineFx.RuntimeCompilation" Version="6.45.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Instartups.Infrastructure\Instartups.Infrastructure.csproj" />
+    <ProjectReference Include="..\Instartups.Infrastructure\Instartups.Command.Infrastructure.csproj" />
   </ItemGroup>
 
 

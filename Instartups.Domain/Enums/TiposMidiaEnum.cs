@@ -1,4 +1,4 @@
-﻿namespace Instartups.Domain.Enums;
+﻿namespace Instartups.Command.Domain.Enums;
 
 public enum TiposMidiaEnum
 {

@@ -1,8 +1,8 @@
-﻿using Instartups.Domain.Entities.Base;
-using Instartups.Domain.Enums;
-using Instartups.Domain.ValueObjects;
+﻿using Instartups.Command.Domain.Entities.Base;
+using Instartups.Command.Domain.Enums;
+using Instartups.Command.Domain.ValueObjects;
 
-namespace Instartups.Domain.Entities;
+namespace Instartups.Command.Domain.Entities;
 
 public sealed class PerfilEntity : BaseEntity
 {

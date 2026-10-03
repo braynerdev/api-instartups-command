@@ -1,8 +1,8 @@
-﻿using Instartups.Domain.Entities.Base;
+﻿using Instartups.Command.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Instartups.Infrastructure.Persistence.Configurations;
+namespace Instartups.Command.Infrastructure.Persistence.Configurations;
 
 public class BaseConf<T> : IEntityTypeConfiguration<T> where T : BaseEntity
 {

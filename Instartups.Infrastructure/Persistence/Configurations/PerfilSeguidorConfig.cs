@@ -1,8 +1,8 @@
-﻿using Instartups.Domain.Entities;
+﻿using Instartups.Command.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Instartups.Infrastructure.Persistence.Configurations;
+namespace Instartups.Command.Infrastructure.Persistence.Configurations;
 
 public class PerfilSeguidorConfig : BaseConf<PerfilSeguidorEntity>
 {

@@ -1,6 +1,6 @@
-﻿using Instartups.Domain.Entities.Base;
+﻿using Instartups.Command.Domain.Entities.Base;
 
-namespace Instartups.Domain.Entities;
+namespace Instartups.Command.Domain.Entities;
 
 public sealed class StartupEntity : BaseEntity
 {

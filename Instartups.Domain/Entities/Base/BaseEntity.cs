@@ -1,4 +1,4 @@
-﻿namespace Instartups.Domain.Entities.Base;
+﻿namespace Instartups.Command.Domain.Entities.Base;
 
 public abstract class BaseEntity
 {
