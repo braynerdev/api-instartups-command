@@ -5,16 +5,18 @@ namespace Instartups.Command.Api.Configurations;
 
 public static class SerilogConfig
 {
-    public static void AddSerilogConfig(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddSerilogConfig(this WebApplicationBuilder builder)
     {
         builder.Services.AddSerilog((services, lc) => lc
             .ReadFrom.Configuration(builder.Configuration)
             .ReadFrom.Services(services)
             .Enrich.FromLogContext());
 
+        return builder;
+
     }
 
-    public static void UseSerilogConfig(this WebApplication app)
+    public static WebApplication UseSerilogConfig(this WebApplication app)
     {
         app.UseSerilogRequestLogging(options =>
         {
@@ -30,5 +32,7 @@ public static class SerilogConfig
                 : elapsedMs > 1000 ? LogEventLevel.Warning
                 : LogEventLevel.Information;
         });
+        
+        return app;
     }
 }

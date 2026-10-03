@@ -26,12 +26,12 @@ public static class ControllersConfig
                     .Where(e => e.Value?.Errors.Count > 0)
                     .Select(e => new ValidationErrorDTO(
                         e.Key,
-                        CodigoErroConst.FormatoInvalido,
+                        CodigosErroConst.FormatoInvalido,
                         e.Value!.Errors.Select(err => err.ErrorMessage).ToList()))
                     .ToList();
 
                 var body = ResponseDTO<IEnumerable<ValidationErrorDTO>>.Error(
-                    MensagemErroConst.FormatoInvalido, errors);
+                    MensagensErroConst.FormatoInvalido, errors);
 
                 return new BadRequestObjectResult(body)
                 {

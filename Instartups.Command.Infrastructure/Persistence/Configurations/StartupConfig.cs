@@ -19,7 +19,7 @@ public class StartupConfig : BaseConf<StartupEntity>
 
         builder.Property(s => s.DataFundacao)
             .HasColumnName("data_fundacao")
-            .HasColumnType("timestamptz")
+            .HasColumnType("date")
             .IsRequired();
 
         builder.Property(s => s.TamanhoEquipe)

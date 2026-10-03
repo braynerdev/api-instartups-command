@@ -8,7 +8,7 @@ namespace Instartups.Command.Api.Configurations;
 
 public static class WolverineConfig
 {
-    public static WebApplicationBuilder AddWolverineConf(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddWolverineConfig(this WebApplicationBuilder builder)
     {
         builder.Host.UseWolverine(opt =>
         {

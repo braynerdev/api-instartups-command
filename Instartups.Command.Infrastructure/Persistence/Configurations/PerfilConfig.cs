@@ -49,7 +49,7 @@ public class PerfilConfig : BaseConf<PerfilEntity>
                 ponto => CoordenadaVO.Create(ponto.Y, ponto.X)
             )
             .HasColumnName("coordenada")
-            .HasColumnType("varchar(50)")
+            .HasColumnType("geography(Point, 4326)")
             .IsRequired();
 
         builder.Property(p => p.TotalCurtidas)
