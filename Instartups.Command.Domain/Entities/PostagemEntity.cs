@@ -1,5 +1,6 @@
 ﻿using Instartups.Command.Domain.Entities.Base;
 using Instartups.Command.Domain.Enums;
+using Instartups.Command.Domain.Exceptions.Base;
 using Instartups.Command.Domain.ValueObjects;
 
 
@@ -42,7 +43,7 @@ public sealed class PostagemEntity : BaseEntity
     public void AdicionarMidiaPostagem(string url, TiposMidiaEnum tipoMidia)
     {
         if (_midiasPostagem.Count >= MaxMidias)
-            throw new Exception($"Não é possível adicionar mais de {MaxMidias} mídias a uma postagem."); // ajustar
+            throw new DomainException($"Não é possível adicionar mais de {MaxMidias} mídias a uma postagem.");
 
         var midiaPostagem = MidiaPostagemEntity.Criar(url, tipoMidia, Id);
         _midiasPostagem.Add(midiaPostagem);
@@ -51,7 +52,7 @@ public sealed class PostagemEntity : BaseEntity
     public void RemoverMidiaPostagem(Guid midiaPostagemId)
     {
         var midiaPostagem = _midiasPostagem.FirstOrDefault(m => m.Id == midiaPostagemId)
-            ?? throw new Exception("Mídia da postagem não encontrada."); // ajustar
+            ?? throw new DomainException("Mídia da postagem não encontrada.");
 
         _midiasPostagem.Remove(midiaPostagem);
     }

@@ -1,38 +1,47 @@
 using Instartups.Command.Api.Configurations;
+using Instartups.Command.Api.Extensions;
+using Instartups.Command.Domain.Constants;
 using Instartups.Command.Infrastructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.AddSerilogConfig();
-builder.AddWolverineConfig();
+
+builder
+    .AddSerilogConfig()
+    .AddWolverineConfig();
+
 builder.Services.AddInfrastructureDependencyInjection(builder.Configuration);
+
 builder.Services
     .AddControllersConfig()
     .AddLowerCaseConfig()
     .AddAuthenticationConfig(builder.Configuration)
     .AddAuthorizationConfig()
-    .AddSwaggerConfig();
-
-
-
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+    .AddCorsConfigurations(builder.Configuration)
+    .AddRateLimiterConfig()
+    .AddOpenApiConfig();
 
 var app = builder.Build();
 
+app.UseCors(OrigensCorsConst.Frontend);
+
 app.UseSerilogConfig();
-//app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseExceptionsMiddleware();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.UseSwaggerConfig();
+    app.UseOpenApiConfig();
 }
+else
+{
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
+
+app.UseAuthentication();
+app.UseRateLimiter();
+app.UseAuthorization();
 
 app.MapControllers();
 

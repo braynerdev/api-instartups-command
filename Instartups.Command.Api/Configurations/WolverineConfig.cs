@@ -20,8 +20,8 @@ public static class WolverineConfig
 
             //opt.CodeGeneration.AlwaysUseServiceLocationFor<AppDbContext>();
 
-            //opt.Policies.MessageExecutionLogLevel(LogLevel.None);
-            //opt.Policies.MessageSuccessLogLevel(LogLevel.None);
+            opt.Policies.MessageExecutionLogLevel(LogLevel.None);
+            opt.Policies.MessageSuccessLogLevel(LogLevel.None);
 
             opt.Services.CritterStackDefaults(x =>
             {
