@@ -47,12 +47,14 @@ public sealed class PerfilEntity : BaseEntity
     {
         Nome = NomeVO.Create(nome);
         EditarCoordenadas(latitude, longitude);
+        Atualizar();
         return this;
     }
 
     public PerfilEntity EditarCoordenadas(double latitude, double longitude)
     {
         Coordenada = CoordenadaVO.Create(latitude, longitude);
+        Atualizar();
         return this;
     }
 
@@ -105,11 +107,13 @@ public sealed class PerfilEntity : BaseEntity
     public void SetImagemPerfilUrl(string? imagemPerfilUrl)
     {
         ImagemPerfilUrl = imagemPerfilUrl;
+        Atualizar();
     }
 
     public void SetImagemFundoUrl(string? imagemFundoUrl)
     {
         ImagemFundoUrl = imagemFundoUrl;
+        Atualizar();
     }
 
 
@@ -117,33 +121,39 @@ public sealed class PerfilEntity : BaseEntity
     public void AdicionarCurtida()
     {
         TotalCurtidas = TotalCurtidas.Adicionar();
+        Atualizar();
     }
     
     public void RemoverCurtida()
     {
         TotalCurtidas = TotalCurtidas.Remover();
+        Atualizar();
     }
 
 
     public void AdicionarSeguindo()
     {
         TotalSeguindo = TotalSeguindo.Adicionar();
+        Atualizar();
     }
 
     public void RemoverSeguindo()
     {
         TotalSeguindo = TotalSeguindo.Remover();
+        Atualizar();
     }
 
 
     public void AdicionarSeguidor()
     {
         TotalSeguidores = TotalSeguidores.Adicionar();
+        Atualizar();
     }
 
     public void RemoverSeguidor()
     {
         TotalSeguidores = TotalSeguidores.Remover();
+        Atualizar();
     }
 
 }

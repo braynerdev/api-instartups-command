@@ -30,6 +30,7 @@ public sealed class InvestidorEntity : BaseEntity
         TeseInvestimento = teseInvestimento;
         TicketMinimo = ticketMinimo;
         TicketMaximo = ticketMaximo;
+        Atualizar();
         return this;
     }
 }

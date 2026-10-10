@@ -33,6 +33,7 @@ public sealed class StartupEntity : BaseEntity
         DataFundacao = dataFundacao;
         TamanhoEquipe = tamanhoEquipe;
         ValorBuscado = valorBuscado;
+        Atualizar();
         return this;
     }
 }
