@@ -44,6 +44,9 @@ public sealed class PerfilEntity : BaseEntity
 
     private PerfilEntity EditarPerfil(string nome, double latitude, double longitude)
     {
+        if (!Ativo)
+            throw new PerfilDesativadoException();
+
         Nome = NomeVO.Create(nome);
         EditarCoordenadas(latitude, longitude);
         Atualizar();
@@ -52,6 +55,9 @@ public sealed class PerfilEntity : BaseEntity
 
     public PerfilEntity EditarCoordenadas(double latitude, double longitude)
     {
+        if (!Ativo)
+            throw new PerfilDesativadoException();
+
         Coordenada = CoordenadaVO.Create(latitude, longitude);
         Atualizar();
         return this;
@@ -71,9 +77,6 @@ public sealed class PerfilEntity : BaseEntity
         if(TipoPerfil != TiposPerfisEnum.STARTUP)
             throw new PerfilNaoEhStartupException();
 
-        if (!Ativo)
-            throw new PerfilDesativadoException();
-
         var perfil = EditarPerfil(nome, latitude, longitude);
         Startup!.Editar(pitch, dataFundacao, tamanhoEquipe, valorBuscado);
         return perfil;
@@ -92,9 +95,6 @@ public sealed class PerfilEntity : BaseEntity
     {
         if (TipoPerfil != TiposPerfisEnum.INVESTIDOR)
             throw new PerfilNaoEhInvestidorException();
-
-        if (!Ativo)
-            throw new PerfilDesativadoException();
 
         var perfil = EditarPerfil(nome, latitude, longitude);
         Investidor!.Editar(teseInvestimento, ticketMinimo, ticketMaximo);

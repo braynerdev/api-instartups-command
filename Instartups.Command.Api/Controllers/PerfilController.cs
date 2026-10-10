@@ -1,9 +1,11 @@
+using Instartups.Command.Api.DTOs;
 using Instartups.Command.Api.DTOs.Perfil.Investidor;
 using Instartups.Command.Api.DTOs.Perfil.Startup;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 using Instartups.Command.Application.UseCases.DesativarPerfil;
+using Instartups.Command.Application.UseCases.EditarCoordenadaPerfil;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.EditarPerfilStartup;
 using Instartups.Command.Application.UseCases.ReativarPerfil;
@@ -67,6 +69,18 @@ public class PerfilController(
         var response = await MessageBus.InvokeAsync<EditarPerfilStartupResponse>(command, ct);
 
         return Ok(response);
+    }
+
+    [HttpPatch("coordenada")]
+    [Authorize]
+    public async Task<IActionResult> EditarCoordenadaPerfil([FromBody] CoordenadaDTO dto, CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = new EditarCoordenadaPerfilCommand(dto.ToCommand(), UserId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
     }
 
     [HttpPatch("desativar")]
