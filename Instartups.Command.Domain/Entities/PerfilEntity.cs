@@ -94,12 +94,12 @@ public sealed class PerfilEntity : BaseEntity
 
 
 
-    public void EditarImagemPerfilUrl(string? imagemPerfilUrl)
+    public void SetImagemPerfilUrl(string? imagemPerfilUrl)
     {
         ImagemPerfilUrl = imagemPerfilUrl;
     }
 
-    public void EditarImagemFundoUrl(string? imagemFundoUrl)
+    public void SetImagemFundoUrl(string? imagemFundoUrl)
     {
         ImagemFundoUrl = imagemFundoUrl;
     }

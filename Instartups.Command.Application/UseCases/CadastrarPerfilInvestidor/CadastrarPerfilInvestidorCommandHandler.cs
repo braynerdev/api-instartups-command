@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Application.Interfaces;
+﻿using Instartups.Command.Application.Common.Command;
+using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
 
@@ -8,19 +9,18 @@ public class CadastrarPerfilInvestidorCommandHandler(
         IUnitOfWork unitOfWork
     ) : ICommandHandler<CadastrarPerfilInvestidorCommand, CadastrarPerfilInvestidorResponse>
 {
-    public async Task<CadastrarPerfilInvestidorResponse> Handle(CadastrarPerfilInvestidorCommand Command, CancellationToken ct)
+    public async Task<CadastrarPerfilInvestidorResponse> Handle(CadastrarPerfilInvestidorCommand command, CancellationToken ct)
     {
-        await ValidarUsuarioJaPossuiPerfil(Command.Perfil.UserId, ct);
+        await ValidarUsuarioJaPossuiPerfil(command.Perfil.UserId, ct);
 
-        var perfil = CriarPerfilInvestidor(Command);
+        var perfil = CriarPerfilInvestidor(command);
         unitOfWork.Perfil.Add(perfil);
 
-        perfil.EditarImagemPerfilUrl(Command.Perfil.ImagemPerfilUrl);
-        perfil.EditarImagemFundoUrl(Command.Perfil.ImagemFundoUrl);
+        CadastrarImagensUrls(perfil, command.Perfil);
 
         await unitOfWork.CommitAsync(ct);
 
-        return CadastrarPerfilInvestidorResponse.FromEntity(perfil, Command.TeseInvestimento, Command.TicketMinimo, Command.TicketMaximo);
+        return CadastrarPerfilInvestidorResponse.FromEntity(perfil, command.TeseInvestimento, command.TicketMinimo, command.TicketMaximo);
     }
 
     private async Task ValidarUsuarioJaPossuiPerfil(Guid usuarioId, CancellationToken ct)
@@ -44,5 +44,11 @@ public class CadastrarPerfilInvestidorCommandHandler(
                 ticketMinimo: command.TicketMinimo,
                 ticketMaximo: command.TicketMaximo
         );
+    }
+
+    private static void CadastrarImagensUrls(PerfilEntity perfil, CadastrarPerfilCommand command)
+    {
+        perfil.SetImagemPerfilUrl(command.ImagemPerfilUrl);
+        perfil.SetImagemFundoUrl(command.ImagemFundoUrl);
     }
 }

@@ -13,4 +13,11 @@ public class PerfilRepository(
     {
         return await context.Perfil.AnyAsync(p => p.UsuarioId == usuarioId, ct);
     }
+
+    public async Task<PerfilEntity?> ObterPorUsuarioIdComInvestidorAsync(Guid usuarioId, CancellationToken ct)
+    {
+        return await context.Perfil
+            .Include(p => p.Investidor)
+            .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId, ct);
+    }
 }
