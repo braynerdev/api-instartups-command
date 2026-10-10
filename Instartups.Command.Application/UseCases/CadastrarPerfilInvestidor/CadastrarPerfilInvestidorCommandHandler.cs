@@ -28,9 +28,7 @@ public class CadastrarPerfilInvestidorCommandHandler(
         var perfilExistente = await unitOfWork.Perfil.UsuarioJaPossuiPerfilAsync(usuarioId, ct);
 
         if (perfilExistente)
-        {
             throw new UsuarioJaPossuiPerfilException();
-        }
     }
 
     private PerfilEntity CriarPerfilInvestidor(CadastrarPerfilInvestidorCommand command)

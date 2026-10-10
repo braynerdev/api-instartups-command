@@ -2,19 +2,19 @@ using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
 
-namespace Instartups.Command.Application.UseCases.DesativarPerfil;
+namespace Instartups.Command.Application.UseCases.ReativarPerfil;
 
-public class DesativarPerfilCommandHandler(
+public class ReativarPerfilCommandHandler(
         IUnitOfWork unitOfWork
-    ) : IVoidCommandHandler<DesativarPerfilCommand>
+    ) : IVoidCommandHandler<ReativarPerfilCommand>
 {
-    public async Task Handle(DesativarPerfilCommand command, CancellationToken ct)
+    public async Task Handle(ReativarPerfilCommand command, CancellationToken ct)
     {
         var perfil = await ObterPerfil(command.UserId, ct);
 
-        ValidarPerfilAtivo(perfil);
+        ValidarPerfilDesativado(perfil);
 
-        perfil.Desativar();
+        perfil.Ativar();
 
         await unitOfWork.CommitAsync(ct);
     }
@@ -26,9 +26,9 @@ public class DesativarPerfilCommandHandler(
         return perfil ?? throw new PerfilNaoEncontradoException();
     }
 
-    private static void ValidarPerfilAtivo(PerfilEntity perfil)
+    private static void ValidarPerfilDesativado(PerfilEntity perfil)
     {
-        if (!perfil.Ativo)
-            throw new PerfilJaDesativadoException();
+        if (perfil.Ativo)
+            throw new PerfilJaAtivoException();
     }
 }

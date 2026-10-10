@@ -28,9 +28,7 @@ public class CadastrarPerfilStartupCommandHandler(
         var perfilExistente = await unitOfWork.Perfil.UsuarioJaPossuiPerfilAsync(usuarioId, ct);
 
         if (perfilExistente)
-        {
             throw new UsuarioJaPossuiPerfilException();
-        }
     }
 
     private static PerfilEntity CriarPerfilStartup(CadastrarPerfilStartupCommand command)

@@ -20,11 +20,13 @@ public abstract class BaseEntity
     public void Ativar()
     {
         Ativo = true;
+        Atualizar();
     }
 
     public void Desativar()
     {
         Ativo = false;
+        Atualizar();
     }
 
     public override bool Equals(object? obj) => obj is BaseEntity entity && Id.Equals(entity.Id);
