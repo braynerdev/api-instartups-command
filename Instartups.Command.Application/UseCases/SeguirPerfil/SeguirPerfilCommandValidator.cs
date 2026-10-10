@@ -1,5 +1,5 @@
 using FluentValidation;
-using Instartups.Command.Domain.Constants;
+using Instartups.Command.Application.Common.Validator.Extensions;
 
 namespace Instartups.Command.Application.UseCases.SeguirPerfil;
 
@@ -8,8 +8,6 @@ public class SeguirPerfilCommandValidator : AbstractValidator<SeguirPerfilComman
     public SeguirPerfilCommandValidator()
     {
         RuleFor(x => x.SeguidoId)
-            .NotEmpty()
-                .WithErrorCode(CodigosErroConst.CampoObrigatorio)
-                .WithMessage(MensagensErroConst.CampoObrigatorio);
+            .ValidarSeguidoId();
     }
 }
