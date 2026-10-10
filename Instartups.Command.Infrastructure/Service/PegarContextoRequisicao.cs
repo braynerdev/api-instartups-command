@@ -14,11 +14,11 @@ public class PegarContextoRequisicao(
                 .FindFirst(ClaimTypes.NameIdentifier)!.Value
         );
     public string? UserName =>
-        _httpContextAccessor.HttpContext.User?.FindFirst("unique_name")?.Value;
+        _httpContextAccessor.HttpContext!.User?.FindFirst("unique_name")?.Value;
 
     public string? Email =>
-        _httpContextAccessor.HttpContext.User?.FindFirst("Email")?.Value;
+        _httpContextAccessor.HttpContext!.User?.FindFirst("Email")?.Value;
 
     public string? PhoneNumber =>
-        _httpContextAccessor.HttpContext.User?.FindFirst("PhoneNumber")?.Value;
+        _httpContextAccessor.HttpContext!.User?.FindFirst("PhoneNumber")?.Value;
 }

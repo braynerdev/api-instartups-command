@@ -12,13 +12,13 @@ public class AppDbContext: DbContext
     }
 
 
-    public DbSet<PerfilEntity>? Perfil { get; set; }
-    public DbSet<StartupEntity>? Startup { get; set; }
-    public DbSet<InvestidorEntity>? Investidor { get; set; }
-    public DbSet<PerfilSeguidorEntity>? PerfilSeguidor { get; set; }
-    public DbSet<PostagemEntity>? Postagem { get; set; }
-    public DbSet<CurtidaPostagemEntity>? CurtidaPostagem { get; set; }
-    public DbSet<MidiaPostagemEntity>? MidiaPostagem { get; set; }
+    public DbSet<PerfilEntity> Perfil { get; set; }
+    public DbSet<StartupEntity> Startup { get; set; }
+    public DbSet<InvestidorEntity> Investidor { get; set; }
+    public DbSet<PerfilSeguidorEntity> PerfilSeguidor { get; set; }
+    public DbSet<PostagemEntity> Postagem { get; set; }
+    public DbSet<CurtidaPostagemEntity> CurtidaPostagem { get; set; }
+    public DbSet<MidiaPostagemEntity> MidiaPostagem { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -5,18 +5,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Instartups.Command.Infrastructure.Persistence.Repositories;
 
-public class PerfilRepository(
-        AppDbContext context
-    ) : RepositoriesGeneric<PerfilEntity>(context), IPerfilRepository
+public class PerfilRepository : RepositoriesGeneric<PerfilEntity>, IPerfilRepository
 {
+    private readonly AppDbContext _context;
+
+    public PerfilRepository(AppDbContext context)
+        : base(context)
+    {
+        _context = context;
+    }
+
     public async Task<bool> UsuarioJaPossuiPerfilAsync(Guid usuarioId, CancellationToken ct)
     {
-        return await context.Perfil.AnyAsync(p => p.UsuarioId == usuarioId, ct);
+        return await _context.Perfil.AnyAsync(p => p.UsuarioId == usuarioId, ct);
     }
 
     public async Task<PerfilEntity?> ObterPorUsuarioIdComInvestidorAsync(Guid usuarioId, CancellationToken ct)
     {
-        return await context.Perfil
+        return await _context.Perfil
             .Include(p => p.Investidor)
             .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId, ct);
     }
