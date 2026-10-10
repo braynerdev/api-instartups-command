@@ -40,7 +40,8 @@ public static class AuthenticationConfig
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ClockSkew = TimeSpan.Zero,
-                IssuerSigningKey = new RsaSecurityKey(rsa)
+                IssuerSigningKey = new RsaSecurityKey(rsa),
+                RoleClaimType = "roles",
             };
 
             options.Events = new JwtBearerEvents

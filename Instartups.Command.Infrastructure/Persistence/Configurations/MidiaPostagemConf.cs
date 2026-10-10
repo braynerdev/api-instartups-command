@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Domain.Entities;
+﻿using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,7 +16,7 @@ public class MidiaPostagemConf : BaseConf<MidiaPostagemEntity>
 
         builder.Property(mp => mp.UrlMidia)
             .HasColumnName("url_midia")
-            .HasColumnType("varchar(400)")
+            .HasColumnType($"varchar({TamanhosColunasConst.MidiaPostagem.UrlMidia})")
             .IsRequired();
 
         builder.Property(mp => mp.TipoMidia)

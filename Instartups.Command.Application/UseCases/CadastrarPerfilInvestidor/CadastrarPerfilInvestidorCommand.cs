@@ -4,7 +4,7 @@ using Instartups.Command.Application.Interfaces;
 namespace Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
 
 public sealed record CadastrarPerfilInvestidorCommand(
-    CadastrarPerfilCommand perfil,
+    CadastrarPerfilCommand Perfil,
     string TeseInvestimento,
     decimal TicketMinimo,
     decimal TicketMaximo

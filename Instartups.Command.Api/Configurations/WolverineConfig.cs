@@ -1,10 +1,8 @@
-﻿using ImTools;
-using Instartups.Command.Application.Interfaces;
+﻿using Instartups.Command.Application.Interfaces;
+using Instartups.Command.Infrastructure.Persistence;
 using JasperFx;
 using JasperFx.CodeGeneration;
-using JasperFx.MultiTenancy;
 using Wolverine;
-using Wolverine.EntityFrameworkCore;
 using Wolverine.FluentValidation;
 
 namespace Instartups.Command.Api.Configurations;
@@ -15,13 +13,13 @@ public static class WolverineConfig
     {
         builder.Host.UseWolverine(opt =>
         {
-            opt.UseEntityFrameworkCoreTransactions();
-            opt.Policies.AutoApplyTransactions();
+            opt.Durability.Mode = DurabilityMode.MediatorOnly;
+
 
             opt.Discovery.IncludeAssembly(typeof(ICommand).Assembly);
             opt.UseFluentValidation();
 
-            //opt.CodeGeneration.AlwaysUseServiceLocationFor<AppDbContext>();
+            opt.CodeGeneration.AlwaysUseServiceLocationFor<AppDbContext>();
 
             opt.Policies.MessageExecutionLogLevel(LogLevel.None);
             opt.Policies.MessageSuccessLogLevel(LogLevel.None);

@@ -26,10 +26,6 @@
     <ProjectReference Include="..\Instartups.Command.Infrastructure\Instartups.Command.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Perfil\Investidor\" />
-  </ItemGroup>
-
 
 	<Target Name="Husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0 and '$(CI)' != 'true'">
 		<Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" />

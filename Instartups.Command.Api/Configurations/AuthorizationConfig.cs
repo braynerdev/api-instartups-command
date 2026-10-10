@@ -6,6 +6,7 @@ namespace Instartups.Command.Api.Configurations;
 
 public static class AuthorizationConfig
 {
+    private const string RoleClaimType = "roles";
     public static IServiceCollection AddAuthorizationConfig(this IServiceCollection services)
     {
         services.AddAuthorization(options =>
@@ -27,8 +28,8 @@ public static class AuthorizationConfig
                 policy.RequireAuthenticatedUser();
 
                 policy.RequireAssertion(context =>
-                    context.User.HasClaim(ClaimTypes.Role, PermissoesConst.Admin) ||
-                    context.User.HasClaim(ClaimTypes.Role, permissao));
+                    context.User.HasClaim(RoleClaimType, PermissoesConst.Admin) ||
+                    context.User.HasClaim(RoleClaimType, permissao));
             });
     }
 }

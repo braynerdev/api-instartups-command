@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Domain.Entities;
+﻿using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,17 +15,17 @@ public class InvestidorConf : BaseConf<InvestidorEntity>
 
         builder.Property(i => i.TeseInvestimento)
             .HasColumnName("tese_investimento")
-            .HasColumnType("varchar(1000)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Investidor.Tese})")
             .IsRequired();
 
         builder.Property(i => i.TicketMinimo)
             .HasColumnName("ticket_minimo")
-            .HasPrecision(12, 2)
+            .HasPrecision(TamanhosColunasConst.Investidor.TicketPrecisao, TamanhosColunasConst.Investidor.TicketEscala)
             .IsRequired();
 
         builder.Property(i => i.TicketMaximo)
             .HasColumnName("ticket_maximo")
-            .HasPrecision(12, 2)
+            .HasPrecision(TamanhosColunasConst.Investidor.TicketPrecisao, TamanhosColunasConst.Investidor.TicketEscala)
             .IsRequired();
 
         builder.Property(i => i.PerfilId)

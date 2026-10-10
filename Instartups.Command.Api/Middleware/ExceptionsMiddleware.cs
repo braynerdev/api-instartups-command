@@ -64,11 +64,10 @@ public class ExceptionsMiddleware
                 ResponseDTO<IEnumerable<ValidationErrorDTO>>.Error(
                     "Erro de validação.",
                     validation.Errors
-                        .GroupBy(x => x.PropertyName)
-                        .Select(group => new ValidationErrorDTO(
-                            group.Key,
-                            group.First().ErrorCode,
-                            group.Select(x => x.ErrorMessage).ToList()
+                        .Select(erro => new ValidationErrorDTO(
+                            erro.PropertyName,
+                            erro.ErrorCode,
+                            erro.ErrorMessage
                         ))
                         .ToList()
                 ),

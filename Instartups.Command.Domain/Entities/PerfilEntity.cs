@@ -78,7 +78,8 @@ public sealed class PerfilEntity : BaseEntity
     public static PerfilEntity CriarInvestidor(string nome, double latitude, double longitude, Guid usuarioId, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
     {
         var perfil = CriarPerfil(nome, TiposPerfisEnum.INVESTIDOR, latitude, longitude, usuarioId);
-        InvestidorEntity.Criar(teseInvestimento, ticketMinimo, ticketMaximo, perfil.Id);
+        var investidor = InvestidorEntity.Criar(teseInvestimento, ticketMinimo, ticketMaximo, perfil.Id);
+        perfil.Investidor = investidor;
         return perfil;
     }
     public PerfilEntity EditarInvestidor(string nome, double latitude, double longitude, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)

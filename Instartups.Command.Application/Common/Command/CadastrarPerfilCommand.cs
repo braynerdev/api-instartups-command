@@ -1,6 +1,7 @@
 ﻿namespace Instartups.Command.Application.Common.Command;
 
-public sealed record CadastrarPerfilCommand(
+public sealed record CadastrarPerfilCommand
+(
     string Nome,
     string? ImagemPerfilUrl,
     string? ImagemFundoUrl,

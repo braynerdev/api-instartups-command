@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Domain.Entities;
+﻿using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ public class PostagemConfig : BaseConf<PostagemEntity>
 
         builder.Property(p => p.Descricao)
             .HasColumnName("descricao")
-            .HasColumnType("varchar(500)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Postagem.Descricao})")
             .IsRequired();
 
         builder.Property(p => p.TotalCurtidas)

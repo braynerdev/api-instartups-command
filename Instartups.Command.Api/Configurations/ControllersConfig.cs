@@ -24,10 +24,13 @@ public static class ControllersConfig
             {
                 var errors = context.ModelState
                     .Where(e => e.Value?.Errors.Count > 0)
-                    .Select(e => new ValidationErrorDTO(
-                        e.Key,
-                        CodigosErroConst.FormatoInvalido,
-                        e.Value!.Errors.Select(err => err.ErrorMessage).ToList()))
+                    .SelectMany(e => e.Value!.Errors.Select(err =>
+                        new ValidationErrorDTO(
+                            e.Key,
+                            CodigosErroConst.FormatoInvalido,
+                            "Formato da requisição inválido."
+                        )
+                    ))
                     .ToList();
 
                 var body = ResponseDTO<IEnumerable<ValidationErrorDTO>>.Error(
