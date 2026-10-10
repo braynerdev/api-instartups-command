@@ -26,4 +26,11 @@ public class PerfilRepository : RepositoriesGeneric<PerfilEntity>, IPerfilReposi
             .Include(p => p.Investidor)
             .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId, ct);
     }
+
+    public async Task<PerfilEntity?> ObterPorUsuarioIdComStartupAsync(Guid usuarioId, CancellationToken ct)
+    {
+        return await _context.Perfil
+            .Include(p => p.Startup)
+            .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId, ct);
+    }
 }

@@ -4,6 +4,7 @@ using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
+using Instartups.Command.Application.UseCases.EditarPerfilStartup;
 using Instartups.Command.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -52,5 +53,17 @@ public class PerfilController(
         var response = await MessageBus.InvokeAsync<CadastrarPerfilStartupResponse>(command, ct);
 
         return StatusCode(StatusCodes.Status201Created, response);
+    }
+
+    [HttpPut("startup")]
+    [Authorize]
+    public async Task<ActionResult<EditarPerfilStartupResponse>> EditarPerfilStartup([FromBody] EditarPerfilStartupDTO dto, CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = dto.ToCommand(UserId);
+
+        var response = await MessageBus.InvokeAsync<EditarPerfilStartupResponse>(command, ct);
+
+        return Ok(response);
     }
 }
