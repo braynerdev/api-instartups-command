@@ -41,18 +41,13 @@ Todos os comandos devem ser executados na **raiz da solution**.
 Use um nome em PascalCase que descreva a mudança (ex.: `AdicionaTabelaPostagem`).
 
 ```bash
-dotnet ef migrations add <NomeDaMigration> \
-  --project Instartups.Command.Infrastructure \
-  --startup-project Instartups.Command.Api \
-  --output-dir Persistence/Migrations
+dotnet ef migrations add <NomeDaMigration> --project Instartups.Command.Infrastructure --startup-project Instartups.Command.Api --output-dir Persistence/Migrations
 ```
 
 ### Aplicar as migrations no banco
 
 ```bash
-dotnet ef database update \
-  --project Instartups.Command.Infrastructure \
-  --startup-project Instartups.Command.Api
+dotnet ef database update --project Instartups.Command.Infrastructure --startup-project Instartups.Command.Api
 ```
 
 ### Listar as migrations
