@@ -1,8 +1,8 @@
 namespace Instartups.Command.Domain.Exceptions.Base;
 
-public class DomainException : BaseException
+public abstract class DomainException : BaseException
 {
-    public DomainException(string message) : base(message)
+    protected DomainException(string message) : base(message)
     {
     }
 }

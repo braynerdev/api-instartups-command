@@ -1,7 +1,6 @@
 ﻿using Instartups.Command.Domain.Entities.Base;
 using Instartups.Command.Domain.Enums;
 using Instartups.Command.Domain.Exceptions;
-using Instartups.Command.Domain.Exceptions.Base;
 using Instartups.Command.Domain.ValueObjects;
 
 namespace Instartups.Command.Domain.Entities;
@@ -70,7 +69,7 @@ public sealed class PerfilEntity : BaseEntity
     public PerfilEntity EditarStartup(string nome, double latitude, double longitude, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
     {
         if(TipoPerfil != TiposPerfisEnum.STARTUP)
-            throw new DomainException("O perfil não é do tipo STARTUP.");
+            throw new PerfilNaoEhStartupException();
 
         if (!Ativo)
             throw new PerfilDesativadoException();
@@ -92,7 +91,7 @@ public sealed class PerfilEntity : BaseEntity
     public PerfilEntity EditarInvestidor(string nome, double latitude, double longitude, string teseInvestimento, decimal ticketMinimo, decimal ticketMaximo)
     {
         if (TipoPerfil != TiposPerfisEnum.INVESTIDOR)
-            throw new DomainException("O perfil não é do tipo INVESTIDOR.");
+            throw new PerfilNaoEhInvestidorException();
 
         if (!Ativo)
             throw new PerfilDesativadoException();
