@@ -258,7 +258,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("SeguidoId");
 
-                    b.HasIndex("SeguidorId");
+                    b.HasIndex("SeguidorId", "SeguidoId")
+                        .IsUnique();
 
                     b.ToTable("perfil_seguidores", (string)null);
                 });

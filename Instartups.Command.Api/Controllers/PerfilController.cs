@@ -4,11 +4,13 @@ using Instartups.Command.Api.DTOs.Perfil.Startup;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
+using Instartups.Command.Application.UseCases.DeixarDeSeguirPerfil;
 using Instartups.Command.Application.UseCases.DesativarPerfil;
 using Instartups.Command.Application.UseCases.EditarCoordenadaPerfil;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.EditarPerfilStartup;
 using Instartups.Command.Application.UseCases.ReativarPerfil;
+using Instartups.Command.Application.UseCases.SeguirPerfil;
 using Instartups.Command.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -101,6 +103,30 @@ public class PerfilController(
     {
         Guid UserId = PegarContextoRequisicao.UserId;
         var command = new ReativarPerfilCommand(UserId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpPost("{seguidoId:guid}/seguir")]
+    [Authorize]
+    public async Task<IActionResult> SeguirPerfil([FromRoute] Guid seguidoId, CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = new SeguirPerfilCommand(seguidoId, UserId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{seguidoId:guid}/seguir")]
+    [Authorize]
+    public async Task<IActionResult> DeixarDeSeguirPerfil([FromRoute] Guid seguidoId, CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = new DeixarDeSeguirPerfilCommand(seguidoId, UserId);
 
         await MessageBus.InvokeAsync(command, ct);
 

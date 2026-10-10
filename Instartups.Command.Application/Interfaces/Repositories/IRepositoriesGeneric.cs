@@ -10,4 +10,5 @@ public interface IRepositoriesGeneric<T> where T : BaseEntity
     public Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken);
     public Task<bool> ExistsAsync(CancellationToken cancellationToken);
     public T Update(T entity);
+    public void Remove(T entity);
 }

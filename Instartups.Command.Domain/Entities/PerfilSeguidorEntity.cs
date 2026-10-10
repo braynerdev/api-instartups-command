@@ -11,18 +11,23 @@ public sealed class PerfilSeguidorEntity : BaseEntity
     public PerfilEntity Seguido { get; private set; } = null!;
 
     private PerfilSeguidorEntity() { }
-    private PerfilSeguidorEntity(Guid seguidorId, Guid seguidoId)
+    private PerfilSeguidorEntity(PerfilEntity seguidor, PerfilEntity seguido)
         : base()
     {
-        SeguidorId = seguidorId;
-        SeguidoId = seguidoId;
+        Seguidor = seguidor;
+        Seguido = seguido;
     }
 
-    public static PerfilSeguidorEntity Criar(Guid seguidorId, Guid seguidoId)
+    public static PerfilSeguidorEntity Criar(PerfilEntity seguidor, PerfilEntity seguido)
     {
-        if (seguidorId.Equals(seguidoId))
+        if (!seguido.Ativo)
+            throw new PerfilDesativadoException();
+        if (!seguidor.Ativo)
+            throw new PerfilDesativadoException();
+
+        if (seguidor.Id.Equals(seguido.Id))
             throw new PerfilNaoPodeSeguirASiMesmoException();
 
-        return new(seguidorId, seguidoId);
+        return new(seguidor, seguido);
     }
 }

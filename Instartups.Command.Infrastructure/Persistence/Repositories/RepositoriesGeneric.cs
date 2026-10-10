@@ -35,4 +35,9 @@ public abstract class RepositoriesGeneric<T>(
         context.Update(entity);
         return entity;
     }
+
+    public void Remove(T entity)
+    {
+        context.Set<T>().Remove(entity);
+    }
 }

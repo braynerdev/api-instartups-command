@@ -10,9 +10,15 @@ public class UnitOfWork(
 {
 
     private IPerfilRepository? _perfilRepository;
+    private IPerfilSeguidorRepository? _perfilSeguidorRepository;
+
+
 
     public IPerfilRepository Perfil =>
         _perfilRepository ??= new PerfilRepository(appDbContext);
+
+    public IPerfilSeguidorRepository PerfilSeguidor =>
+        _perfilSeguidorRepository ??= new PerfilSeguidorRepository(appDbContext);
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken)
     {

@@ -130,6 +130,24 @@ public sealed class PerfilEntity : BaseEntity
     }
 
 
+    public PerfilSeguidorEntity Seguir(PerfilEntity seguido)
+    {
+        var perfilSeguidor = PerfilSeguidorEntity.Criar(this, seguido);
+        AdicionarSeguindo();
+        seguido.AdicionarSeguidor();
+        return perfilSeguidor;
+    }
+
+    public void DeixarDeSeguir(PerfilEntity seguido)
+    {
+        if (!Ativo)
+            throw new PerfilDesativadoException();
+
+        RemoverSeguindo();
+        seguido.RemoverSeguidor();
+    }
+
+
     public void AdicionarSeguindo()
     {
         TotalSeguindo = TotalSeguindo.Adicionar();
