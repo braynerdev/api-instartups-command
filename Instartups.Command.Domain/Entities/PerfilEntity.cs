@@ -60,7 +60,8 @@ public sealed class PerfilEntity : BaseEntity
     public static PerfilEntity CriarStartup(string nome, double latitude, double longitude, Guid usuarioId, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
     {
         var perfil = CriarPerfil(nome, TiposPerfisEnum.STARTUP, latitude, longitude, usuarioId);
-        StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, perfil.Id);
+        var startup = StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, perfil.Id);
+        perfil.Startup = startup;
         return perfil;
     }
     public PerfilEntity EditarStartup(string nome, double latitude, double longitude, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)

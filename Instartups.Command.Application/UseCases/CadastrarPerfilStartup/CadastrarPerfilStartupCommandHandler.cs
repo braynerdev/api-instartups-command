@@ -1,26 +1,26 @@
-﻿using Instartups.Command.Application.Common.Command;
+using Instartups.Command.Application.Common.Command;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
 
-namespace Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
+namespace Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 
-public class CadastrarPerfilInvestidorCommandHandler(
+public class CadastrarPerfilStartupCommandHandler(
         IUnitOfWork unitOfWork
-    ) : ICommandHandler<CadastrarPerfilInvestidorCommand, CadastrarPerfilInvestidorResponse>
+    ) : ICommandHandler<CadastrarPerfilStartupCommand, CadastrarPerfilStartupResponse>
 {
-    public async Task<CadastrarPerfilInvestidorResponse> Handle(CadastrarPerfilInvestidorCommand command, CancellationToken ct)
+    public async Task<CadastrarPerfilStartupResponse> Handle(CadastrarPerfilStartupCommand command, CancellationToken ct)
     {
         await ValidarUsuarioJaPossuiPerfil(command.Perfil.UserId, ct);
 
-        var perfil = CriarPerfilInvestidor(command);
+        var perfil = CriarPerfilStartup(command);
         CadastrarImagensUrls(perfil, command.Perfil);
 
         unitOfWork.Perfil.Add(perfil);
 
         await unitOfWork.CommitAsync(ct);
 
-        return CadastrarPerfilInvestidorResponse.FromEntity(perfil, command.TeseInvestimento, command.TicketMinimo, command.TicketMaximo);
+        return CadastrarPerfilStartupResponse.FromEntity(perfil);
     }
 
     private async Task ValidarUsuarioJaPossuiPerfil(Guid usuarioId, CancellationToken ct)
@@ -33,16 +33,17 @@ public class CadastrarPerfilInvestidorCommandHandler(
         }
     }
 
-    private PerfilEntity CriarPerfilInvestidor(CadastrarPerfilInvestidorCommand command)
+    private static PerfilEntity CriarPerfilStartup(CadastrarPerfilStartupCommand command)
     {
-        return PerfilEntity.CriarInvestidor(
+        return PerfilEntity.CriarStartup(
                 nome: command.Perfil.Nome,
                 latitude: command.Perfil.Coordenada.Latitude,
                 longitude: command.Perfil.Coordenada.Longitude,
                 usuarioId: command.Perfil.UserId,
-                teseInvestimento: command.TeseInvestimento,
-                ticketMinimo: command.TicketMinimo,
-                ticketMaximo: command.TicketMaximo
+                pitch: command.Pitch,
+                dataFundacao: command.DataFundacao,
+                tamanhoEquipe: command.TamanhoEquipe,
+                valorBuscado: command.ValorBuscado
         );
     }
 

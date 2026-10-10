@@ -9,4 +9,5 @@ public static class CodigosErroConst
     public const string UrlInvalida = "URL_INVALIDA";
     public const string ValorMinimo = "VALOR_MINIMO";
     public const string PrecisaoIncorreta = "PRECISAO_INCORRETA";
+    public const string DataFutura = "DATA_FUTURA";
 }

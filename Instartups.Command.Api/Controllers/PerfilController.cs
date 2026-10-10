@@ -1,6 +1,8 @@
-﻿using Instartups.Command.Api.DTOs.Perfil.Investidor;
+using Instartups.Command.Api.DTOs.Perfil.Investidor;
+using Instartups.Command.Api.DTOs.Perfil.Startup;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Application.UseCases.CadastrarPerfilInvestidor;
+using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
 using Instartups.Command.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +18,7 @@ public class PerfilController(
         IMessageBus MessageBus
     ) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("investidor")]
     [Authorize]
     public async Task<ActionResult<CadastrarPerfilInvestidorResponse>> CadastrarPerfilInvestidor([FromBody] CadastrarPerfilInvestidorDTO dto, CancellationToken ct)
     {
@@ -28,7 +30,7 @@ public class PerfilController(
         return StatusCode(StatusCodes.Status201Created, response);
     }
 
-    [HttpPut]
+    [HttpPut("investidor")]
     [Authorize]
     public async Task<ActionResult<EditarPerfilInvestidorResponse>> EditarPerfilInvestidor([FromBody] EditarPerfilInvestidorDTO dto, CancellationToken ct)
     {
@@ -38,5 +40,17 @@ public class PerfilController(
         var response = await MessageBus.InvokeAsync<EditarPerfilInvestidorResponse>(command, ct);
 
         return Ok(response);
+    }
+
+    [HttpPost("startup")]
+    [Authorize]
+    public async Task<ActionResult<CadastrarPerfilStartupResponse>> CadastrarPerfilStartup([FromBody] CadastrarPerfilStartupDTO dto, CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = dto.ToCommand(UserId);
+
+        var response = await MessageBus.InvokeAsync<CadastrarPerfilStartupResponse>(command, ct);
+
+        return StatusCode(StatusCodes.Status201Created, response);
     }
 }
