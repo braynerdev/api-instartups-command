@@ -39,7 +39,7 @@ public static class RateLimiterConfig
 
     public static string PegarIdUsuario(HttpContext httpContext)
     {
-        return httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub)
+        return httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
             ?? "anonymous";
     }
 }
