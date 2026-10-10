@@ -20,6 +20,12 @@ public class PerfilRepository : RepositoriesGeneric<PerfilEntity>, IPerfilReposi
         return await _context.Perfil.AnyAsync(p => p.UsuarioId == usuarioId, ct);
     }
 
+    public async Task<PerfilEntity?> ObterPorUsuarioIdAsync(Guid usuarioId, CancellationToken ct)
+    {
+        return await _context.Perfil
+            .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId, ct);
+    }
+
     public async Task<PerfilEntity?> ObterPorUsuarioIdComInvestidorAsync(Guid usuarioId, CancellationToken ct)
     {
         return await _context.Perfil
