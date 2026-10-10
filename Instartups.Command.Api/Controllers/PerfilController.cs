@@ -6,6 +6,7 @@ using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 using Instartups.Command.Application.UseCases.DesativarPerfil;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.EditarPerfilStartup;
+using Instartups.Command.Application.UseCases.ReativarPerfil;
 using Instartups.Command.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,18 @@ public class PerfilController(
     {
         Guid UserId = PegarContextoRequisicao.UserId;
         var command = new DesativarPerfilCommand(UserId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpPatch("reativar")]
+    [Authorize]
+    public async Task<IActionResult> ReativarPerfil(CancellationToken ct)
+    {
+        Guid UserId = PegarContextoRequisicao.UserId;
+        var command = new ReativarPerfilCommand(UserId);
 
         await MessageBus.InvokeAsync(command, ct);
 

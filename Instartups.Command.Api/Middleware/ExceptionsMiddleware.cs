@@ -88,12 +88,10 @@ public class ExceptionsMiddleware
     private void LogError(Exception exception, int statusCode)
     {
         if (statusCode == StatusCodes.Status500InternalServerError)
-        {
             _logger.LogError(exception, "Erro interno da aplicação");
-        }
+
         else
-        {
             _logger.LogWarning($"Erro de negócio: {exception.Message}");
-        }
+
     }
 }
