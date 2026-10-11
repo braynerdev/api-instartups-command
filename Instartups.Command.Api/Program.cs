@@ -33,8 +33,10 @@ if (app.Environment.IsDevelopment())
     app.UseOpenApiConfig();
 
 else
+{
     app.UseHsts();
     app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseRateLimiter();
