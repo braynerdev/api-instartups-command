@@ -17,6 +17,5 @@
 
   <ItemGroup>
     <Folder Include="UseCases\CadastrarPerfilStartup\" />
-    <Folder Include="UseCases\CadastrarPost\" />
   </ItemGroup>
 </Project>

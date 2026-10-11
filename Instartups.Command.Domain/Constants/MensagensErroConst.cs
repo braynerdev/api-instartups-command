@@ -10,4 +10,5 @@ public static class MensagensErroConst
     public const string ValorMinimo = "O valor do campo deve ser maior que {ComparisonValue}.";
     public const string PrecisaoIncorreta = "O valor do campo excede a precisão ou escala permitida.";
     public const string DataFutura = "O campo não pode ser uma data futura.";
+    public const string ValorInvalidoEnum = "O valor informado não é válido para este campo.";
 }

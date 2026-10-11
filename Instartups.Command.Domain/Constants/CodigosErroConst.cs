@@ -10,4 +10,5 @@ public static class CodigosErroConst
     public const string ValorMinimo = "VALOR_MINIMO";
     public const string PrecisaoIncorreta = "PRECISAO_INCORRETA";
     public const string DataFutura = "DATA_FUTURA";
+    public const string ValorInvalidoEnum =  "VALOR_INVALIDO_ENUM";
 }

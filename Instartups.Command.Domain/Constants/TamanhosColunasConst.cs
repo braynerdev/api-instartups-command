@@ -30,6 +30,6 @@ public static class TamanhosColunasConst
 
     public static class MidiaPostagem
     {
-        public const int UrlMidia = 400;
+        public const int Url = 400;
     }
 }

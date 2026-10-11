@@ -6,6 +6,7 @@ public interface IUnitOfWork
 {
     IPerfilRepository Perfil { get; }
     IPerfilSeguidorRepository PerfilSeguidor { get; }
+    IPostagemRepository Postagem { get; }
 
     public Task<int> CommitAsync(CancellationToken cancellationToken);
 }

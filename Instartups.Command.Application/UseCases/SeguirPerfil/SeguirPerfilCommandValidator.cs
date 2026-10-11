@@ -8,6 +8,6 @@ public class SeguirPerfilCommandValidator : AbstractValidator<SeguirPerfilComman
     public SeguirPerfilCommandValidator()
     {
         RuleFor(x => x.SeguidoId)
-            .ValidarSeguidoId();
+            .ValidarId();
     }
 }

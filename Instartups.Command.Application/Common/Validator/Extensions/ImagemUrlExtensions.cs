@@ -12,15 +12,8 @@ public static class ImagemUrlExtensions
             .MaximumLength(tamanhoMaximo)
                 .WithErrorCode(CodigosErroConst.TamanhoMaximo)
                 .WithMessage(MensagensErroConst.TamanhoMaximo)
-            .Must(UrlValida)
+            .Must(ValidarUrl.Valida)
                 .WithErrorCode(CodigosErroConst.UrlInvalida)
                 .WithMessage(MensagensErroConst.UrlInvalida);
-    }
-
-    private static bool UrlValida(string? url)
-    {
-        return Uri.TryCreate(url, UriKind.Absolute, out var uri)
-            && (uri.Scheme == Uri.UriSchemeHttp ||
-                uri.Scheme == Uri.UriSchemeHttps);
     }
 }

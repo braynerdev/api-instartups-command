@@ -16,7 +16,7 @@ public class MidiaPostagemConf : BaseConf<MidiaPostagemEntity>
 
         builder.Property(mp => mp.UrlMidia)
             .HasColumnName("url_midia")
-            .HasColumnType($"varchar({TamanhosColunasConst.MidiaPostagem.UrlMidia})")
+            .HasColumnType($"varchar({TamanhosColunasConst.MidiaPostagem.Url})")
             .IsRequired();
 
         builder.Property(mp => mp.TipoMidia)

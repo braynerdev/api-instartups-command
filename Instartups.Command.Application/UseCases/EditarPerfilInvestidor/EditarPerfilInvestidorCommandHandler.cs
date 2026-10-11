@@ -8,11 +8,11 @@ public class EditarPerfilInvestidorCommandHandler(
         IUnitOfWork unitOfWork
     ) : ICommandHandler<EditarPerfilInvestidorCommand, EditarPerfilInvestidorResponse>
 {
-    public async Task<EditarPerfilInvestidorResponse> Handle(EditarPerfilInvestidorCommand Command, CancellationToken ct)
+    public async Task<EditarPerfilInvestidorResponse> Handle(EditarPerfilInvestidorCommand command, CancellationToken ct)
     {
-        var perfil = await ObterPerfilInvestidor(Command.Perfil.UserId, ct);
+        var perfil = await ObterPerfilInvestidor(command.Perfil.UserId, ct);
 
-        EditarPerfilInvestidor(perfil, Command);
+        EditarPerfilInvestidor(perfil, command);
 
         await unitOfWork.CommitAsync(ct);
 

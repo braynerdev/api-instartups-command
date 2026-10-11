@@ -8,6 +8,6 @@ public class DeixarDeSeguirPerfilCommandValidator : AbstractValidator<DeixarDeSe
     public DeixarDeSeguirPerfilCommandValidator()
     {
         RuleFor(x => x.SeguidoId)
-            .ValidarSeguidoId();
+            .ValidarId();
     }
 }

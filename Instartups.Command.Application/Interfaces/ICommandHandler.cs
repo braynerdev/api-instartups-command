@@ -6,7 +6,7 @@ namespace Instartups.Command.Application.Interfaces;
 
 public interface ICommandHandler<TCommand, TResponse> where TCommand : ICommand
 {
-    public Task<TResponse> Handle(TCommand Command, CancellationToken ct);
+    public Task<TResponse> Handle(TCommand command, CancellationToken ct);
 }
 
 public interface ICommandHandler<TResponse>

@@ -3,9 +3,9 @@ using Instartups.Command.Domain.Constants;
 
 namespace Instartups.Command.Application.Common.Validator.Extensions;
 
-public static class SeguidoIdExtensions
+public static class IdExtensions
 {
-    public static IRuleBuilderOptions<T, Guid> ValidarSeguidoId<T>(
+    public static IRuleBuilderOptions<T, Guid> ValidarId<T>(
         this IRuleBuilder<T, Guid> ruleBuilder)
     {
         return ruleBuilder
