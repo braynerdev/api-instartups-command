@@ -12,8 +12,6 @@ public class DesativarPerfilCommandHandler(
     {
         var perfil = await ObterPerfil(command.UserId, ct);
 
-        ValidarPerfilAtivo(perfil);
-
         perfil.Desativar();
 
         await unitOfWork.CommitAsync(ct);
@@ -24,11 +22,5 @@ public class DesativarPerfilCommandHandler(
         var perfil = await unitOfWork.Perfil.ObterPorUsuarioIdAsync(usuarioId, ct);
 
         return perfil ?? throw new PerfilNaoEncontradoException();
-    }
-
-    private static void ValidarPerfilAtivo(PerfilEntity perfil)
-    {
-        if (!perfil.Ativo)
-            throw new PerfilJaDesativadoException();
     }
 }

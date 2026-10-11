@@ -57,18 +57,13 @@ public sealed class PostagemEntity : BaseEntity
         _midiasPostagem.Remove(midiaPostagem);
     }
 
-
-
-
-    public void AdicionarCurtida()
+    internal void AdicionarCurtida()
     {
         TotalCurtidas = TotalCurtidas.Adicionar();
-        Autor.AdicionarCurtida();
     }
 
-    public void RemoverCurtida()
+    internal void RemoverCurtida()
     {
         TotalCurtidas = TotalCurtidas.Remover();
-        Autor.RemoverCurtida();
     }
 }

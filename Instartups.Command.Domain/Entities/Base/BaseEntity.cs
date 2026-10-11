@@ -17,13 +17,13 @@ public abstract class BaseEntity
         DataAtualizacao = DateTimeOffset.UtcNow;
     }
 
-    public void Ativar()
+    public virtual void Ativar()
     {
         Ativo = true;
         Atualizar();
     }
 
-    public void Desativar()
+    public virtual void Desativar()
     {
         Ativo = false;
         Atualizar();

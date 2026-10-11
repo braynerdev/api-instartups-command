@@ -1,6 +1,7 @@
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
+using Instartups.Command.Domain.Services;
 
 namespace Instartups.Command.Application.UseCases.DeixarDeSeguirPerfil;
 
@@ -13,7 +14,7 @@ public class DeixarDeSeguirPerfilCommandHandler(
         var seguidor = await ObterPerfil(command.UserId, ct);
         var perfilSeguidor = await ObterPerfilSeguidor(seguidor.Id, command.SeguidoId, ct);
 
-        seguidor.DeixarDeSeguir(perfilSeguidor.Seguido);
+        SeguirPerfilService.DeixarDeSeguir(seguidor, perfilSeguidor.Seguido);
 
         unitOfWork.PerfilSeguidor.Remove(perfilSeguidor);
 

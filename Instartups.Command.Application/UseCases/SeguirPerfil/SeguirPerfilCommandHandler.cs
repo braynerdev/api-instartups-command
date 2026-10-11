@@ -1,6 +1,7 @@
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
+using Instartups.Command.Domain.Services;
 
 namespace Instartups.Command.Application.UseCases.SeguirPerfil;
 
@@ -13,9 +14,9 @@ public class SeguirPerfilCommandHandler(
         var seguidor = await ObterPerfil(command.UserId, ct);
         var seguido = await ObterPerfilSeguido(command.SeguidoId, ct);
 
-        await ValidarNaoSegue(seguidor.Id, seguido.Id, ct);
+        var jaSegue = await unitOfWork.PerfilSeguidor.JaSegueAsync(seguidor.Id, seguido.Id, ct);
 
-        var perfilSeguidor = seguidor.Seguir(seguido);
+        var perfilSeguidor = SeguirPerfilService.Seguir(seguidor, seguido, jaSegue);
 
         unitOfWork.PerfilSeguidor.Add(perfilSeguidor);
 
@@ -34,13 +35,5 @@ public class SeguirPerfilCommandHandler(
         var perfil = await unitOfWork.Perfil.GetByIdAsync(seguidoId, ct);
 
         return perfil ?? throw new PerfilNaoEncontradoException();
-    }
-
-    private async Task ValidarNaoSegue(Guid seguidorId, Guid seguidoId, CancellationToken ct)
-    {
-        var jaSegue = await unitOfWork.PerfilSeguidor.JaSegueAsync(seguidorId, seguidoId, ct);
-
-        if (jaSegue)
-            throw new PerfilJaSeguidoException();
     }
 }

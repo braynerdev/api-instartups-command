@@ -1,5 +1,4 @@
-﻿using Instartups.Command.Application.Common.Command;
-using Instartups.Command.Application.Interfaces;
+﻿using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
 
@@ -14,7 +13,6 @@ public class CadastrarPerfilInvestidorCommandHandler(
         await ValidarUsuarioJaPossuiPerfil(command.Perfil.UserId, ct);
 
         var perfil = CriarPerfilInvestidor(command);
-        CadastrarImagensUrls(perfil, command.Perfil);
 
         unitOfWork.Perfil.Add(perfil);
 
@@ -38,15 +36,11 @@ public class CadastrarPerfilInvestidorCommandHandler(
                 latitude: command.Perfil.Coordenada.Latitude,
                 longitude: command.Perfil.Coordenada.Longitude,
                 usuarioId: command.Perfil.UserId,
+                imagemPerfilUrl: command.Perfil.ImagemPerfilUrl,
+                imagemFundoUrl: command.Perfil.ImagemFundoUrl,
                 teseInvestimento: command.TeseInvestimento,
                 ticketMinimo: command.TicketMinimo,
                 ticketMaximo: command.TicketMaximo
         );
-    }
-
-    private static void CadastrarImagensUrls(PerfilEntity perfil, CadastrarPerfilCommand command)
-    {
-        perfil.SetImagemPerfilUrl(command.ImagemPerfilUrl);
-        perfil.SetImagemFundoUrl(command.ImagemFundoUrl);
     }
 }

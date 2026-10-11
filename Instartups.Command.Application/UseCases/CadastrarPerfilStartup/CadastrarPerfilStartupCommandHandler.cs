@@ -1,4 +1,3 @@
-using Instartups.Command.Application.Common.Command;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
@@ -14,7 +13,6 @@ public class CadastrarPerfilStartupCommandHandler(
         await ValidarUsuarioJaPossuiPerfil(command.Perfil.UserId, ct);
 
         var perfil = CriarPerfilStartup(command);
-        CadastrarImagensUrls(perfil, command.Perfil);
 
         unitOfWork.Perfil.Add(perfil);
 
@@ -38,16 +36,12 @@ public class CadastrarPerfilStartupCommandHandler(
                 latitude: command.Perfil.Coordenada.Latitude,
                 longitude: command.Perfil.Coordenada.Longitude,
                 usuarioId: command.Perfil.UserId,
+                imagemPerfilUrl: command.Perfil.ImagemPerfilUrl,
+                imagemFundoUrl: command.Perfil.ImagemFundoUrl,
                 pitch: command.Pitch,
                 dataFundacao: command.DataFundacao,
                 tamanhoEquipe: command.TamanhoEquipe,
                 valorBuscado: command.ValorBuscado
         );
-    }
-
-    private static void CadastrarImagensUrls(PerfilEntity perfil, CadastrarPerfilCommand command)
-    {
-        perfil.SetImagemPerfilUrl(command.ImagemPerfilUrl);
-        perfil.SetImagemFundoUrl(command.ImagemFundoUrl);
     }
 }

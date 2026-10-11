@@ -1,4 +1,3 @@
-using Instartups.Command.Application.Common.Command;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
@@ -14,7 +13,6 @@ public class EditarPerfilStartupCommandHandler(
         var perfil = await ObterPerfilStartup(command.Perfil.UserId, ct);
 
         EditarPerfilStartup(perfil, command);
-        EditarImagens(perfil, command.Perfil);
 
         await unitOfWork.CommitAsync(ct);
 
@@ -34,16 +32,12 @@ public class EditarPerfilStartupCommandHandler(
             nome: command.Perfil.Nome,
             latitude: command.Perfil.Coordenada.Latitude,
             longitude: command.Perfil.Coordenada.Longitude,
+            imagemPerfilUrl: command.Perfil.ImagemPerfilUrl,
+            imagemFundoUrl: command.Perfil.ImagemFundoUrl,
             pitch: command.Pitch,
             dataFundacao: command.DataFundacao,
             tamanhoEquipe: command.TamanhoEquipe,
             valorBuscado: command.ValorBuscado
         );
-    }
-
-    private static void EditarImagens(PerfilEntity perfil, EditarPerfilCommand command)
-    {
-        perfil.SetImagemPerfilUrl(command.ImagemPerfilUrl);
-        perfil.SetImagemFundoUrl(command.ImagemFundoUrl);
     }
 }
