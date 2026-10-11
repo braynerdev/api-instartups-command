@@ -1,3 +1,4 @@
+using Instartups.Command.Application.Common.Response;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Exceptions;
@@ -6,9 +7,9 @@ namespace Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 
 public class CadastrarPerfilStartupCommandHandler(
         IUnitOfWork unitOfWork
-    ) : ICommandHandler<CadastrarPerfilStartupCommand, CadastrarPerfilStartupResponse>
+    ) : ICommandHandler<CadastrarPerfilStartupCommand, IdResponse>
 {
-    public async Task<CadastrarPerfilStartupResponse> Handle(CadastrarPerfilStartupCommand command, CancellationToken ct)
+    public async Task<IdResponse> Handle(CadastrarPerfilStartupCommand command, CancellationToken ct)
     {
         await ValidarUsuarioJaPossuiPerfil(command.Perfil.UserId, ct);
 
@@ -18,7 +19,7 @@ public class CadastrarPerfilStartupCommandHandler(
 
         await unitOfWork.CommitAsync(ct);
 
-        return CadastrarPerfilStartupResponse.FromEntity(perfil);
+        return new IdResponse(perfil.Id);
     }
 
     private async Task ValidarUsuarioJaPossuiPerfil(Guid usuarioId, CancellationToken ct)

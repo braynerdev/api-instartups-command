@@ -11,4 +11,5 @@ public static class MensagensErroConst
     public const string PrecisaoIncorreta = "O valor do campo excede a precisão ou escala permitida.";
     public const string DataFutura = "O campo não pode ser uma data futura.";
     public const string ValorInvalidoEnum = "O valor informado não é válido para este campo.";
+    public const string LimiteRequisicoes = "Limite de requisições atingido. Tente novamente em instantes.";
 }

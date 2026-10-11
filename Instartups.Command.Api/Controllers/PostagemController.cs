@@ -1,3 +1,4 @@
+using Instartups.Command.Api.DTOs;
 using Instartups.Command.Api.DTOs.Postagem;
 using Instartups.Command.Application.Common.Response;
 using Instartups.Command.Application.Interfaces;
@@ -17,13 +18,17 @@ public class PostagemController(
 {
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<IdResponse>> Post([FromBody] CadastrarPostagemDTO dto)
+    [ProducesResponseType<ResponseDTO<IdResponse>>(StatusCodes.Status201Created)]
+    [ProducesResponseType<ResponseDTO<IEnumerable<ValidationErrorDTO>>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<ResponseDTO<IdResponse>>> Post([FromBody] CadastrarPostagemDTO dto, CancellationToken ct)
     {
         var userId = PegarContextoRequisicao.UserId;
         var command = dto.ToCommand(userId);
-        
-        var response = await MessageBus.InvokeAsync<IdResponse>(command);
-        
-        return StatusCode(StatusCodes.Status201Created, response);
+
+        var response = await MessageBus.InvokeAsync<IdResponse>(command, ct);
+
+        return StatusCode(StatusCodes.Status201Created, ResponseDTO<IdResponse>.Success(MensagensSucessoConst.PostagemCadastrada, response));
     }
 }

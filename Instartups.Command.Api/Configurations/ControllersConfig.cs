@@ -14,6 +14,8 @@ public static class ControllersConfig
 
             options.Filters.Add(new ProducesAttribute("application/json"));
             options.Filters.Add(new ConsumesAttribute("application/json"));
+            options.Filters.Add(new ProducesResponseTypeAttribute<ResponseDTO<string>>(StatusCodes.Status429TooManyRequests));
+            options.Filters.Add(new ProducesResponseTypeAttribute<ResponseDTO<string>>(StatusCodes.Status401Unauthorized));
             options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
             options.AllowEmptyInputInBodyModelBinding = true;
         });

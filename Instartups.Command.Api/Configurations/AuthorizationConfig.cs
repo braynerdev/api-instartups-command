@@ -11,25 +11,22 @@ public static class AuthorizationConfig
     {
         services.AddAuthorization(options =>
         {
-            foreach (var permissao in PermissoesConst.All())
-            {
-                AddPermissionPolicy(options, permissao);
-            }
+            AddPermissionPolicy(options);
         });
 
         return services;
     }
 
-    private static void AddPermissionPolicy(AuthorizationOptions options, string permissao)
+    private static void AddPermissionPolicy(AuthorizationOptions options)
     {
-        options.AddPolicy(permissao,
+        options.AddPolicy(PermissoesConst.Admin,
             policy =>
             {
                 policy.RequireAuthenticatedUser();
 
                 policy.RequireAssertion(context =>
-                    context.User.HasClaim(RoleClaimType, PermissoesConst.Admin) ||
-                    context.User.HasClaim(RoleClaimType, permissao));
+                        context.User.HasClaim(RoleClaimType, PermissoesConst.Admin)
+                    );
             });
     }
 }

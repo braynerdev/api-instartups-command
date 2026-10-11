@@ -6,17 +6,15 @@ namespace Instartups.Command.Application.UseCases.EditarPerfilStartup;
 
 public class EditarPerfilStartupCommandHandler(
         IUnitOfWork unitOfWork
-    ) : ICommandHandler<EditarPerfilStartupCommand, EditarPerfilStartupResponse>
+    ) : IVoidCommandHandler<EditarPerfilStartupCommand>
 {
-    public async Task<EditarPerfilStartupResponse> Handle(EditarPerfilStartupCommand command, CancellationToken ct)
+    public async Task Handle(EditarPerfilStartupCommand command, CancellationToken ct)
     {
         var perfil = await ObterPerfilStartup(command.Perfil.UserId, ct);
 
         EditarPerfilStartup(perfil, command);
 
         await unitOfWork.CommitAsync(ct);
-
-        return EditarPerfilStartupResponse.FromEntity(perfil);
     }
 
     private async Task<PerfilEntity> ObterPerfilStartup(Guid usuarioId, CancellationToken ct)
