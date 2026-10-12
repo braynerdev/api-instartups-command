@@ -64,6 +64,14 @@ public sealed class PostagemEntity : BaseEntity
         _midiasPostagem.Remove(midiaPostagem);
     }
 
+    public override void Ativar()
+    {
+        if (Ativo)
+            throw new PostagemJaAtivaException();
+
+        base.Ativar();
+    }
+
     public override void Desativar()
     {
         if (!Ativo)

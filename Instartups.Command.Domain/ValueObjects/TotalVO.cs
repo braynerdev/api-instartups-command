@@ -19,6 +19,7 @@ public sealed record TotalVO
     }
     public static TotalVO Zero() => new(0);
     public TotalVO Adicionar() => new(Total + 1);
+    public TotalVO Adicionar(long quantidade) => new(Total + quantidade);
     public TotalVO Remover() => new(Math.Max(0, Total - 1));
     public TotalVO Remover(long quantidade) => new(Math.Max(0, Total - quantidade));
 }

@@ -3,6 +3,7 @@ using Instartups.Command.Api.DTOs.Postagem;
 using Instartups.Command.Application.Common.Response;
 using Instartups.Command.Application.Interfaces;
 using Instartups.Command.Application.UseCases.DesativarPostagem;
+using Instartups.Command.Application.UseCases.ReativarPostagem;
 using Instartups.Command.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,24 @@ public class PostagemController(
     {
         var userId = PegarContextoRequisicao.UserId;
         var command = new DesativarPostagemCommand(postagemId, userId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpPatch("{postagemId:guid}/reativar")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseDTO<IEnumerable<ValidationErrorDTO>>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Reativar([FromRoute] Guid postagemId, CancellationToken ct)
+    {
+        var userId = PegarContextoRequisicao.UserId;
+        var command = new ReativarPostagemCommand(postagemId, userId);
 
         await MessageBus.InvokeAsync(command, ct);
 
