@@ -5,7 +5,7 @@ namespace Instartups.Command.Api.DTOs.Postagem;
 
 public sealed record CadastrarPostagemDTO(
     string Descricao,
-    IEnumerable<MidiaDTO> Midias
+    IEnumerable<MidiaDTO>? Midias
 )
 {
     public CadastrarPostagemCommand ToCommand(Guid userId)
@@ -19,6 +19,6 @@ public sealed record CadastrarPostagemDTO(
 
     private IEnumerable<MidiaCommand> ToMidias()
     {
-        return Midias.Select(x => x.ToCommand());
+        return Midias?.Select(x => x.ToCommand()) ?? [];
     }
 }

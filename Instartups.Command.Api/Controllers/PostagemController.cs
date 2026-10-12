@@ -31,4 +31,20 @@ public class PostagemController(
 
         return StatusCode(StatusCodes.Status201Created, ResponseDTO<IdResponse>.Success(MensagensSucessoConst.PostagemCadastrada, response));
     }
+
+    [HttpPut("{postagemId:guid}")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseDTO<IEnumerable<ValidationErrorDTO>>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Editar([FromRoute] Guid postagemId, [FromBody] EditarPostagemDTO dto, CancellationToken ct)
+    {
+        var userId = PegarContextoRequisicao.UserId;
+        var command = dto.ToCommand(postagemId, userId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
 }

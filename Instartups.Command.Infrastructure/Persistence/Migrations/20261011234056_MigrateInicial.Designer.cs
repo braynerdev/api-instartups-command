@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instartups.Command.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261010052608_AjustandoCoordenada")]
-    partial class AjustandoCoordenada
+    [Migration("20261011234056_MigrateInicial")]
+    partial class MigrateInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,9 +133,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamptz")
                         .HasColumnName("data_criacao");
 
-                    b.Property<Guid?>("PostagemEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("PostagemId")
                         .HasColumnType("uuid")
                         .HasColumnName("postagem_id");
@@ -154,8 +151,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                     b.HasIndex("DataAtualizacao");
 
                     b.HasIndex("DataCriacao");
-
-                    b.HasIndex("PostagemEntityId");
 
                     b.HasIndex("PostagemId");
 
@@ -261,7 +256,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("SeguidoId");
 
-                    b.HasIndex("SeguidorId");
+                    b.HasIndex("SeguidorId", "SeguidoId")
+                        .IsUnique();
 
                     b.ToTable("perfil_seguidores", (string)null);
                 });
@@ -392,12 +388,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Instartups.Command.Domain.Entities.MidiaPostagemEntity", b =>
                 {
-                    b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", null)
-                        .WithMany("MidiasPostagem")
-                        .HasForeignKey("PostagemEntityId");
-
                     b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", "Postagem")
-                        .WithMany()
+                        .WithMany("MidiasPostagem")
                         .HasForeignKey("PostagemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

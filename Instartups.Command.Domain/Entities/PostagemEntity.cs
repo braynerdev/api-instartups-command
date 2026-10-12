@@ -38,6 +38,7 @@ public sealed class PostagemEntity : BaseEntity
     public void EditarDescricao(string descricao)
     {
         Descricao = descricao;
+        Atualizar();
     }
 
     public void AdicionarMidiaPostagem(string url, TiposMidiaEnum tipoMidia)

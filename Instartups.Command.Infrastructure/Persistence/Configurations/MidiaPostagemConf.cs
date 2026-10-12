@@ -34,8 +34,8 @@ public class MidiaPostagemConf : BaseConf<MidiaPostagemEntity>
             .IsRequired();
 
         builder.HasOne(mp => mp.Postagem)
-            .WithMany()
+            .WithMany(p => p.MidiasPostagem)
             .HasForeignKey(mp => mp.PostagemId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

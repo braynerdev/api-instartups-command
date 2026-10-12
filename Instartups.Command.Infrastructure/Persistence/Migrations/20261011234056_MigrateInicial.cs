@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using NpgsqlTypes;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
 namespace Instartups.Command.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class MigrateInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,7 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                     tipo_perfil = table.Column<short>(type: "smallint", nullable: false),
                     imagem_perfil_url = table.Column<string>(type: "varchar(400)", nullable: true),
                     imagem_fundo_url = table.Column<string>(type: "varchar(400)", nullable: true),
-                    coordenada = table.Column<NpgsqlPoint>(type: "geography(Point, 4326)", nullable: false),
+                    coordenada = table.Column<Point>(type: "geography(Point, 4326)", nullable: false),
                     total_curtidas = table.Column<int>(type: "integer", nullable: false),
                     total_seguidores = table.Column<int>(type: "integer", nullable: false),
                     total_seguindo = table.Column<int>(type: "integer", nullable: false),
@@ -174,7 +174,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                     url_midia = table.Column<string>(type: "varchar(400)", nullable: false),
                     tipo_midia = table.Column<int>(type: "int", nullable: false),
                     postagem_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    PostagemEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     data_criacao = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
                     data_atualizacao = table.Column<DateTimeOffset>(type: "timestamptz", nullable: true),
                     ativo = table.Column<bool>(type: "boolean", nullable: false)
@@ -182,11 +181,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_midias_postagens", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_midias_postagens_postagens_PostagemEntityId",
-                        column: x => x.PostagemEntityId,
-                        principalTable: "postagens",
-                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_midias_postagens_postagens_postagem_id",
                         column: x => x.postagem_id,
@@ -247,11 +241,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                 column: "postagem_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_midias_postagens_PostagemEntityId",
-                table: "midias_postagens",
-                column: "PostagemEntityId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_perfil_seguidores_data_atualizacao",
                 table: "perfil_seguidores",
                 column: "data_atualizacao");
@@ -267,9 +256,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                 column: "seguido_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_perfil_seguidores_seguidor_id",
+                name: "IX_perfil_seguidores_seguidor_id_seguido_id",
                 table: "perfil_seguidores",
-                column: "seguidor_id");
+                columns: new[] { "seguidor_id", "seguido_id" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_perfis_data_atualizacao",

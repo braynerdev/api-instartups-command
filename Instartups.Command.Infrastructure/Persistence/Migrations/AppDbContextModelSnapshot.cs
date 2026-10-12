@@ -130,9 +130,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamptz")
                         .HasColumnName("data_criacao");
 
-                    b.Property<Guid?>("PostagemEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("PostagemId")
                         .HasColumnType("uuid")
                         .HasColumnName("postagem_id");
@@ -151,8 +148,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                     b.HasIndex("DataAtualizacao");
 
                     b.HasIndex("DataCriacao");
-
-                    b.HasIndex("PostagemEntityId");
 
                     b.HasIndex("PostagemId");
 
@@ -390,14 +385,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Instartups.Command.Domain.Entities.MidiaPostagemEntity", b =>
                 {
-                    b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", null)
-                        .WithMany("MidiasPostagem")
-                        .HasForeignKey("PostagemEntityId");
-
                     b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", "Postagem")
-                        .WithMany()
+                        .WithMany("MidiasPostagem")
                         .HasForeignKey("PostagemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Postagem");

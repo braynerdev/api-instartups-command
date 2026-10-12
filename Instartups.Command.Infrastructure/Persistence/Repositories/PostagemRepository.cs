@@ -1,5 +1,6 @@
 using Instartups.Command.Application.Interfaces.Repositories;
 using Instartups.Command.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Instartups.Command.Infrastructure.Persistence.Repositories;
 
@@ -11,5 +12,12 @@ public class PostagemRepository : RepositoriesGeneric<PostagemEntity>, IPostagem
         : base(context)
     {
         _context = context;
+    }
+
+    public async Task<PostagemEntity?> ObterPorIdComMidiasAsync(Guid postagemId, CancellationToken ct)
+    {
+        return await _context.Postagem
+            .Include(p => p.MidiasPostagem)
+            .FirstOrDefaultAsync(p => p.Id == postagemId, ct);
     }
 }
