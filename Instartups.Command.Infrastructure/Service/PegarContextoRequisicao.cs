@@ -1,4 +1,5 @@
 ﻿using Instartups.Command.Application.Interfaces;
+using Instartups.Command.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
@@ -8,11 +9,19 @@ public class PegarContextoRequisicao(
     IHttpContextAccessor _httpContextAccessor
 ) : IPegarContextoRequisicao
 {
-    public Guid UserId =>
-        Guid.Parse(
-            _httpContextAccessor.HttpContext!.User
-                .FindFirst(ClaimTypes.NameIdentifier)!.Value
-        );
+    public Guid UserId
+    {
+        get
+        {
+            var valor = _httpContextAccessor.HttpContext?.User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!Guid.TryParse(valor, out var userId) || userId == Guid.Empty)
+                throw new UsuarioNaoIdentificadoException();
+
+            return userId;
+        }
+    }
     public string? UserName =>
         _httpContextAccessor.HttpContext!.User?.FindFirst("unique_name")?.Value;
 

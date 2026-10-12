@@ -23,6 +23,8 @@ public class CadastrarPerfilInvestidorCommandValidatorTests : InvestidorCommandV
         return command with { Perfil = command.Perfil with { Coordenada = command.Perfil.Coordenada with { Latitude = latitude } } };
     }
 
+    protected override CadastrarPerfilInvestidorCommand SemPerfil() => CommandValido() with { Perfil = null! };
+
     protected override CadastrarPerfilInvestidorCommand ComTeseInvestimento(string tese) => CommandValido() with { TeseInvestimento = tese };
     protected override CadastrarPerfilInvestidorCommand ComTickets(decimal ticketMinimo, decimal ticketMaximo) => CommandValido() with { TicketMinimo = ticketMinimo, TicketMaximo = ticketMaximo };
 }

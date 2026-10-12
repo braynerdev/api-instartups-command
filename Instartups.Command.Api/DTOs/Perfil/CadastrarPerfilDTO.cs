@@ -15,7 +15,7 @@ public sealed record CadastrarPerfilDTO(
             Nome,
             ImagemPerfilUrl,
             ImagemFundoUrl,
-            Coordenada.ToCommand(),
+            Coordenada?.ToCommand()!,
             userId
         );
     }

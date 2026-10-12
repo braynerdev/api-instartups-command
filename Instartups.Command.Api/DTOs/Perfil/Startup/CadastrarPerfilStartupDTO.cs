@@ -13,7 +13,7 @@ public sealed record CadastrarPerfilStartupDTO(
     public CadastrarPerfilStartupCommand ToCommand(Guid userId)
     {
         return new CadastrarPerfilStartupCommand(
-            Perfil.ToCommand(userId),
+            Perfil?.ToCommand(userId)!,
             Pitch,
             DataFundacao,
             TamanhoEquipe,

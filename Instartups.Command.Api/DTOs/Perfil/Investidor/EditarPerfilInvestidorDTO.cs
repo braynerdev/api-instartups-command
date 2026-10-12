@@ -12,7 +12,7 @@ public sealed record EditarPerfilInvestidorDTO(
     public EditarPerfilInvestidorCommand ToCommand(Guid userId)
     {
         return new EditarPerfilInvestidorCommand(
-            Perfil.ToCommand(userId),
+            Perfil?.ToCommand(userId)!,
             TeseInvestimento,
             TicketMinimo,
             TicketMaximo

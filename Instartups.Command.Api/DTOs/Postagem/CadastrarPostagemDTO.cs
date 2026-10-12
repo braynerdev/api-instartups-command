@@ -19,6 +19,6 @@ public sealed record CadastrarPostagemDTO(
 
     private IEnumerable<MidiaCommand> ToMidias()
     {
-        return Midias?.Select(x => x.ToCommand()) ?? [];
+        return Midias?.Select(x => x?.ToCommand()!) ?? [];
     }
 }

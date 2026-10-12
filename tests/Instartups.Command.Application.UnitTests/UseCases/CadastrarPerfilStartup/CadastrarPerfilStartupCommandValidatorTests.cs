@@ -23,6 +23,8 @@ public class CadastrarPerfilStartupCommandValidatorTests : StartupCommandValidat
         return command with { Perfil = command.Perfil with { Coordenada = command.Perfil.Coordenada with { Latitude = latitude } } };
     }
 
+    protected override CadastrarPerfilStartupCommand SemPerfil() => CommandValido() with { Perfil = null! };
+
     protected override CadastrarPerfilStartupCommand ComPitch(string pitch) => CommandValido() with { Pitch = pitch };
     protected override CadastrarPerfilStartupCommand ComDataFundacao(DateOnly dataFundacao) => CommandValido() with { DataFundacao = dataFundacao };
     protected override CadastrarPerfilStartupCommand ComTamanhoEquipe(int tamanhoEquipe) => CommandValido() with { TamanhoEquipe = tamanhoEquipe };

@@ -12,6 +12,7 @@ public abstract class InvestidorCommandValidatorTestsBase<TCommand>
     protected abstract TCommand CommandValido();
     protected abstract TCommand ComNomePerfil(string nome);
     protected abstract TCommand ComLatitudePerfil(double latitude);
+    protected abstract TCommand SemPerfil();
     protected abstract TCommand ComTeseInvestimento(string tese);
     protected abstract TCommand ComTickets(decimal ticketMinimo, decimal ticketMaximo);
 
@@ -23,6 +24,15 @@ public abstract class InvestidorCommandValidatorTestsBase<TCommand>
     public void Validar_QuandoCommandValido_NaoDeveRetornarErros()
     {
         Validar(CommandValido()).ShouldNotHaveAnyValidationErrors();
+    }
+
+    [Fact]
+    public void Validar_QuandoPerfilNulo_DeveRetornarErroCampoObrigatorio()
+    {
+        Validar(SemPerfil())
+            .ShouldHaveValidationErrorFor("Perfil")
+            .WithErrorCode(CodigosErroConst.CampoObrigatorio)
+            .WithErrorMessage(MensagensErroConst.CampoObrigatorio);
     }
 
     [Fact]

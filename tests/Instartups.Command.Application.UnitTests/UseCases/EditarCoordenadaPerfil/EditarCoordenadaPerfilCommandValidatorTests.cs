@@ -48,6 +48,16 @@ public class EditarCoordenadaPerfilCommandValidatorTests
     }
 
     [Fact]
+    public void Validar_QuandoCoordenadaNula_DeveRetornarErroCampoObrigatorio()
+    {
+        var command = PerfilCommandBuilder.EditarCoordenada() with { Coordenada = null! };
+
+        _validator.TestValidate(command)
+            .ShouldHaveValidationErrorFor("Coordenada")
+            .WithErrorCode(CodigosErroConst.CampoObrigatorio);
+    }
+
+    [Fact]
     public void Validar_QuandoUserIdVazio_NaoDeveRetornarErros()
     {
         var command = PerfilCommandBuilder.EditarCoordenada() with { UserId = Guid.Empty };

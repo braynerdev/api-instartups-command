@@ -12,6 +12,7 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
     protected abstract TCommand CommandValido();
     protected abstract TCommand ComNomePerfil(string nome);
     protected abstract TCommand ComLatitudePerfil(double latitude);
+    protected abstract TCommand SemPerfil();
     protected abstract TCommand ComPitch(string pitch);
     protected abstract TCommand ComDataFundacao(DateOnly dataFundacao);
     protected abstract TCommand ComTamanhoEquipe(int tamanhoEquipe);
@@ -27,6 +28,15 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
     public void Validar_QuandoCommandValido_NaoDeveRetornarErros()
     {
         Validar(CommandValido()).ShouldNotHaveAnyValidationErrors();
+    }
+
+    [Fact]
+    public void Validar_QuandoPerfilNulo_DeveRetornarErroCampoObrigatorio()
+    {
+        Validar(SemPerfil())
+            .ShouldHaveValidationErrorFor("Perfil")
+            .WithErrorCode(CodigosErroConst.CampoObrigatorio)
+            .WithErrorMessage(MensagensErroConst.CampoObrigatorio);
     }
 
     [Fact]

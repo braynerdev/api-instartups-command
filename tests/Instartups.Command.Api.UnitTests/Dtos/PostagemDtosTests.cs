@@ -36,11 +36,11 @@ public class PostagemDtosTests
     }
 
     [Fact]
-    public void MidiaDTO_ToCommand_QuandoTipoNulo_DeveLancarNullReferenceException()
+    public void MidiaDTO_ToCommand_QuandoTipoNulo_DeveMapearParaValorZero()
     {
         var dto = new MidiaDTO("https://cdn.instartups.com/midia.png", null!);
 
-        Should.Throw<NullReferenceException>(() => dto.ToCommand());
+        ((int)dto.ToCommand().Tipo).ShouldBe(0);
     }
 
     #endregion

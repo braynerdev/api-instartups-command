@@ -15,6 +15,7 @@
     <Project Path="Instartups.Command.Infrastructure/Instartups.Command.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Instartups.Command.Api.IntegrationTests/Instartups.Command.Api.IntegrationTests.csproj" />
     <Project Path="tests/Instartups.Command.Api.UnitTests/Instartups.Command.Api.UnitTests.csproj" />
     <Project Path="tests/Instartups.Command.Application.UnitTests/Instartups.Command.Application.UnitTests.csproj" />
     <Project Path="tests/Instartups.Command.Domain.UnitTests/Instartups.Command.Domain.UnitTests.csproj" />

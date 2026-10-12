@@ -21,6 +21,9 @@ public class EditarPerfilCommandValidator : AbstractValidator<EditarPerfilComman
             .When(x => x.ImagemFundoUrl is not null);
 
         RuleFor(x => x.Coordenada)
+            .NotNull()
+                .WithErrorCode(CodigosErroConst.CampoObrigatorio)
+                .WithMessage(MensagensErroConst.CampoObrigatorio)
             .SetValidator(new CoordenadaCommandValidator());
     }
 }

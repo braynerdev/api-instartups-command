@@ -23,6 +23,8 @@ public class EditarPerfilStartupCommandValidatorTests : StartupCommandValidatorT
         return command with { Perfil = command.Perfil with { Coordenada = command.Perfil.Coordenada with { Latitude = latitude } } };
     }
 
+    protected override EditarPerfilStartupCommand SemPerfil() => CommandValido() with { Perfil = null! };
+
     protected override EditarPerfilStartupCommand ComPitch(string pitch) => CommandValido() with { Pitch = pitch };
     protected override EditarPerfilStartupCommand ComDataFundacao(DateOnly dataFundacao) => CommandValido() with { DataFundacao = dataFundacao };
     protected override EditarPerfilStartupCommand ComTamanhoEquipe(int tamanhoEquipe) => CommandValido() with { TamanhoEquipe = tamanhoEquipe };

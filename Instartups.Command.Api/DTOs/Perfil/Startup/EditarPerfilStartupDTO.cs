@@ -13,7 +13,7 @@ public sealed record EditarPerfilStartupDTO(
     public EditarPerfilStartupCommand ToCommand(Guid userId)
     {
         return new EditarPerfilStartupCommand(
-            Perfil.ToCommand(userId),
+            Perfil?.ToCommand(userId)!,
             Pitch,
             DataFundacao,
             TamanhoEquipe,

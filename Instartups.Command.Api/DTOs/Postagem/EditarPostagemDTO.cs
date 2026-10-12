@@ -22,6 +22,6 @@ public sealed record EditarPostagemDTO(
 
     private IEnumerable<MidiaCommand> ToMidias()
     {
-        return MidiasAdicionadas?.Select(x => x.ToCommand()) ?? [];
+        return MidiasAdicionadas?.Select(x => x?.ToCommand()!) ?? [];
     }
 }

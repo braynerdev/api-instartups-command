@@ -12,7 +12,7 @@ public sealed record CadastrarPerfilInvestidorDTO(
     public CadastrarPerfilInvestidorCommand ToCommand(Guid userId)
     {
         return new CadastrarPerfilInvestidorCommand(
-            Perfil.ToCommand(userId),
+            Perfil?.ToCommand(userId)!,
             TeseInvestimento,
             TicketMinimo,
             TicketMaximo

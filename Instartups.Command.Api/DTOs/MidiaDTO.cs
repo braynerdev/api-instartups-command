@@ -13,7 +13,7 @@ public sealed record MidiaDTO(
     {
         return new(
             Url: Url,
-            Tipo: Tipo.MapTiposMidia()
+            Tipo: Tipo?.MapTiposMidia() ?? default
         );
     }
 }

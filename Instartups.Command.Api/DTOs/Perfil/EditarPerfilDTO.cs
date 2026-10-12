@@ -15,7 +15,7 @@ public sealed record EditarPerfilDTO(
             Nome,
             ImagemPerfilUrl,
             ImagemFundoUrl,
-            Coordenada.ToCommand(),
+            Coordenada?.ToCommand()!,
             userId
         );
     }

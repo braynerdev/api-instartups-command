@@ -123,6 +123,15 @@ public abstract class PerfilCommandValidatorTestsBase<TCommand>
     }
 
     [Fact]
+    public void Validar_QuandoCoordenadaNula_DeveRetornarErroCampoObrigatorio()
+    {
+        Validar(ComCoordenada(null!))
+            .ShouldHaveValidationErrorFor("Coordenada")
+            .WithErrorCode(CodigosErroConst.CampoObrigatorio)
+            .WithErrorMessage(MensagensErroConst.CampoObrigatorio);
+    }
+
+    [Fact]
     public void Validar_QuandoLatitudeInvalida_DeveRetornarErroNaPropriedadeAninhada()
     {
         Validar(ComCoordenada(new CoordenadaCommand(91, 10)))

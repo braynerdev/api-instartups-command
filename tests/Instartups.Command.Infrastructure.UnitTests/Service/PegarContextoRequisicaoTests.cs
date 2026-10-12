@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Instartups.Command.Domain.Exceptions;
 using Instartups.Command.Infrastructure.Service;
 using Microsoft.AspNetCore.Http;
 
@@ -28,30 +29,39 @@ public class PegarContextoRequisicaoTests
     }
 
     [Fact]
-    public void UserId_QuandoClaimNameIdentifierAusente_DeveLancarNullReferenceException()
+    public void UserId_QuandoClaimNameIdentifierAusente_DeveLancarUsuarioNaoIdentificadoException()
     {
         var sut = CriarComClaims(new Claim("unique_name", "brayner"));
 
-        Should.Throw<NullReferenceException>(() => sut.UserId);
+        Should.Throw<UsuarioNaoIdentificadoException>(() => sut.UserId);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData("nao-eh-guid")]
     [InlineData("12345")]
-    public void UserId_QuandoClaimNameIdentifierNaoEhGuid_DeveLancarFormatException(string valor)
+    [InlineData("00000000-0000-0000-0000-000000000000")]
+    public void UserId_QuandoClaimNameIdentifierNaoEhGuidValido_DeveLancarUsuarioNaoIdentificadoException(string valor)
     {
         var sut = CriarComClaims(new Claim(ClaimTypes.NameIdentifier, valor));
 
-        Should.Throw<FormatException>(() => sut.UserId);
+        Should.Throw<UsuarioNaoIdentificadoException>(() => sut.UserId);
     }
 
     [Fact]
-    public void UserId_QuandoHttpContextNulo_DeveLancarNullReferenceException()
+    public void UserId_QuandoHttpContextNulo_DeveLancarUsuarioNaoIdentificadoException()
     {
         var sut = new PegarContextoRequisicao(new HttpContextAccessor { HttpContext = null });
 
-        Should.Throw<NullReferenceException>(() => sut.UserId);
+        Should.Throw<UsuarioNaoIdentificadoException>(() => sut.UserId);
+    }
+
+    [Fact]
+    public void UserId_QuandoUsuarioNaoAutenticado_DeveLancarUsuarioNaoIdentificadoException()
+    {
+        var sut = new PegarContextoRequisicao(new HttpContextAccessor { HttpContext = new DefaultHttpContext() });
+
+        Should.Throw<UsuarioNaoIdentificadoException>(() => sut.UserId);
     }
 
     #endregion

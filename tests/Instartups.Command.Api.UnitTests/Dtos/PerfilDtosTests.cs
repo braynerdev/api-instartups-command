@@ -27,11 +27,11 @@ public class PerfilDtosTests
     }
 
     [Fact]
-    public void CadastrarPerfilDTO_ToCommand_QuandoCoordenadaNula_DeveLancarNullReferenceException()
+    public void CadastrarPerfilDTO_ToCommand_QuandoCoordenadaNula_DeveMapearCoordenadaNula()
     {
         var dto = DtoBuilder.CadastrarPerfil() with { Coordenada = null! };
 
-        Should.Throw<NullReferenceException>(() => dto.ToCommand(_userId));
+        dto.ToCommand(_userId).Coordenada.ShouldBeNull();
     }
 
     [Fact]
@@ -59,11 +59,11 @@ public class PerfilDtosTests
     }
 
     [Fact]
-    public void CadastrarPerfilStartupDTO_ToCommand_QuandoPerfilNulo_DeveLancarNullReferenceException()
+    public void CadastrarPerfilStartupDTO_ToCommand_QuandoPerfilNulo_DeveMapearPerfilNulo()
     {
         var dto = DtoBuilder.CadastrarStartup() with { Perfil = null! };
 
-        Should.Throw<NullReferenceException>(() => dto.ToCommand(_userId));
+        dto.ToCommand(_userId).Perfil.ShouldBeNull();
     }
 
     [Fact]
