@@ -5,13 +5,17 @@ namespace Instartups.Command.Domain.Services;
 
 public static class CurtirPostagemService
 {
-    public static CurtidaPostagemEntity Curtir(PostagemEntity postagem, PerfilEntity autorPostagem, PerfilEntity perfilQueCurtiu)
+    public static CurtidaPostagemEntity Curtir(PostagemEntity postagem, PerfilEntity autorPostagem, PerfilEntity perfilQueCurtiu, bool jaCurtiu)
     {
+        if (jaCurtiu)
+            throw new PostagemJaCurtidaException();
+
         ValidarAutor(postagem, autorPostagem);
         ValidarPostagemAtiva(postagem);
+        ValidarPerfis(autorPostagem, perfilQueCurtiu);
 
-        if (!perfilQueCurtiu.Ativo)
-            throw new PerfilDesativadoException();
+        if (autorPostagem.Id.Equals(perfilQueCurtiu.Id))
+            throw new PerfilNaoPodeCurtirPropriaPostagemException();
 
         var curtida = CurtidaPostagemEntity.Criar(postagem.Id, perfilQueCurtiu.Id);
         postagem.AdicionarCurtida();
@@ -19,10 +23,11 @@ public static class CurtirPostagemService
         return curtida;
     }
 
-    public static void Descurtir(PostagemEntity postagem, PerfilEntity autorPostagem)
+    public static void Descurtir(PostagemEntity postagem, PerfilEntity autorPostagem, PerfilEntity perfilQueCurtiu)
     {
         ValidarAutor(postagem, autorPostagem);
         ValidarPostagemAtiva(postagem);
+        ValidarPerfis(autorPostagem, perfilQueCurtiu);
 
         postagem.RemoverCurtida();
         autorPostagem.RemoverCurtida();
@@ -38,5 +43,11 @@ public static class CurtirPostagemService
     {
         if (!postagem.Ativo)
             throw new PostagemDesativadaException();
+    }
+
+    private static void ValidarPerfis(PerfilEntity autorPostagem, PerfilEntity perfilQueCurtiu)
+    {
+        if (!autorPostagem.Ativo || !perfilQueCurtiu.Ativo)
+            throw new PerfilDesativadoException();
     }
 }

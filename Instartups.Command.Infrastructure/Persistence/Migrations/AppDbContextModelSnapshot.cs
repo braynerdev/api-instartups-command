@@ -58,7 +58,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PerfilAutorCurtidaId");
 
-                    b.HasIndex("PostagemId");
+                    b.HasIndex("PostagemId", "PerfilAutorCurtidaId")
+                        .IsUnique();
 
                     b.ToTable("curtidas_postagens", (string)null);
                 });

@@ -20,4 +20,11 @@ public class PostagemRepository : RepositoriesGeneric<PostagemEntity>, IPostagem
             .Include(p => p.MidiasPostagem)
             .FirstOrDefaultAsync(p => p.Id == postagemId, ct);
     }
+
+    public async Task<PostagemEntity?> ObterPorIdComAutorAsync(Guid postagemId, CancellationToken ct)
+    {
+        return await _context.Postagem
+            .Include(p => p.Autor)
+            .FirstOrDefaultAsync(p => p.Id == postagemId, ct);
+    }
 }

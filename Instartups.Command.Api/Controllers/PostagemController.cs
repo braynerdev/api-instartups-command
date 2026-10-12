@@ -2,6 +2,8 @@ using Instartups.Command.Api.DTOs;
 using Instartups.Command.Api.DTOs.Postagem;
 using Instartups.Command.Application.Common.Response;
 using Instartups.Command.Application.Interfaces;
+using Instartups.Command.Application.UseCases.CurtirPostagem;
+using Instartups.Command.Application.UseCases.DescurtirPostagem;
 using Instartups.Command.Application.UseCases.DesativarPostagem;
 using Instartups.Command.Application.UseCases.ReativarPostagem;
 using Instartups.Command.Domain.Constants;
@@ -81,6 +83,39 @@ public class PostagemController(
     {
         var userId = PegarContextoRequisicao.UserId;
         var command = new ReativarPostagemCommand(postagemId, userId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpPost("{postagemId:guid}/curtir")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseDTO<IEnumerable<ValidationErrorDTO>>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Curtir([FromRoute] Guid postagemId, CancellationToken ct)
+    {
+        var userId = PegarContextoRequisicao.UserId;
+        var command = new CurtirPostagemCommand(postagemId, userId);
+
+        await MessageBus.InvokeAsync(command, ct);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{postagemId:guid}/curtir")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseDTO<IEnumerable<ValidationErrorDTO>>>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<ResponseDTO<string>>(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Descurtir([FromRoute] Guid postagemId, CancellationToken ct)
+    {
+        var userId = PegarContextoRequisicao.UserId;
+        var command = new DescurtirPostagemCommand(postagemId, userId);
 
         await MessageBus.InvokeAsync(command, ct);
 

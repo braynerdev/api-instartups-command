@@ -12,6 +12,7 @@ public class UnitOfWork(
     private IPerfilRepository? _perfilRepository;
     private IPerfilSeguidorRepository? _perfilSeguidorRepository;
     private IPostagemRepository? _postagemRepository;
+    private ICurtidaPostagemRepository? _curtidaPostagemRepository;
 
 
 
@@ -23,6 +24,9 @@ public class UnitOfWork(
     
     public IPostagemRepository Postagem =>
         _postagemRepository ??= new PostagemRepository(appDbContext);
+
+    public ICurtidaPostagemRepository CurtidaPostagem =>
+        _curtidaPostagemRepository ??= new CurtidaPostagemRepository(appDbContext);
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken)
     {
