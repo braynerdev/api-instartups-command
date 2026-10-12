@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Respawn;
@@ -15,7 +16,7 @@ namespace Instartups.Command.Api.IntegrationTests.Fixtures;
 
 public class InstartupsApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private const string VariavelConnectionString = "InstartupsIntegrationDb";
+    private const string ChaveConnectionString = "InstartupsIntegrationDb";
 
     public const string Issuer = "instartups-auth-tests";
     public const string Audience = "instartups-command-tests";
@@ -31,9 +32,15 @@ public class InstartupsApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
 
     public InstartupsApiFactory()
     {
-        ConnectionString = Environment.GetEnvironmentVariable(VariavelConnectionString)
+        var configuracao = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.Development.json", optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        ConnectionString = configuracao.GetConnectionString(ChaveConnectionString)
             ?? throw new InvalidOperationException(
-                $"Variável de ambiente '{VariavelConnectionString}' não definida. Informe o connection string de um banco dedicado (nome terminando em '_tests').");
+                $"Connection string '{ChaveConnectionString}' não encontrada. Defina 'ConnectionStrings:{ChaveConnectionString}' no appsettings.Development.json ou a variável de ambiente 'ConnectionStrings__{ChaveConnectionString}'.");
         GarantirBancoDeTestes(ConnectionString);
 
         File.WriteAllText(_caminhoChavePublica, _chaveRsa.ExportSubjectPublicKeyInfoPem());
