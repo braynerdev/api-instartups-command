@@ -5,7 +5,7 @@ namespace Instartups.Command.Domain.Exceptions;
 public class PerfilNaoEhAutorPostagemException : ForbiddenException
 {
     public PerfilNaoEhAutorPostagemException()
-        : base("Apenas o autor pode editar a postagem.")
+        : base("Apenas o autor pode realizar esta ação na postagem.")
     {
     }
 }

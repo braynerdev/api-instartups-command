@@ -37,12 +37,16 @@ public sealed class PostagemEntity : BaseEntity
 
     public void EditarDescricao(string descricao)
     {
+        ValidarAtiva();
+
         Descricao = descricao;
         Atualizar();
     }
 
     public void AdicionarMidiaPostagem(string url, TiposMidiaEnum tipoMidia)
     {
+        ValidarAtiva();
+
         if (_midiasPostagem.Count >= MaxMidias)
             throw new LimiteMidiasPostagemExcedidoException(MaxMidias);
 
@@ -52,10 +56,26 @@ public sealed class PostagemEntity : BaseEntity
 
     public void RemoverMidiaPostagem(Guid midiaPostagemId)
     {
+        ValidarAtiva();
+
         var midiaPostagem = _midiasPostagem.FirstOrDefault(m => m.Id == midiaPostagemId)
             ?? throw new MidiaPostagemNaoEncontradaException();
 
         _midiasPostagem.Remove(midiaPostagem);
+    }
+
+    public override void Desativar()
+    {
+        if (!Ativo)
+            throw new PostagemJaDesativadaException();
+
+        base.Desativar();
+    }
+
+    private void ValidarAtiva()
+    {
+        if (!Ativo)
+            throw new PostagemDesativadaException();
     }
 
     internal void AdicionarCurtida()

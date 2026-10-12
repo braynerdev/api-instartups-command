@@ -131,6 +131,11 @@ public sealed class PerfilEntity : BaseEntity
         TotalCurtidas = TotalCurtidas.Remover();
         Atualizar();
     }
+    internal void RemoverCurtidas(TotalVO quantidade)
+    {
+        TotalCurtidas = TotalCurtidas.Remover(quantidade.Total);
+        Atualizar();
+    }
     internal void AdicionarSeguindo()
     {
         TotalSeguindo = TotalSeguindo.Adicionar();
