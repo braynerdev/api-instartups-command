@@ -6,29 +6,27 @@ namespace Instartups.Command.Api.Configurations;
 
 public static class AuthorizationConfig
 {
+    private const string RoleClaimType = "roles";
     public static IServiceCollection AddAuthorizationConfig(this IServiceCollection services)
     {
         services.AddAuthorization(options =>
         {
-            foreach (var permissao in PermissoesConst.All())
-            {
-                AddPermissionPolicy(options, permissao);
-            }
+            AddPermissionPolicy(options);
         });
 
         return services;
     }
 
-    private static void AddPermissionPolicy(AuthorizationOptions options, string permissao)
+    private static void AddPermissionPolicy(AuthorizationOptions options)
     {
-        options.AddPolicy(permissao,
+        options.AddPolicy(PermissoesConst.Admin,
             policy =>
             {
                 policy.RequireAuthenticatedUser();
 
                 policy.RequireAssertion(context =>
-                    context.User.HasClaim(ClaimTypes.Role, PermissoesConst.Admin) ||
-                    context.User.HasClaim(ClaimTypes.Role, permissao));
+                        context.User.HasClaim(RoleClaimType, PermissoesConst.Admin)
+                    );
             });
     }
 }

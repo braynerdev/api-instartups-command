@@ -1,5 +1,5 @@
 ﻿using Instartups.Command.Domain.Entities.Base;
-using Instartups.Command.Domain.Exceptions.Base;
+using Instartups.Command.Domain.Exceptions;
 
 namespace Instartups.Command.Domain.Entities;
 
@@ -11,18 +11,23 @@ public sealed class PerfilSeguidorEntity : BaseEntity
     public PerfilEntity Seguido { get; private set; } = null!;
 
     private PerfilSeguidorEntity() { }
-    private PerfilSeguidorEntity(Guid seguidorId, Guid seguidoId)
+    private PerfilSeguidorEntity(PerfilEntity seguidor, PerfilEntity seguido)
         : base()
     {
-        SeguidorId = seguidorId;
-        SeguidoId = seguidoId;
+        Seguidor = seguidor;
+        Seguido = seguido;
     }
 
-    public static PerfilSeguidorEntity Criar(Guid seguidorId, Guid seguidoId)
+    public static PerfilSeguidorEntity Criar(PerfilEntity seguidor, PerfilEntity seguido)
     {
-        if (seguidorId.Equals(seguidoId))
-            throw new DomainException("Um perfil não pode seguir a si mesmo.");
+        if (!seguido.Ativo)
+            throw new PerfilDesativadoException();
+        if (!seguidor.Ativo)
+            throw new PerfilDesativadoException();
 
-        return new(seguidorId, seguidoId);
+        if (seguidor.Id.Equals(seguido.Id))
+            throw new PerfilNaoPodeSeguirASiMesmoException();
+
+        return new(seguidor, seguido);
     }
 }

@@ -21,6 +21,9 @@ public class PerfilSeguidorConfig : BaseConf<PerfilSeguidorEntity>
             .HasColumnType("uuid")
             .IsRequired();
 
+        builder.HasIndex(ps => new { ps.SeguidorId, ps.SeguidoId })
+            .IsUnique();
+
         builder.HasOne(ps => ps.Seguidor)
             .WithMany()
             .HasForeignKey(ps => ps.SeguidorId)

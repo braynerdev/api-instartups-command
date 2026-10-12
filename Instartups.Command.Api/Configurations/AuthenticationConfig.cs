@@ -40,7 +40,8 @@ public static class AuthenticationConfig
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ClockSkew = TimeSpan.Zero,
-                IssuerSigningKey = new RsaSecurityKey(rsa)
+                IssuerSigningKey = new RsaSecurityKey(rsa),
+                RoleClaimType = "roles",
             };
 
             options.Events = new JwtBearerEvents
@@ -57,7 +58,7 @@ public static class AuthenticationConfig
                     context.Response.ContentType = "application/json";
 
                     var result = JsonSerializer.Serialize(
-                        ResponseDTO<string>.Error("Você não possui permissão para acessar este recurso."));
+                        ResponseDTO<string>.Error("Você não possui permissão para acessar este recurso."), JsonSerializerOptions.Web);
 
                     await context.Response.WriteAsync(result);
                 },
@@ -74,7 +75,7 @@ public static class AuthenticationConfig
 
                     var message = GetMessageError(context);
                     var result = JsonSerializer.Serialize(
-                        ResponseDTO<string>.Error(message));
+                        ResponseDTO<string>.Error(message), JsonSerializerOptions.Web);
 
                     await context.Response.WriteAsync(result);
                 }

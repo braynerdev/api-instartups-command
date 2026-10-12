@@ -4,8 +4,8 @@ using Instartups.Command.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using NpgsqlTypes;
 
 #nullable disable
 
@@ -58,7 +58,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PerfilAutorCurtidaId");
 
-                    b.HasIndex("PostagemId");
+                    b.HasIndex("PostagemId", "PerfilAutorCurtidaId")
+                        .IsUnique();
 
                     b.ToTable("curtidas_postagens", (string)null);
                 });
@@ -130,9 +131,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamptz")
                         .HasColumnName("data_criacao");
 
-                    b.Property<Guid?>("PostagemEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("PostagemId")
                         .HasColumnType("uuid")
                         .HasColumnName("postagem_id");
@@ -152,8 +150,6 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DataCriacao");
 
-                    b.HasIndex("PostagemEntityId");
-
                     b.HasIndex("PostagemId");
 
                     b.ToTable("midias_postagens", (string)null);
@@ -169,7 +165,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("ativo");
 
-                    b.Property<NpgsqlPoint>("Coordenada")
+                    b.Property<Point>("Coordenada")
+                        .IsRequired()
                         .HasColumnType("geography(Point, 4326)")
                         .HasColumnName("coordenada");
 
@@ -257,7 +254,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("SeguidoId");
 
-                    b.HasIndex("SeguidorId");
+                    b.HasIndex("SeguidorId", "SeguidoId")
+                        .IsUnique();
 
                     b.ToTable("perfil_seguidores", (string)null);
                 });
@@ -388,14 +386,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Instartups.Command.Domain.Entities.MidiaPostagemEntity", b =>
                 {
-                    b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", null)
-                        .WithMany("MidiasPostagem")
-                        .HasForeignKey("PostagemEntityId");
-
                     b.HasOne("Instartups.Command.Domain.Entities.PostagemEntity", "Postagem")
-                        .WithMany()
+                        .WithMany("MidiasPostagem")
                         .HasForeignKey("PostagemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Postagem");

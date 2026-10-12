@@ -13,17 +13,23 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Scalar.AspNetCore" Version="2.17.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.17.14" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
-    <PackageReference Include="WolverineFx" Version="6.45.0" />
-    <PackageReference Include="WolverineFx.FluentValidation" Version="6.45.0" />
-    <PackageReference Include="WolverineFx.RuntimeCompilation" Version="6.45.0" />
+    <PackageReference Include="WolverineFx" Version="6.48.3" />
+    <PackageReference Include="WolverineFx.FluentValidation" Version="6.48.3" />
+    <PackageReference Include="WolverineFx.RuntimeCompilation" Version="6.48.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Instartups.Command.Infrastructure\Instartups.Command.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 

@@ -1,4 +1,6 @@
-﻿using Instartups.Command.Infrastructure.Persistence;
+﻿using Instartups.Command.Application.Interfaces;
+using Instartups.Command.Infrastructure.Persistence;
+using Instartups.Command.Infrastructure.Service;
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +13,10 @@ public static class DependencyInjection
     {
         services.AddMapster();
         services.AddPostgresConf(configuration);
-        //services.AddScoped<IExemplo, Exemplo>();
-        // services.AddScoped(typeof(IExemploGenerico<>),typeof(ExemploGenerico<>));
+        services.AddHttpContextAccessor();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPegarContextoRequisicao, PegarContextoRequisicao>();
         return services;
     }
 }
