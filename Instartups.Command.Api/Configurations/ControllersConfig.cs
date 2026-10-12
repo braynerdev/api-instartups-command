@@ -14,8 +14,10 @@ public static class ControllersConfig
 
             options.Filters.Add(new ProducesAttribute("application/json"));
             options.Filters.Add(new ConsumesAttribute("application/json"));
+            options.Filters.Add(new ProducesResponseTypeAttribute<ResponseDTO<string>>(StatusCodes.Status429TooManyRequests));
+            options.Filters.Add(new ProducesResponseTypeAttribute<ResponseDTO<string>>(StatusCodes.Status401Unauthorized));
             options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-            options.AllowEmptyInputInBodyModelBinding = true;
+            options.AllowEmptyInputInBodyModelBinding = false;
         });
 
         services.Configure<ApiBehaviorOptions>(options =>
@@ -24,10 +26,13 @@ public static class ControllersConfig
             {
                 var errors = context.ModelState
                     .Where(e => e.Value?.Errors.Count > 0)
-                    .Select(e => new ValidationErrorDTO(
-                        e.Key,
-                        CodigosErroConst.FormatoInvalido,
-                        e.Value!.Errors.Select(err => err.ErrorMessage).ToList()))
+                    .SelectMany(e => e.Value!.Errors.Select(err =>
+                        new ValidationErrorDTO(
+                            e.Key,
+                            CodigosErroConst.FormatoInvalido,
+                            "Formato da requisição inválido."
+                        )
+                    ))
                     .ToList();
 
                 var body = ResponseDTO<IEnumerable<ValidationErrorDTO>>.Error(

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Instartups.Command.Application\Instartups.Command.Application.csproj" />
+    <ProjectReference Include="..\Instartups.Command.Tests.Common\Instartups.Command.Tests.Common.csproj" />
+  </ItemGroup>
+
+</Project>

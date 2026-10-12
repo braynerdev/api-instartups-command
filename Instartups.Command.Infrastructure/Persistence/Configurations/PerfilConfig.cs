@@ -1,14 +1,17 @@
-﻿using Instartups.Command.Domain.Entities;
+﻿using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Entities;
 using Instartups.Command.Domain.Enums;
 using Instartups.Command.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NpgsqlTypes;
+using NetTopologySuite.Geometries;
+
 
 namespace Instartups.Command.Infrastructure.Persistence.Configurations;
 
 public class PerfilConfig : BaseConf<PerfilEntity>
 {
+    private const int Srid = 4326;
     public override void Configure(EntityTypeBuilder<PerfilEntity> builder)
     {
         base.Configure(builder);
@@ -21,7 +24,7 @@ public class PerfilConfig : BaseConf<PerfilEntity>
                 valor => NomeVO.Create(valor)
             )
             .HasColumnName("nome")
-            .HasColumnType("varchar(100)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Perfil.Nome})")
             .IsRequired();
 
         builder.Property(p => p.TipoPerfil)
@@ -35,17 +38,17 @@ public class PerfilConfig : BaseConf<PerfilEntity>
 
         builder.Property(p => p.ImagemPerfilUrl)
             .HasColumnName("imagem_perfil_url")
-            .HasColumnType("varchar(400)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Perfil.ImagemPerfilUrl})")
             .IsRequired(false);
 
         builder.Property(p => p.ImagemFundoUrl)
             .HasColumnName("imagem_fundo_url")
-            .HasColumnType("varchar(400)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Perfil.ImagemFundoUrl})")
             .IsRequired(false);
 
         builder.Property(p => p.Coordenada)
             .HasConversion(
-                coordenada => new NpgsqlPoint(coordenada.Longitude, coordenada.Latitude),
+                coordenada => new Point(coordenada.Longitude, coordenada.Latitude) { SRID = 4326 },
                 ponto => CoordenadaVO.Create(ponto.Y, ponto.X)
             )
             .HasColumnName("coordenada")

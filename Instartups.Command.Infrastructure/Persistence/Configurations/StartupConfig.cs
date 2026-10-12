@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Domain.Entities;
+﻿using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +15,7 @@ public class StartupConfig : BaseConf<StartupEntity>
 
         builder.Property(s => s.Pitch)
             .HasColumnName("pitch")
-            .HasColumnType("varchar(1000)")
+            .HasColumnType($"varchar({TamanhosColunasConst.Startup.Pitch})")
             .IsRequired();
 
         builder.Property(s => s.DataFundacao)
@@ -29,7 +30,7 @@ public class StartupConfig : BaseConf<StartupEntity>
         
         builder.Property(s => s.ValorBuscado)
             .HasColumnName("valor_buscado")
-            .HasPrecision(12, 2)
+            .HasPrecision(TamanhosColunasConst.Startup.ValorBuscadoPrecisao, TamanhosColunasConst.Startup.ValorBuscadoEscala)
             .IsRequired();
 
         builder.Property(s => s.PerfilId)

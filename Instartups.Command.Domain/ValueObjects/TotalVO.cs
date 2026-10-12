@@ -1,4 +1,4 @@
-﻿using Instartups.Command.Domain.Exceptions.Base;
+﻿using Instartups.Command.Domain.Exceptions;
 
 namespace Instartups.Command.Domain.ValueObjects;
 
@@ -13,11 +13,13 @@ public sealed record TotalVO
     public static TotalVO Create(long total)
     {
         if (total < 0)
-            throw new DomainException("O total não pode ser negativo."); 
+            throw new TotalNegativoException(); 
 
         return new TotalVO(total);
     }
     public static TotalVO Zero() => new(0);
     public TotalVO Adicionar() => new(Total + 1);
+    public TotalVO Adicionar(long quantidade) => new(Total + quantidade);
     public TotalVO Remover() => new(Math.Max(0, Total - 1));
+    public TotalVO Remover(long quantidade) => new(Math.Max(0, Total - quantidade));
 }

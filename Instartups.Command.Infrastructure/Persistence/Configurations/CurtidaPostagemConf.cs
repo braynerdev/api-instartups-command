@@ -22,6 +22,9 @@ public class CurtidaPostagemConf : BaseConf<CurtidaPostagemEntity>
             .HasColumnType("uuid")
             .IsRequired();
 
+        builder.HasIndex(cp => new { cp.PostagemId, cp.PerfilAutorCurtidaId })
+            .IsUnique();
+
         builder.HasOne(cp => cp.Postagem)
             .WithMany()
             .HasForeignKey(cp => cp.PostagemId)

@@ -1,4 +1,5 @@
-﻿using Instartups.Command.Application.Interface;
+﻿using Instartups.Command.Application.Interfaces;
+using Instartups.Command.Infrastructure.Persistence;
 using JasperFx;
 using JasperFx.CodeGeneration;
 using Wolverine;
@@ -14,11 +15,11 @@ public static class WolverineConfig
         {
             opt.Durability.Mode = DurabilityMode.MediatorOnly;
 
+
             opt.Discovery.IncludeAssembly(typeof(ICommand).Assembly);
             opt.UseFluentValidation();
 
-
-            //opt.CodeGeneration.AlwaysUseServiceLocationFor<AppDbContext>();
+            opt.CodeGeneration.AlwaysUseServiceLocationFor<AppDbContext>();
 
             opt.Policies.MessageExecutionLogLevel(LogLevel.None);
             opt.Policies.MessageSuccessLogLevel(LogLevel.None);

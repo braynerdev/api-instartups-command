@@ -47,14 +47,14 @@ public static class OpenApiConfig
 
     public static WebApplication UseOpenApiConfig(this WebApplication app)
     {
+        app.UseStaticFiles();
         app.MapOpenApi();
         app.MapScalarApiReference("/docs", options =>
         {
             options
                 .WithTitle(_apiName)
-                .AddPreferredSecuritySchemes("Bearer")
-                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
-                .DisableAgent();
+                .WithFavicon("/img/favicon-logo.svg")
+                .WithJavaScriptConfiguration("/js/scalar.js");
         });
 
         return app;

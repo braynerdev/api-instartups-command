@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Instartups.Command.Api\Instartups.Command.Api.csproj" />
+    <ProjectReference Include="..\Instartups.Command.Tests.Common\Instartups.Command.Tests.Common.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,3 +1,5 @@
+using Instartups.Command.Api.DTOs;
+using Instartups.Command.Domain.Constants;
 using Instartups.Command.Domain.Exceptions.Base;
 using Microsoft.AspNetCore.RateLimiting;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,6 +15,12 @@ public static class RateLimiterConfig
         services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+            options.OnRejected = async (context, ct) =>
+            {
+                await context.HttpContext.Response.WriteAsJsonAsync(
+                    ResponseDTO<string>.Error(MensagensErroConst.LimiteRequisicoes), ct);
+            };
 
 
             options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -39,7 +47,7 @@ public static class RateLimiterConfig
 
     public static string PegarIdUsuario(HttpContext httpContext)
     {
-        return httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub)
+        return httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
             ?? "anonymous";
     }
 }

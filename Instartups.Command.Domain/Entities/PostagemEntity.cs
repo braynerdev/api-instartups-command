@@ -1,6 +1,6 @@
 ﻿using Instartups.Command.Domain.Entities.Base;
 using Instartups.Command.Domain.Enums;
-using Instartups.Command.Domain.Exceptions.Base;
+using Instartups.Command.Domain.Exceptions;
 using Instartups.Command.Domain.ValueObjects;
 
 
@@ -37,13 +37,18 @@ public sealed class PostagemEntity : BaseEntity
 
     public void EditarDescricao(string descricao)
     {
+        ValidarAtiva();
+
         Descricao = descricao;
+        Atualizar();
     }
 
     public void AdicionarMidiaPostagem(string url, TiposMidiaEnum tipoMidia)
     {
+        ValidarAtiva();
+
         if (_midiasPostagem.Count >= MaxMidias)
-            throw new DomainException($"Não é possível adicionar mais de {MaxMidias} mídias a uma postagem.");
+            throw new LimiteMidiasPostagemExcedidoException(MaxMidias);
 
         var midiaPostagem = MidiaPostagemEntity.Criar(url, tipoMidia, Id);
         _midiasPostagem.Add(midiaPostagem);
@@ -51,24 +56,43 @@ public sealed class PostagemEntity : BaseEntity
 
     public void RemoverMidiaPostagem(Guid midiaPostagemId)
     {
+        ValidarAtiva();
+
         var midiaPostagem = _midiasPostagem.FirstOrDefault(m => m.Id == midiaPostagemId)
-            ?? throw new DomainException("Mídia da postagem não encontrada.");
+            ?? throw new MidiaPostagemNaoEncontradaException();
 
         _midiasPostagem.Remove(midiaPostagem);
     }
 
-
-
-
-    public void AdicionarCurtida()
+    public override void Ativar()
     {
-        TotalCurtidas = TotalCurtidas.Adicionar();
-        Autor.AdicionarCurtida();
+        if (Ativo)
+            throw new PostagemJaAtivaException();
+
+        base.Ativar();
     }
 
-    public void RemoverCurtida()
+    public override void Desativar()
+    {
+        if (!Ativo)
+            throw new PostagemJaDesativadaException();
+
+        base.Desativar();
+    }
+
+    private void ValidarAtiva()
+    {
+        if (!Ativo)
+            throw new PostagemDesativadaException();
+    }
+
+    internal void AdicionarCurtida()
+    {
+        TotalCurtidas = TotalCurtidas.Adicionar();
+    }
+
+    internal void RemoverCurtida()
     {
         TotalCurtidas = TotalCurtidas.Remover();
-        Autor.RemoverCurtida();
     }
 }

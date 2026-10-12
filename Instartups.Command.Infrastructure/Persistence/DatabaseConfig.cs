@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Wolverine.EntityFrameworkCore;
 
 namespace Instartups.Command.Infrastructure.Persistence;
 
@@ -13,7 +14,7 @@ public static class DatabaseConfig
         var ConnectionString = configuration.GetConnectionString("PostgresConnection")
                                ?? throw new InvalidOperationException("Connection string 'PostgresConnection' não configurada.");
 
-        services.AddDbContext<AppDbContext>(options =>
+        services.AddDbContextWithWolverineIntegration<AppDbContext>(options =>
             options.UseNpgsql(
                 ConnectionString,
                 bd =>
