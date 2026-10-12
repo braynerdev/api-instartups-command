@@ -1,5 +1,7 @@
 # Migrations (EF Core)
 
+[← Índice](README.md)
+
 O `AppDbContext` e as migrations ficam no projeto **Instartups.Command.Infrastructure** (`Persistence/` e `Persistence/Migrations/`). A configuração (connection string e DI) é lida do projeto **Instartups.Command.Api**.
 
 ## Pré-requisitos
