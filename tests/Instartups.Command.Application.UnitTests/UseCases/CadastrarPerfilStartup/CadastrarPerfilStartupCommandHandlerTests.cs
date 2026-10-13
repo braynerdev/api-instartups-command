@@ -40,6 +40,7 @@ public class CadastrarPerfilStartupCommandHandlerTests
         perfilAdicionado.Startup.DataFundacao.ShouldBe(command.DataFundacao);
         perfilAdicionado.Startup.TamanhoEquipe.ShouldBe(command.TamanhoEquipe);
         perfilAdicionado.Startup.ValorBuscado.ShouldBe(command.ValorBuscado);
+        perfilAdicionado.Startup.Setor.ShouldBe(command.Setor);
     }
 
     [Fact]

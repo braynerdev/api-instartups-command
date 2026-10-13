@@ -2,6 +2,7 @@ using System.Globalization;
 using FluentValidation;
 using FluentValidation.TestHelper;
 using Instartups.Command.Domain.Constants;
+using Instartups.Command.Domain.Enums;
 
 namespace Instartups.Command.Application.UnitTests.Common.Validators;
 
@@ -17,6 +18,7 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
     protected abstract TCommand ComDataFundacao(DateOnly dataFundacao);
     protected abstract TCommand ComTamanhoEquipe(int tamanhoEquipe);
     protected abstract TCommand ComValorBuscado(decimal valorBuscado);
+    protected abstract TCommand ComSetor(SetorStartupEnum setor);
 
     private TestValidationResult<TCommand> Validar(TCommand command) => Validator.TestValidate(command);
 
@@ -187,6 +189,34 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
             .ShouldHaveValidationErrorFor("ValorBuscado")
             .WithErrorCode(CodigosErroConst.PrecisaoIncorreta)
             .WithErrorMessage(MensagensErroConst.PrecisaoIncorreta);
+    }
+
+    #endregion
+
+    #region Setor
+
+    [Theory]
+    [InlineData(SetorStartupEnum.Financas)]
+    [InlineData(SetorStartupEnum.Saude)]
+    [InlineData(SetorStartupEnum.Agronegocios)]
+    [InlineData(SetorStartupEnum.Varejo)]
+    public void Validar_QuandoSetorValido_NaoDeveRetornarErro(SetorStartupEnum setor)
+    {
+        Validar(ComSetor(setor))
+            .ShouldNotHaveValidationErrorFor("Setor");
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(99)]
+    public void Validar_QuandoSetorForaDoEnum_DeveRetornarErroValorInvalidoEnum(int valor)
+    {
+        var resultado = Validar(ComSetor((SetorStartupEnum)valor));
+
+        var erro = resultado.Errors.ShouldHaveSingleItem();
+        erro.PropertyName.ShouldBe("Setor");
+        erro.ErrorCode.ShouldBe(CodigosErroConst.ValorInvalidoEnum);
+        erro.ErrorMessage.ShouldBe(MensagensErroConst.ValorInvalidoEnum);
     }
 
     #endregion

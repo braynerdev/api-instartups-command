@@ -23,6 +23,7 @@ public sealed class PerfilBuilder
     private DateOnly _dataFundacao = new(2020, 1, 15);
     private int _tamanhoEquipe = 10;
     private decimal _valorBuscado = 500_000m;
+    private SetorStartupEnum _setor = SetorStartupEnum.Financas;
 
     private string _teseInvestimento = "Investimento em startups early-stage de tecnologia.";
     private decimal _ticketMinimo = 50_000m;
@@ -85,7 +86,7 @@ public sealed class PerfilBuilder
     {
         var perfil = _tipoPerfil == TiposPerfisEnum.Investidor
             ? PerfilEntity.CriarInvestidor(_nome, _latitude, _longitude, _usuarioId, _imagemPerfilUrl, _imagemFundoUrl, _teseInvestimento, _ticketMinimo, _ticketMaximo)
-            : PerfilEntity.CriarStartup(_nome, _latitude, _longitude, _usuarioId, _imagemPerfilUrl, _imagemFundoUrl, _pitch, _dataFundacao, _tamanhoEquipe, _valorBuscado);
+            : PerfilEntity.CriarStartup(_nome, _latitude, _longitude, _usuarioId, _imagemPerfilUrl, _imagemFundoUrl, _pitch, _dataFundacao, _tamanhoEquipe, _valorBuscado, _setor);
 
         perfil
             .DefinirPropriedadePrivada(nameof(PerfilEntity.TotalCurtidas), TotalVO.Create(_totalCurtidas))

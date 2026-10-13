@@ -1,6 +1,7 @@
 using FluentValidation;
 using Instartups.Command.Application.UnitTests.Common.Validators;
 using Instartups.Command.Application.UseCases.EditarPerfilStartup;
+using Instartups.Command.Domain.Enums;
 using Instartups.Command.Tests.Common.Builders.Commands;
 
 namespace Instartups.Command.Application.UnitTests.UseCases.EditarPerfilStartup;
@@ -29,4 +30,5 @@ public class EditarPerfilStartupCommandValidatorTests : StartupCommandValidatorT
     protected override EditarPerfilStartupCommand ComDataFundacao(DateOnly dataFundacao) => CommandValido() with { DataFundacao = dataFundacao };
     protected override EditarPerfilStartupCommand ComTamanhoEquipe(int tamanhoEquipe) => CommandValido() with { TamanhoEquipe = tamanhoEquipe };
     protected override EditarPerfilStartupCommand ComValorBuscado(decimal valorBuscado) => CommandValido() with { ValorBuscado = valorBuscado };
+    protected override EditarPerfilStartupCommand ComSetor(SetorStartupEnum setor) => CommandValido() with { Setor = setor };
 }

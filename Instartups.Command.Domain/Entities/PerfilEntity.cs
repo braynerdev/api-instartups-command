@@ -67,20 +67,20 @@ public sealed class PerfilEntity : BaseEntity
 
 
 
-    public static PerfilEntity CriarStartup(string nome, double latitude, double longitude, Guid usuarioId, string? imagemPerfilUrl, string? imagemFundoUrl, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
+    public static PerfilEntity CriarStartup(string nome, double latitude, double longitude, Guid usuarioId, string? imagemPerfilUrl, string? imagemFundoUrl, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado, SetorStartupEnum setor)
     {
         var perfil = CriarPerfil(nome, TiposPerfisEnum.Startup, latitude, longitude, usuarioId, imagemPerfilUrl, imagemFundoUrl);
-        var startup = StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, perfil.Id);
+        var startup = StartupEntity.Criar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, setor, perfil.Id);
         perfil.Startup = startup;
         return perfil;
     }
-    public PerfilEntity EditarStartup(string nome, double latitude, double longitude, string? imagemPerfilUrl, string? imagemFundoUrl, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado)
+    public PerfilEntity EditarStartup(string nome, double latitude, double longitude, string? imagemPerfilUrl, string? imagemFundoUrl, string pitch, DateOnly dataFundacao, int tamanhoEquipe, decimal valorBuscado, SetorStartupEnum setor)
     {
         if(TipoPerfil != TiposPerfisEnum.Startup)
             throw new PerfilNaoEhStartupException();
 
         var perfil = EditarPerfil(nome, latitude, longitude, imagemPerfilUrl, imagemFundoUrl);
-        Startup!.Editar(pitch, dataFundacao, tamanhoEquipe, valorBuscado);
+        Startup!.Editar(pitch, dataFundacao, tamanhoEquipe, valorBuscado, setor);
         return perfil;
     }
 

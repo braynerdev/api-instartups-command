@@ -40,6 +40,7 @@ public class EditarPerfilStartupCommandHandlerTests
         perfil.Startup.DataFundacao.ShouldBe(command.DataFundacao);
         perfil.Startup.TamanhoEquipe.ShouldBe(command.TamanhoEquipe);
         perfil.Startup.ValorBuscado.ShouldBe(command.ValorBuscado);
+        perfil.Startup.Setor.ShouldBe(command.Setor);
     }
 
     [Fact]

@@ -333,6 +333,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(1000)")
                         .HasColumnName("pitch");
 
+                    b.Property<short>("Setor")
+                        .HasColumnType("smallint")
+                        .HasColumnName("setor");
+
                     b.Property<short>("TamanhoEquipe")
                         .HasColumnType("smallint")
                         .HasColumnName("tamanho_equipe");

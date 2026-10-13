@@ -26,5 +26,8 @@ public class EditarPerfilStartupCommandValidator : AbstractValidator<EditarPerfi
 
         RuleFor(x => x.ValorBuscado)
             .ValidarValorBuscado();
+
+        RuleFor(x => x.Setor)
+            .ValidarSetor();
     }
 }
