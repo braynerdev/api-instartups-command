@@ -12,10 +12,10 @@ public class PostagemDtosTests
     #region MidiaDTO
 
     [Theory]
-    [InlineData("FOTO", TiposMidiaEnum.FOTO)]
-    [InlineData("foto", TiposMidiaEnum.FOTO)]
-    [InlineData("VIDEO", TiposMidiaEnum.VIDEO)]
-    [InlineData(" video ", TiposMidiaEnum.VIDEO)]
+    [InlineData("FOTO", TiposMidiaEnum.Foto)]
+    [InlineData("foto", TiposMidiaEnum.Foto)]
+    [InlineData("VIDEO", TiposMidiaEnum.Video)]
+    [InlineData(" video ", TiposMidiaEnum.Video)]
     public void MidiaDTO_ToCommand_DeveMapearUrlETipo(string tipo, TiposMidiaEnum esperado)
     {
         var dto = new MidiaDTO("https://cdn.instartups.com/midia.png", tipo);
@@ -58,8 +58,8 @@ public class PostagemDtosTests
         command.AutorId.ShouldBe(_userId);
         command.Midias.ShouldBe(
         [
-            new MidiaCommand(DtoBuilder.Midia(indice: 0).Url, TiposMidiaEnum.FOTO),
-            new MidiaCommand(DtoBuilder.Midia(indice: 1).Url, TiposMidiaEnum.VIDEO)
+            new MidiaCommand(DtoBuilder.Midia(indice: 0).Url, TiposMidiaEnum.Foto),
+            new MidiaCommand(DtoBuilder.Midia(indice: 1).Url, TiposMidiaEnum.Video)
         ]);
     }
 
@@ -90,7 +90,7 @@ public class PostagemDtosTests
         command.UserId.ShouldBe(_userId);
         command.Descricao.ShouldBe(dto.Descricao);
         command.MidiasRemovidas.ShouldBe(dto.MidiasRemovidas!);
-        command.MidiasAdicionadas.ShouldBe([new MidiaCommand(DtoBuilder.Midia(indice: 2).Url, TiposMidiaEnum.VIDEO)]);
+        command.MidiasAdicionadas.ShouldBe([new MidiaCommand(DtoBuilder.Midia(indice: 2).Url, TiposMidiaEnum.Video)]);
     }
 
     [Fact]

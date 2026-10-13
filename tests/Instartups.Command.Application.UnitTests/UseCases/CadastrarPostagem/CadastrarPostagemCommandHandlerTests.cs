@@ -44,15 +44,15 @@ public class CadastrarPostagemCommandHandlerTests
         _uow.ComPerfilDoUsuario(PerfilBuilder.Startup().ComUsuarioId(_userId).Build());
         var command = PostagemCommandBuilder.CadastrarPostagem(_userId) with
         {
-            Midias = [PostagemCommandBuilder.Midia(0, TiposMidiaEnum.FOTO), PostagemCommandBuilder.Midia(1, TiposMidiaEnum.VIDEO)]
+            Midias = [PostagemCommandBuilder.Midia(0, TiposMidiaEnum.Foto), PostagemCommandBuilder.Midia(1, TiposMidiaEnum.Video)]
         };
 
         await _handler.Handle(command, _ct);
 
         _postagemAdicionada!.MidiasPostagem.Select(m => (m.UrlMidia, m.TipoMidia)).ShouldBe(
         [
-            (PostagemCommandBuilder.Midia(0).Url, TiposMidiaEnum.FOTO),
-            (PostagemCommandBuilder.Midia(1).Url, TiposMidiaEnum.VIDEO)
+            (PostagemCommandBuilder.Midia(0).Url, TiposMidiaEnum.Foto),
+            (PostagemCommandBuilder.Midia(1).Url, TiposMidiaEnum.Video)
         ]);
         _postagemAdicionada.MidiasPostagem.ShouldAllBe(m => m.PostagemId == _postagemAdicionada.Id);
     }

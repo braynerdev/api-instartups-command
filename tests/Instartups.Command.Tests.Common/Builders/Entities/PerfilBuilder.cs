@@ -7,7 +7,7 @@ namespace Instartups.Command.Tests.Common.Builders.Entities;
 
 public sealed class PerfilBuilder
 {
-    private TiposPerfisEnum _tipoPerfil = TiposPerfisEnum.STARTUP;
+    private TiposPerfisEnum _tipoPerfil = TiposPerfisEnum.Startup;
     private string _nome = "Instartups Tech";
     private double _latitude = -23.5505;
     private double _longitude = -46.6333;
@@ -28,8 +28,8 @@ public sealed class PerfilBuilder
     private decimal _ticketMinimo = 50_000m;
     private decimal _ticketMaximo = 500_000m;
 
-    public static PerfilBuilder Startup() => new() { _tipoPerfil = TiposPerfisEnum.STARTUP };
-    public static PerfilBuilder Investidor() => new() { _tipoPerfil = TiposPerfisEnum.INVESTIDOR };
+    public static PerfilBuilder Startup() => new() { _tipoPerfil = TiposPerfisEnum.Startup };
+    public static PerfilBuilder Investidor() => new() { _tipoPerfil = TiposPerfisEnum.Investidor };
 
     public PerfilBuilder ComNome(string nome)
     {
@@ -83,7 +83,7 @@ public sealed class PerfilBuilder
 
     public PerfilEntity Build()
     {
-        var perfil = _tipoPerfil == TiposPerfisEnum.INVESTIDOR
+        var perfil = _tipoPerfil == TiposPerfisEnum.Investidor
             ? PerfilEntity.CriarInvestidor(_nome, _latitude, _longitude, _usuarioId, _imagemPerfilUrl, _imagemFundoUrl, _teseInvestimento, _ticketMinimo, _ticketMaximo)
             : PerfilEntity.CriarStartup(_nome, _latitude, _longitude, _usuarioId, _imagemPerfilUrl, _imagemFundoUrl, _pitch, _dataFundacao, _tamanhoEquipe, _valorBuscado);
 

@@ -77,8 +77,8 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     }
 
     [Theory]
-    [InlineData(TiposMidiaEnum.FOTO)]
-    [InlineData(TiposMidiaEnum.VIDEO)]
+    [InlineData(TiposMidiaEnum.Foto)]
+    [InlineData(TiposMidiaEnum.Video)]
     public void Validar_QuandoMidiaComTipoValido_NaoDeveRetornarErros(TiposMidiaEnum tipo)
     {
         ValidarMidia(PostagemCommandBuilder.Midia(tipo: tipo)).ShouldNotHaveAnyValidationErrors();
@@ -95,7 +95,7 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     [Fact]
     public void Validar_QuandoUrlDaMidiaVazia_DeveRetornarErrosCampoObrigatorioEUrlInvalida()
     {
-        var resultado = ValidarMidia(new MidiaCommand("", TiposMidiaEnum.FOTO));
+        var resultado = ValidarMidia(new MidiaCommand("", TiposMidiaEnum.Foto));
 
         resultado.ShouldHaveValidationErrorFor($"{PropriedadeMidias}[0].Url").WithErrorCode(CodigosErroConst.CampoObrigatorio);
         resultado.ShouldHaveValidationErrorFor($"{PropriedadeMidias}[0].Url").WithErrorCode(CodigosErroConst.UrlInvalida);
@@ -106,7 +106,7 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     [InlineData("ftp://cdn.instartups.com/midia.png")]
     public void Validar_QuandoUrlDaMidiaInvalida_DeveRetornarErroUrlInvalida(string url)
     {
-        ValidarMidia(new MidiaCommand(url, TiposMidiaEnum.FOTO))
+        ValidarMidia(new MidiaCommand(url, TiposMidiaEnum.Foto))
             .ShouldHaveValidationErrorFor($"{PropriedadeMidias}[0].Url")
             .WithErrorCode(CodigosErroConst.UrlInvalida);
     }
@@ -114,14 +114,14 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     [Fact]
     public void Validar_QuandoUrlDaMidiaComTamanhoMaximo_NaoDeveRetornarErros()
     {
-        ValidarMidia(new MidiaCommand(UrlComTamanho(TamanhosColunasConst.MidiaPostagem.Url), TiposMidiaEnum.FOTO))
+        ValidarMidia(new MidiaCommand(UrlComTamanho(TamanhosColunasConst.MidiaPostagem.Url), TiposMidiaEnum.Foto))
             .ShouldNotHaveAnyValidationErrors();
     }
 
     [Fact]
     public void Validar_QuandoUrlDaMidiaExcedeTamanhoMaximo_DeveRetornarErroTamanhoMaximo()
     {
-        ValidarMidia(new MidiaCommand(UrlComTamanho(TamanhosColunasConst.MidiaPostagem.Url + 1), TiposMidiaEnum.FOTO))
+        ValidarMidia(new MidiaCommand(UrlComTamanho(TamanhosColunasConst.MidiaPostagem.Url + 1), TiposMidiaEnum.Foto))
             .ShouldHaveValidationErrorFor($"{PropriedadeMidias}[0].Url")
             .WithErrorCode(CodigosErroConst.TamanhoMaximo);
     }
@@ -141,7 +141,7 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     [Fact]
     public void Validar_QuandoSegundaMidiaInvalida_DeveRetornarErroComIndiceDaMidia()
     {
-        var resultado = Validar(ComMidias([PostagemCommandBuilder.Midia(0), new MidiaCommand("invalida", TiposMidiaEnum.VIDEO)]));
+        var resultado = Validar(ComMidias([PostagemCommandBuilder.Midia(0), new MidiaCommand("invalida", TiposMidiaEnum.Video)]));
 
         resultado.ShouldHaveValidationErrorFor($"{PropriedadeMidias}[1].Url");
         resultado.ShouldNotHaveValidationErrorFor($"{PropriedadeMidias}[0].Url");

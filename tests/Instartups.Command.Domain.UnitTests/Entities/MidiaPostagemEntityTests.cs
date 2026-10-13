@@ -6,8 +6,8 @@ namespace Instartups.Command.Domain.UnitTests.Entities;
 public class MidiaPostagemEntityTests
 {
     [Theory]
-    [InlineData(TiposMidiaEnum.FOTO)]
-    [InlineData(TiposMidiaEnum.VIDEO)]
+    [InlineData(TiposMidiaEnum.Foto)]
+    [InlineData(TiposMidiaEnum.Video)]
     public void Criar_DeveGuardarUrlTipoEPostagem(TiposMidiaEnum tipo)
     {
         var postagemId = Guid.NewGuid();

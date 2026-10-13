@@ -29,8 +29,8 @@ public class EditarPostagemTests(InstartupsApiFactory factory) : IntegrationTest
         persistida.Descricao.ShouldBe("Descrição editada.");
         persistida.DataAtualizacao.ShouldNotBeNull();
         persistida.MidiasPostagem.Count.ShouldBe(2);
-        persistida.MidiasPostagem.ShouldContain(m => m.Id == mantida.Id && m.TipoMidia == TiposMidiaEnum.FOTO);
-        persistida.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-9.png" && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        persistida.MidiasPostagem.ShouldContain(m => m.Id == mantida.Id && m.TipoMidia == TiposMidiaEnum.Foto);
+        persistida.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-9.png" && m.TipoMidia == TiposMidiaEnum.Video);
         persistida.MidiasPostagem.ShouldNotContain(m => m.Id == removida.Id);
     }
 

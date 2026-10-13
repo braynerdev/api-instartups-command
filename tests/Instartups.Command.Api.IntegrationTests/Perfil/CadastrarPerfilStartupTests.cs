@@ -28,7 +28,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
             .SingleAsync(p => p.Id == id, Ct));
 
         perfil.UsuarioId.ShouldBe(_usuarioId);
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.Nome.Nome.ShouldBe(dto.Perfil.Nome);
         perfil.ImagemPerfilUrl.ShouldBe(dto.Perfil.ImagemPerfilUrl);
         perfil.ImagemFundoUrl.ShouldBe(dto.Perfil.ImagemFundoUrl);

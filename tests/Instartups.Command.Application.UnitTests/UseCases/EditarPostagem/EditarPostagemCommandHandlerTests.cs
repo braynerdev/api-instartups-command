@@ -64,12 +64,12 @@ public class EditarPostagemCommandHandlerTests
     {
         _uow.ComPerfilDoUsuario(_autor);
         var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(1));
-        var novaMidia = PostagemCommandBuilder.Midia(7, TiposMidiaEnum.VIDEO);
+        var novaMidia = PostagemCommandBuilder.Midia(7, TiposMidiaEnum.Video);
 
         await _handler.Handle(Command(postagem) with { MidiasAdicionadas = [novaMidia] }, _ct);
 
         postagem.MidiasPostagem.Count.ShouldBe(2);
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == novaMidia.Url && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == novaMidia.Url && m.TipoMidia == TiposMidiaEnum.Video);
     }
 
     [Fact]

@@ -63,8 +63,8 @@ public class PostagemEntityTests
     #region AdicionarMidiaPostagem
 
     [Theory]
-    [InlineData(TiposMidiaEnum.FOTO)]
-    [InlineData(TiposMidiaEnum.VIDEO)]
+    [InlineData(TiposMidiaEnum.Foto)]
+    [InlineData(TiposMidiaEnum.Video)]
     public void AdicionarMidiaPostagem_QuandoPostagemAtiva_DeveAdicionarMidiaVinculadaAPostagem(TiposMidiaEnum tipo)
     {
         var postagem = PostagemBuilder.Nova().Build();
@@ -82,7 +82,7 @@ public class PostagemEntityTests
     {
         var postagem = PostagemBuilder.Nova().ComMidias(4).Build();
 
-        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.VIDEO);
+        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Video);
 
         postagem.MidiasPostagem.Count.ShouldBe(5);
     }
@@ -92,7 +92,7 @@ public class PostagemEntityTests
     {
         var postagem = PostagemBuilder.Nova().ComMidias(5).Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<LimiteMidiasPostagemExcedidoException>()
             .Message.ShouldBe("Não é possível adicionar mais de 5 mídias a uma postagem.");
@@ -104,7 +104,7 @@ public class PostagemEntityTests
     {
         var postagem = PostagemBuilder.Nova().Desativada().Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<PostagemDesativadaException>();
         postagem.MidiasPostagem.ShouldBeEmpty();
@@ -115,7 +115,7 @@ public class PostagemEntityTests
     {
         var postagem = PostagemBuilder.Nova().ComMidias(5).Desativada().Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<PostagemDesativadaException>();
     }
@@ -165,7 +165,7 @@ public class PostagemEntityTests
         var postagem = PostagemBuilder.Nova().ComMidias(5).Build();
 
         postagem.RemoverMidiaPostagem(postagem.MidiasPostagem.First().Id);
-        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.VIDEO);
+        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Video);
 
         postagem.MidiasPostagem.Count.ShouldBe(5);
         postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == UrlMidia);

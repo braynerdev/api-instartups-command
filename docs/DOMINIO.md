@@ -139,8 +139,8 @@ As faixas de latitude/longitude e os tamanhos máximos são validados na Applica
 
 | Enum | Valores | Persistência |
 | --- | --- | --- |
-| `TiposPerfisEnum` | `STARTUP = 1`, `INVESTIDOR = 2` | `smallint` |
-| `TiposMidiaEnum` | `FOTO = 1`, `VIDEO = 2` | `int` |
+| `TiposPerfisEnum` | `Startup = 1`, `Investidor = 2` | `smallint` |
+| `TiposMidiaEnum` | `Foto = 1`, `Video = 2` | `int` |
 
 Em `Enums/Mapear/`:
 

@@ -32,9 +32,9 @@ public class CadastrarPostagemTests(InstartupsApiFactory factory) : IntegrationT
 
         postagem.MidiasPostagem.Count.ShouldBe(2);
         postagem.MidiasPostagem.ShouldAllBe(m => m.PostagemId == id);
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-0.png" && m.TipoMidia == TiposMidiaEnum.FOTO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-0.png" && m.TipoMidia == TiposMidiaEnum.Foto);
         // "video" em minúsculas deve ser aceito.
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-1.png" && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-1.png" && m.TipoMidia == TiposMidiaEnum.Video);
     }
 
     [Fact]

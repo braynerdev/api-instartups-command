@@ -29,7 +29,7 @@ public class PerfilEntityTests
     {
         var perfil = CriarStartupValida();
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.Nome.ShouldBe(NomeVO.Create("Instartups Tech"));
         perfil.Coordenada.ShouldBe(CoordenadaVO.Create(-23.5505, -46.6333));
         perfil.UsuarioId.ShouldBe(UsuarioId);
@@ -89,7 +89,7 @@ public class PerfilEntityTests
     {
         var perfil = CriarInvestidorValido();
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.INVESTIDOR);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Investidor);
         perfil.Nome.Nome.ShouldBe("Fundo Investe");
         perfil.Coordenada.ShouldBe(CoordenadaVO.Create(-22.9068, -43.1729));
         perfil.UsuarioId.ShouldBe(UsuarioId);
@@ -171,7 +171,7 @@ public class PerfilEntityTests
 
         EditarStartup(perfil);
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.UsuarioId.ShouldBe(UsuarioId);
         perfil.TotalCurtidas.Total.ShouldBe(3);
         perfil.TotalSeguidores.Total.ShouldBe(2);
