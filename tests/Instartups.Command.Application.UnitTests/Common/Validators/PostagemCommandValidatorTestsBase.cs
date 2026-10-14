@@ -71,9 +71,9 @@ public abstract class PostagemCommandValidatorTestsBase<TCommand>
     }
 
     [Fact]
-    public void Validar_QuandoMaisDeCincoMidias_NaoDeveRetornarErros()
+    public void Validar_QuandoMaisDeDezMidias_NaoDeveRetornarErros()
     {
-        Validar(ComMidias(PostagemCommandBuilder.Midias(6))).ShouldNotHaveAnyValidationErrors();
+        Validar(ComMidias(PostagemCommandBuilder.Midias(11))).ShouldNotHaveAnyValidationErrors();
     }
 
     [Theory]

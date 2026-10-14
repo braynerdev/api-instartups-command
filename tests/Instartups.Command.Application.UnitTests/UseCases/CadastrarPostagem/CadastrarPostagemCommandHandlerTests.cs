@@ -93,11 +93,11 @@ public class CadastrarPostagemCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_QuandoCommandTemMaisDeCincoMidias_DeveLancarLimiteMidiasPostagemExcedidoException()
+    public async Task Handle_QuandoCommandTemMaisDeDezMidias_DeveLancarLimiteMidiasPostagemExcedidoException()
     {
         _uow.ComPerfilDoUsuario(PerfilBuilder.Startup().ComUsuarioId(_userId).Build());
 
-        var acao = () => _handler.Handle(PostagemCommandBuilder.CadastrarPostagem(_userId, quantidadeMidias: 6), _ct);
+        var acao = () => _handler.Handle(PostagemCommandBuilder.CadastrarPostagem(_userId, quantidadeMidias: 11), _ct);
 
         await acao.ShouldThrowAsync<LimiteMidiasPostagemExcedidoException>();
         _uow.Postagem.DidNotReceive().Add(Arg.Any<PostagemEntity>());
