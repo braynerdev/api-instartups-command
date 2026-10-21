@@ -23,6 +23,8 @@ builder.Services
 
 var app = builder.Build();
 
+await app.ApplyMigrationsAsync();
+
 app.UseCors(OrigensCorsConst.Frontend);
 
 app.UseSerilogConfig();
