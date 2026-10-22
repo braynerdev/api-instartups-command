@@ -2,6 +2,7 @@ using Instartups.Command.Api.Configurations;
 using Instartups.Command.Api.Extensions;
 using Instartups.Command.Domain.Constants;
 using Instartups.Command.Infrastructure.Configurations;
+using JasperFx;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +24,10 @@ builder.Services
 
 var app = builder.Build();
 
-await app.ApplyMigrationsAsync();
-
+var executandoComando = args.Length > 0 && !args[0].StartsWith('-');
+if (!executandoComando)
+    await app.ApplyMigrationsAsync();
+       
 app.UseCors(OrigensCorsConst.Frontend);
 
 app.UseSerilogConfig();
@@ -46,4 +49,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+return await app.RunJasperFxCommands(args);
