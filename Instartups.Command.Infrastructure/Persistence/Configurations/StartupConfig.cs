@@ -1,5 +1,6 @@
 ﻿using Instartups.Command.Domain.Constants;
 using Instartups.Command.Domain.Entities;
+using Instartups.Command.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -31,6 +32,15 @@ public class StartupConfig : BaseConf<StartupEntity>
         builder.Property(s => s.ValorBuscado)
             .HasColumnName("valor_buscado")
             .HasPrecision(TamanhosColunasConst.Startup.ValorBuscadoPrecisao, TamanhosColunasConst.Startup.ValorBuscadoEscala)
+            .IsRequired();
+
+        builder.Property(s => s.Setor)
+            .HasConversion<int>(
+                setor => (int)setor,
+                valor => (SetorStartupEnum)valor
+            )
+            .HasColumnName("setor")
+            .HasColumnType("smallint")
             .IsRequired();
 
         builder.Property(s => s.PerfilId)

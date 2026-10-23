@@ -42,7 +42,8 @@ public class CadastrarPerfilStartupCommandHandler(
                 pitch: command.Pitch,
                 dataFundacao: command.DataFundacao,
                 tamanhoEquipe: command.TamanhoEquipe,
-                valorBuscado: command.ValorBuscado
+                valorBuscado: command.ValorBuscado,
+            setor: command.Setor
         );
     }
 }

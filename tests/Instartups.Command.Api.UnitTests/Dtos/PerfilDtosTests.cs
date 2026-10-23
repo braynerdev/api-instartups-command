@@ -1,6 +1,7 @@
 using Instartups.Command.Api.DTOs;
 using Instartups.Command.Api.UnitTests.Builders;
 using Instartups.Command.Application.Common.Command;
+using Instartups.Command.Domain.Enums;
 
 namespace Instartups.Command.Api.UnitTests.Dtos;
 
@@ -56,6 +57,18 @@ public class PerfilDtosTests
         command.DataFundacao.ShouldBe(dto.DataFundacao);
         command.TamanhoEquipe.ShouldBe(dto.TamanhoEquipe);
         command.ValorBuscado.ShouldBe(dto.ValorBuscado);
+        command.Setor.ShouldBe(SetorStartupEnum.Financas);
+    }
+
+    [Theory]
+    [InlineData("SETOR_INEXISTENTE")]
+    [InlineData("")]
+    [InlineData(null)]
+    public void CadastrarPerfilStartupDTO_ToCommand_QuandoSetorDesconhecidoOuNulo_DeveMapearParaValorZero(string? setor)
+    {
+        var dto = DtoBuilder.CadastrarStartup() with { Setor = setor! };
+
+        ((int)dto.ToCommand(_userId).Setor).ShouldBe(0);
     }
 
     [Fact]
@@ -78,6 +91,18 @@ public class PerfilDtosTests
         command.DataFundacao.ShouldBe(dto.DataFundacao);
         command.TamanhoEquipe.ShouldBe(dto.TamanhoEquipe);
         command.ValorBuscado.ShouldBe(dto.ValorBuscado);
+        command.Setor.ShouldBe(SetorStartupEnum.Saude);
+    }
+
+    [Theory]
+    [InlineData("SETOR_INEXISTENTE")]
+    [InlineData("")]
+    [InlineData(null)]
+    public void EditarPerfilStartupDTO_ToCommand_QuandoSetorDesconhecidoOuNulo_DeveMapearParaValorZero(string? setor)
+    {
+        var dto = DtoBuilder.EditarStartup() with { Setor = setor! };
+
+        ((int)dto.ToCommand(_userId).Setor).ShouldBe(0);
     }
 
     [Fact]

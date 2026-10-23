@@ -32,9 +32,9 @@ public class CadastrarPostagemTests(InstartupsApiFactory factory) : IntegrationT
 
         postagem.MidiasPostagem.Count.ShouldBe(2);
         postagem.MidiasPostagem.ShouldAllBe(m => m.PostagemId == id);
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-0.png" && m.TipoMidia == TiposMidiaEnum.FOTO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-0.png" && m.TipoMidia == TiposMidiaEnum.Foto);
         // "video" em minúsculas deve ser aceito.
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-1.png" && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-1.png" && m.TipoMidia == TiposMidiaEnum.Video);
     }
 
     [Fact]
@@ -49,26 +49,26 @@ public class CadastrarPostagemTests(InstartupsApiFactory factory) : IntegrationT
     }
 
     [Fact]
-    public async Task Cadastrar_ComCincoMidias_DeveRetornar201()
+    public async Task Cadastrar_ComDezMidias_DeveRetornar201()
     {
         await SemearAsync(PerfilBuilder.Startup().ComUsuarioId(_usuarioId).Build());
-        var dto = new CadastrarPostagemDTO("Cinco mídias.", Enumerable.Range(0, 5).Select(i => DtoBuilder.Midia("FOTO", i)).ToList());
+        var dto = new CadastrarPostagemDTO("Dez mídias.", Enumerable.Range(0, 10).Select(i => DtoBuilder.Midia("FOTO", i)).ToList());
 
         var resposta = await PostAsync(CriarCliente(_usuarioId), Rotas.Postagem.Base, dto);
 
         var id = await resposta.DeveSerCriadoAsync(MensagensSucessoConst.PostagemCadastrada);
-        (await ConsultarAsync(db => db.MidiaPostagem.CountAsync(m => m.PostagemId == id, Ct))).ShouldBe(5);
+        (await ConsultarAsync(db => db.MidiaPostagem.CountAsync(m => m.PostagemId == id, Ct))).ShouldBe(10);
     }
 
     [Fact]
-    public async Task Cadastrar_ComMaisDeCincoMidias_DeveRetornar422ENaoPersistir()
+    public async Task Cadastrar_ComMaisDeDezMidias_DeveRetornar422ENaoPersistir()
     {
         await SemearAsync(PerfilBuilder.Startup().ComUsuarioId(_usuarioId).Build());
-        var dto = new CadastrarPostagemDTO("Seis mídias.", Enumerable.Range(0, 6).Select(i => DtoBuilder.Midia("FOTO", i)).ToList());
+        var dto = new CadastrarPostagemDTO("Onze mídias.", Enumerable.Range(0, 11).Select(i => DtoBuilder.Midia("FOTO", i)).ToList());
 
         var resposta = await PostAsync(CriarCliente(_usuarioId), Rotas.Postagem.Base, dto);
 
-        await resposta.DeveSerErroAsync(HttpStatusCode.UnprocessableEntity, "Não é possível adicionar mais de 5 mídias a uma postagem.");
+        await resposta.DeveSerErroAsync(HttpStatusCode.UnprocessableEntity, "Não é possível adicionar mais de 10 mídias a uma postagem.");
         (await ConsultarAsync(db => db.Postagem.CountAsync(Ct))).ShouldBe(0);
         (await ConsultarAsync(db => db.MidiaPostagem.CountAsync(Ct))).ShouldBe(0);
     }

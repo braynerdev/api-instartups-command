@@ -322,7 +322,7 @@ Remove a relação e decrementa os contadores.
 | `url` | string | Sim | URL absoluta `http`/`https`, máx. 400. |
 | `tipo` | string | Sim | `FOTO` ou `VIDEO` (não diferencia maiúsculas; espaços nas pontas são ignorados). Outro valor → `VALOR_INVALIDO_ENUM`. |
 
-Uma postagem tem **no máximo 5 mídias**.
+Uma postagem tem **no máximo 10 mídias**.
 
 ### Cadastrar postagem
 
@@ -343,7 +343,7 @@ Cria uma postagem cujo autor é o perfil do usuário autenticado.
 | Campo | Regras |
 | --- | --- |
 | `descricao` | Obrigatória, máx. 500. |
-| `midias` | Opcional (`null` ou ausente = nenhuma). Cada item segue o objeto `midia`. Máx. 5 itens. |
+| `midias` | Opcional (`null` ou ausente = nenhuma). Cada item segue o objeto `midia`. Máx. 10 itens. |
 
 **`201 Created`**
 
@@ -360,7 +360,7 @@ Cria uma postagem cujo autor é o perfil do usuário autenticado.
 | --- | --- |
 | `400` | Validação. |
 | `404` | `Perfil não encontrado.` (usuário sem perfil) |
-| `422` | Perfil desativado · `Não é possível adicionar mais de 5 mídias a uma postagem.` |
+| `422` | Perfil desativado · `Não é possível adicionar mais de 10 mídias a uma postagem.` |
 
 ### Editar postagem
 
@@ -382,7 +382,7 @@ Substitui a descrição e aplica um *diff* de mídias: primeiro remove as indica
 | --- | --- |
 | `descricao` | Obrigatória, máx. 500. |
 | `midiasRemovidas` | Opcional. Ids (GUID não vazio) de mídias **desta** postagem. |
-| `midiasAdicionadas` | Opcional. Itens no formato `midia`. O total após a edição não pode passar de 5. |
+| `midiasAdicionadas` | Opcional. Itens no formato `midia`. O total após a edição não pode passar de 10. |
 
 **`204 No Content`**
 
@@ -391,7 +391,7 @@ Substitui a descrição e aplica um *diff* de mídias: primeiro remove as indica
 | `400` | Validação. |
 | `403` | `Apenas o autor pode realizar esta ação na postagem.` |
 | `404` | `Perfil não encontrado.` · `Postagem não encontrada.` · `Mídia da postagem não encontrada.` |
-| `422` | Perfil desativado · `Não é possível realizar esta ação porque a postagem está desativada.` · limite de 5 mídias. |
+| `422` | Perfil desativado · `Não é possível realizar esta ação porque a postagem está desativada.` · limite de 10 mídias. |
 
 ### Desativar postagem
 

@@ -18,7 +18,7 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
@@ -332,6 +332,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(1000)")
                         .HasColumnName("pitch");
+
+                    b.Property<short>("Setor")
+                        .HasColumnType("smallint")
+                        .HasColumnName("setor");
 
                     b.Property<short>("TamanhoEquipe")
                         .HasColumnType("smallint")

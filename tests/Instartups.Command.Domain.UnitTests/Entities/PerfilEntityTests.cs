@@ -11,13 +11,13 @@ public class PerfilEntityTests
     private static readonly Guid UsuarioId = Guid.NewGuid();
 
     private static PerfilEntity CriarStartupValida(string nome = "Instartups Tech", string? imagemPerfilUrl = "https://cdn.instartups.com/perfil.png", string? imagemFundoUrl = "https://cdn.instartups.com/fundo.png") =>
-        PerfilEntity.CriarStartup(nome, -23.5505, -46.6333, UsuarioId, imagemPerfilUrl, imagemFundoUrl, "Pitch da startup", new DateOnly(2020, 1, 15), 10, 500_000m);
+        PerfilEntity.CriarStartup(nome, -23.5505, -46.6333, UsuarioId, imagemPerfilUrl, imagemFundoUrl, "Pitch da startup", new DateOnly(2020, 1, 15), 10, 500_000m, SetorStartupEnum.Financas);
 
     private static PerfilEntity CriarInvestidorValido(string nome = "Fundo Investe") =>
         PerfilEntity.CriarInvestidor(nome, -22.9068, -43.1729, UsuarioId, "https://cdn.instartups.com/perfil.png", null, "Tese de investimento", 50_000m, 500_000m);
 
     private static void EditarStartup(PerfilEntity perfil) =>
-        perfil.EditarStartup("  Nova Startup  ", 10.5, 20.5, "https://cdn.instartups.com/nova.png", null, "Novo pitch", new DateOnly(2018, 3, 10), 42, 2_000_000m);
+        perfil.EditarStartup("  Nova Startup  ", 10.5, 20.5, "https://cdn.instartups.com/nova.png", null, "Novo pitch", new DateOnly(2018, 3, 10), 42, 2_000_000m, SetorStartupEnum.Varejo);
 
     private static void EditarInvestidor(PerfilEntity perfil) =>
         perfil.EditarInvestidor("  Novo Fundo  ", 10.5, 20.5, null, "https://cdn.instartups.com/fundo-novo.png", "Nova tese", 100_000m, 900_000m);
@@ -29,7 +29,7 @@ public class PerfilEntityTests
     {
         var perfil = CriarStartupValida();
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.Nome.ShouldBe(NomeVO.Create("Instartups Tech"));
         perfil.Coordenada.ShouldBe(CoordenadaVO.Create(-23.5505, -46.6333));
         perfil.UsuarioId.ShouldBe(UsuarioId);
@@ -60,6 +60,7 @@ public class PerfilEntityTests
         perfil.Startup.DataFundacao.ShouldBe(new DateOnly(2020, 1, 15));
         perfil.Startup.TamanhoEquipe.ShouldBe(10);
         perfil.Startup.ValorBuscado.ShouldBe(500_000m);
+        perfil.Startup.Setor.ShouldBe(SetorStartupEnum.Financas);
         perfil.Investidor.ShouldBeNull();
     }
 
@@ -89,7 +90,7 @@ public class PerfilEntityTests
     {
         var perfil = CriarInvestidorValido();
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.INVESTIDOR);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Investidor);
         perfil.Nome.Nome.ShouldBe("Fundo Investe");
         perfil.Coordenada.ShouldBe(CoordenadaVO.Create(-22.9068, -43.1729));
         perfil.UsuarioId.ShouldBe(UsuarioId);
@@ -151,6 +152,7 @@ public class PerfilEntityTests
         perfil.Startup.DataFundacao.ShouldBe(new DateOnly(2018, 3, 10));
         perfil.Startup.TamanhoEquipe.ShouldBe(42);
         perfil.Startup.ValorBuscado.ShouldBe(2_000_000m);
+        perfil.Startup.Setor.ShouldBe(SetorStartupEnum.Varejo);
         perfil.Startup.DataAtualizacao.ShouldNotBeNull();
     }
 
@@ -159,7 +161,7 @@ public class PerfilEntityTests
     {
         var perfil = CriarStartupValida();
 
-        var resultado = perfil.EditarStartup("Nome", 1, 1, null, null, "Pitch", new DateOnly(2020, 1, 1), 1, 1m);
+        var resultado = perfil.EditarStartup("Nome", 1, 1, null, null, "Pitch", new DateOnly(2020, 1, 1), 1, 1m, SetorStartupEnum.Saude);
 
         resultado.ShouldBeSameAs(perfil);
     }
@@ -171,7 +173,7 @@ public class PerfilEntityTests
 
         EditarStartup(perfil);
 
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.UsuarioId.ShouldBe(UsuarioId);
         perfil.TotalCurtidas.Total.ShouldBe(3);
         perfil.TotalSeguidores.Total.ShouldBe(2);

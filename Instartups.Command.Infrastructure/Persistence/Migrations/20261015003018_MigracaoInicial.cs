@@ -7,7 +7,7 @@ using NetTopologySuite.Geometries;
 namespace Instartups.Command.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrateInicial : Migration
+    public partial class MigracaoInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -122,6 +122,7 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                     data_fundacao = table.Column<DateOnly>(type: "date", nullable: false),
                     tamanho_equipe = table.Column<short>(type: "smallint", nullable: false),
                     valor_buscado = table.Column<decimal>(type: "numeric(12,2)", precision: 12, scale: 2, nullable: false),
+                    setor = table.Column<short>(type: "smallint", nullable: false),
                     perfil_id = table.Column<Guid>(type: "uuid", nullable: false),
                     data_criacao = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
                     data_atualizacao = table.Column<DateTimeOffset>(type: "timestamptz", nullable: true),
@@ -186,7 +187,7 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         column: x => x.postagem_id,
                         principalTable: "postagens",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -205,9 +206,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                 column: "perfil_autor_curtida_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_curtidas_postagens_postagem_id",
+                name: "IX_curtidas_postagens_postagem_id_perfil_autor_curtida_id",
                 table: "curtidas_postagens",
-                column: "postagem_id");
+                columns: new[] { "postagem_id", "perfil_autor_curtida_id" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_investidores_data_atualizacao",

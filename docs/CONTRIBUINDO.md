@@ -137,7 +137,7 @@ Atualize [API.md](API.md) (endpoint e erros), [VALIDACOES-E-ERROS.md](VALIDACOES
 | Idioma | Domínio e nomes em **português** | `CadastrarPostagem`, `TotalSeguidores` |
 | Entidades | Sufixo `Entity`, `sealed` | `PostagemEntity` |
 | Value objects | Sufixo `VO`, `sealed record` | `TotalVO` |
-| Enums | Sufixo `Enum`, valores em MAIÚSCULAS começando em 1 | `TiposMidiaEnum.FOTO` |
+| Enums | Sufixo `Enum`, valores em PascalCase começando em 1 | `TiposMidiaEnum.Foto` |
 | Constantes | Classe estática com sufixo `Const` | `RotasBaseConst` |
 | Exceções | Sufixo `Exception`, mensagem fixa no construtor | `PostagemJaCurtidaException` |
 | Casos de uso | Verbo + substantivo; `Command`, `CommandValidator`, `CommandHandler` | `DeixarDeSeguirPerfilCommandHandler` |

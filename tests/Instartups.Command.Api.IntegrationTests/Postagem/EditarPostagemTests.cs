@@ -29,8 +29,8 @@ public class EditarPostagemTests(InstartupsApiFactory factory) : IntegrationTest
         persistida.Descricao.ShouldBe("Descrição editada.");
         persistida.DataAtualizacao.ShouldNotBeNull();
         persistida.MidiasPostagem.Count.ShouldBe(2);
-        persistida.MidiasPostagem.ShouldContain(m => m.Id == mantida.Id && m.TipoMidia == TiposMidiaEnum.FOTO);
-        persistida.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-9.png" && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        persistida.MidiasPostagem.ShouldContain(m => m.Id == mantida.Id && m.TipoMidia == TiposMidiaEnum.Foto);
+        persistida.MidiasPostagem.ShouldContain(m => m.UrlMidia == "https://cdn.instartups.com/midia-9.png" && m.TipoMidia == TiposMidiaEnum.Video);
         persistida.MidiasPostagem.ShouldNotContain(m => m.Id == removida.Id);
     }
 
@@ -62,30 +62,30 @@ public class EditarPostagemTests(InstartupsApiFactory factory) : IntegrationTest
     [Fact]
     public async Task Editar_TrocandoMidiaComLimiteCheio_DeveRetornar204()
     {
-        var postagem = await SemearPostagemAsync(midias: 5);
+        var postagem = await SemearPostagemAsync(midias: 10);
         var removida = postagem.MidiasPostagem.First();
-        var dto = new EditarPostagemDTO("Troca.", [removida.Id], [DtoBuilder.Midia("FOTO", 7)]);
+        var dto = new EditarPostagemDTO("Troca.", [removida.Id], [DtoBuilder.Midia("FOTO", 10)]);
 
         var resposta = await PutAsync(CriarCliente(_usuarioId), Rotas.Postagem.PorId(postagem.Id), dto);
 
         await resposta.DeveSerNoContentAsync();
         var persistida = await ObterPostagemAsync(postagem.Id);
-        persistida.MidiasPostagem.Count.ShouldBe(5);
+        persistida.MidiasPostagem.Count.ShouldBe(10);
         persistida.MidiasPostagem.ShouldNotContain(m => m.Id == removida.Id);
     }
 
     [Fact]
     public async Task Editar_ExcedendoLimiteDeMidias_DeveRetornar422ENaoPersistirAlteracoes()
     {
-        var postagem = await SemearPostagemAsync(midias: 5);
-        var dto = new EditarPostagemDTO("Não deve salvar.", null, [DtoBuilder.Midia("FOTO", 7)]);
+        var postagem = await SemearPostagemAsync(midias: 10);
+        var dto = new EditarPostagemDTO("Não deve salvar.", null, [DtoBuilder.Midia("FOTO", 10)]);
 
         var resposta = await PutAsync(CriarCliente(_usuarioId), Rotas.Postagem.PorId(postagem.Id), dto);
 
-        await resposta.DeveSerErroAsync(HttpStatusCode.UnprocessableEntity, "Não é possível adicionar mais de 5 mídias a uma postagem.");
+        await resposta.DeveSerErroAsync(HttpStatusCode.UnprocessableEntity, "Não é possível adicionar mais de 10 mídias a uma postagem.");
         var persistida = await ObterPostagemAsync(postagem.Id);
         persistida.Descricao.ShouldBe(postagem.Descricao);
-        persistida.MidiasPostagem.Count.ShouldBe(5);
+        persistida.MidiasPostagem.Count.ShouldBe(10);
     }
 
     [Fact]

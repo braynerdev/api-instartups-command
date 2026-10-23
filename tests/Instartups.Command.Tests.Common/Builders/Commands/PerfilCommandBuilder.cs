@@ -4,6 +4,7 @@ using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
 using Instartups.Command.Application.UseCases.EditarCoordenadaPerfil;
 using Instartups.Command.Application.UseCases.EditarPerfilInvestidor;
 using Instartups.Command.Application.UseCases.EditarPerfilStartup;
+using Instartups.Command.Domain.Enums;
 
 namespace Instartups.Command.Tests.Common.Builders.Commands;
 
@@ -32,7 +33,8 @@ public static class PerfilCommandBuilder
         Pitch: "Plataforma que conecta startups a investidores.",
         DataFundacao: new DateOnly(2020, 1, 15),
         TamanhoEquipe: 10,
-        ValorBuscado: 500_000m
+        ValorBuscado: 500_000m,
+        Setor: SetorStartupEnum.Financas
     );
 
     public static EditarPerfilStartupCommand EditarStartup(Guid? userId = null) => new(
@@ -40,7 +42,8 @@ public static class PerfilCommandBuilder
         Pitch: "Novo pitch da startup.",
         DataFundacao: new DateOnly(2019, 6, 1),
         TamanhoEquipe: 25,
-        ValorBuscado: 1_500_000.50m
+        ValorBuscado: 1_500_000.50m,
+        Setor: SetorStartupEnum.Saude
     );
 
     public static CadastrarPerfilInvestidorCommand CadastrarInvestidor(Guid? userId = null) => new(

@@ -1,6 +1,7 @@
 using FluentValidation;
 using Instartups.Command.Application.UnitTests.Common.Validators;
 using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
+using Instartups.Command.Domain.Enums;
 using Instartups.Command.Tests.Common.Builders.Commands;
 
 namespace Instartups.Command.Application.UnitTests.UseCases.CadastrarPerfilStartup;
@@ -29,4 +30,5 @@ public class CadastrarPerfilStartupCommandValidatorTests : StartupCommandValidat
     protected override CadastrarPerfilStartupCommand ComDataFundacao(DateOnly dataFundacao) => CommandValido() with { DataFundacao = dataFundacao };
     protected override CadastrarPerfilStartupCommand ComTamanhoEquipe(int tamanhoEquipe) => CommandValido() with { TamanhoEquipe = tamanhoEquipe };
     protected override CadastrarPerfilStartupCommand ComValorBuscado(decimal valorBuscado) => CommandValido() with { ValorBuscado = valorBuscado };
+    protected override CadastrarPerfilStartupCommand ComSetor(SetorStartupEnum setor) => CommandValido() with { Setor = setor };
 }

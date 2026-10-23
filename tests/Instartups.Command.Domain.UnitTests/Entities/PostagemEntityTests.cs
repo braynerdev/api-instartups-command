@@ -63,8 +63,8 @@ public class PostagemEntityTests
     #region AdicionarMidiaPostagem
 
     [Theory]
-    [InlineData(TiposMidiaEnum.FOTO)]
-    [InlineData(TiposMidiaEnum.VIDEO)]
+    [InlineData(TiposMidiaEnum.Foto)]
+    [InlineData(TiposMidiaEnum.Video)]
     public void AdicionarMidiaPostagem_QuandoPostagemAtiva_DeveAdicionarMidiaVinculadaAPostagem(TiposMidiaEnum tipo)
     {
         var postagem = PostagemBuilder.Nova().Build();
@@ -78,25 +78,25 @@ public class PostagemEntityTests
     }
 
     [Fact]
-    public void AdicionarMidiaPostagem_QuandoPostagemTemQuatroMidias_DevePermitirAQuinta()
+    public void AdicionarMidiaPostagem_QuandoPostagemTemNoveMidias_DevePermitirADecima()
     {
-        var postagem = PostagemBuilder.Nova().ComMidias(4).Build();
+        var postagem = PostagemBuilder.Nova().ComMidias(9).Build();
 
-        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.VIDEO);
+        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Video);
 
-        postagem.MidiasPostagem.Count.ShouldBe(5);
+        postagem.MidiasPostagem.Count.ShouldBe(10);
     }
 
     [Fact]
-    public void AdicionarMidiaPostagem_QuandoPostagemJaTemCincoMidias_DeveLancarLimiteMidiasPostagemExcedidoException()
+    public void AdicionarMidiaPostagem_QuandoPostagemJaTemDezMidias_DeveLancarLimiteMidiasPostagemExcedidoException()
     {
-        var postagem = PostagemBuilder.Nova().ComMidias(5).Build();
+        var postagem = PostagemBuilder.Nova().ComMidias(10).Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<LimiteMidiasPostagemExcedidoException>()
-            .Message.ShouldBe("Não é possível adicionar mais de 5 mídias a uma postagem.");
-        postagem.MidiasPostagem.Count.ShouldBe(5);
+            .Message.ShouldBe("Não é possível adicionar mais de 10 mídias a uma postagem.");
+        postagem.MidiasPostagem.Count.ShouldBe(10);
     }
 
     [Fact]
@@ -104,18 +104,18 @@ public class PostagemEntityTests
     {
         var postagem = PostagemBuilder.Nova().Desativada().Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<PostagemDesativadaException>();
         postagem.MidiasPostagem.ShouldBeEmpty();
     }
 
     [Fact]
-    public void AdicionarMidiaPostagem_QuandoPostagemDesativadaComCincoMidias_DeveValidarStatusAntesDoLimite()
+    public void AdicionarMidiaPostagem_QuandoPostagemDesativadaComDezMidias_DeveValidarStatusAntesDoLimite()
     {
-        var postagem = PostagemBuilder.Nova().ComMidias(5).Desativada().Build();
+        var postagem = PostagemBuilder.Nova().ComMidias(10).Desativada().Build();
 
-        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.FOTO);
+        var acao = () => postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Foto);
 
         acao.ShouldThrow<PostagemDesativadaException>();
     }
@@ -162,12 +162,12 @@ public class PostagemEntityTests
     [Fact]
     public void RemoverMidiaPostagem_QuandoPostagemNoLimite_DeveLiberarVagaParaNovaMidia()
     {
-        var postagem = PostagemBuilder.Nova().ComMidias(5).Build();
+        var postagem = PostagemBuilder.Nova().ComMidias(10).Build();
 
         postagem.RemoverMidiaPostagem(postagem.MidiasPostagem.First().Id);
-        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.VIDEO);
+        postagem.AdicionarMidiaPostagem(UrlMidia, TiposMidiaEnum.Video);
 
-        postagem.MidiasPostagem.Count.ShouldBe(5);
+        postagem.MidiasPostagem.Count.ShouldBe(10);
         postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == UrlMidia);
     }
 

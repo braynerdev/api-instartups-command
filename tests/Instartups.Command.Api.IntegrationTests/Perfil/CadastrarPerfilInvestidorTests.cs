@@ -28,7 +28,7 @@ public class CadastrarPerfilInvestidorTests(InstartupsApiFactory factory) : Inte
             .SingleAsync(p => p.Id == id, Ct));
 
         perfil.UsuarioId.ShouldBe(_usuarioId);
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.INVESTIDOR);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Investidor);
         perfil.Nome.Nome.ShouldBe(dto.Perfil.Nome);
         perfil.ImagemPerfilUrl.ShouldBe(dto.Perfil.ImagemPerfilUrl);
         perfil.ImagemFundoUrl.ShouldBe(dto.Perfil.ImagemFundoUrl);
