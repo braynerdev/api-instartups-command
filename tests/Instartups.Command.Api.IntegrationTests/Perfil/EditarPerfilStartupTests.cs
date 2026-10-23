@@ -4,6 +4,7 @@ using Instartups.Command.Api.IntegrationTests.Fixtures;
 using Instartups.Command.Api.UnitTests.Builders;
 using Instartups.Command.Domain.Constants;
 using Instartups.Command.Domain.Entities;
+using Instartups.Command.Domain.Enums;
 using Instartups.Command.Tests.Common.Builders.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,7 @@ public class EditarPerfilStartupTests(InstartupsApiFactory factory) : Integratio
         startup.DataFundacao.ShouldBe(dto.DataFundacao);
         startup.TamanhoEquipe.ShouldBe(dto.TamanhoEquipe);
         startup.ValorBuscado.ShouldBe(dto.ValorBuscado);
+        startup.Setor.ShouldBe(SetorStartupEnum.Saude);
         startup.DataAtualizacao.ShouldNotBeNull();
     }
 
@@ -82,6 +84,7 @@ public class EditarPerfilStartupTests(InstartupsApiFactory factory) : Integratio
     [InlineData("data-futura", "DataFundacao", CodigosErroConst.DataFutura)]
     [InlineData("equipe-negativa", "TamanhoEquipe", CodigosErroConst.ValorEntre)]
     [InlineData("valor-zero", "ValorBuscado", CodigosErroConst.CampoObrigatorio)]
+    [InlineData("setor-invalido", "Setor", CodigosErroConst.ValorInvalidoEnum)]
     public async Task EditarStartup_ComPayloadInvalido_DeveRetornar400ENaoAlterarPerfil(string cenario, string campo, string codigo)
     {
         var original = PerfilBuilder.Startup().ComUsuarioId(_usuarioId).Build();
@@ -107,6 +110,7 @@ public class EditarPerfilStartupTests(InstartupsApiFactory factory) : Integratio
             "data-futura" => valido with { DataFundacao = DateOnly.FromDateTime(DateTime.UtcNow).AddYears(1) },
             "equipe-negativa" => valido with { TamanhoEquipe = -1 },
             "valor-zero" => valido with { ValorBuscado = 0m },
+            "setor-invalido" => valido with { Setor = "TECNOLOGIA" },
             _ => throw new ArgumentOutOfRangeException(nameof(cenario), cenario, null)
         };
     }

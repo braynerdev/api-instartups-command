@@ -134,7 +134,7 @@ Todas as exceções de negócio herdam de `BaseException` (em `Domain/Exceptions
 | `PerfilNaoPodeSeguirASiMesmoException` | `DomainException` | 422 | Um perfil não pode seguir a si mesmo. |
 | `PerfilNaoPodeCurtirPropriaPostagemException` | `DomainException` | 422 | Um perfil não pode curtir a própria postagem. |
 | `PostagemDesativadaException` | `DomainException` | 422 | Não é possível realizar esta ação porque a postagem está desativada. |
-| `LimiteMidiasPostagemExcedidoException` | `DomainException` | 422 | Não é possível adicionar mais de 5 mídias a uma postagem. |
+| `LimiteMidiasPostagemExcedidoException` | `DomainException` | 422 | Não é possível adicionar mais de 10 mídias a uma postagem. |
 | `TotalNegativoException` | `DomainException` | 422 | O total não pode ser negativo. |
 
 ## Erros do pipeline

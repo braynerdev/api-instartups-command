@@ -29,7 +29,8 @@ public static class DtoBuilder
         Pitch: "Plataforma que conecta startups a investidores.",
         DataFundacao: new DateOnly(2020, 1, 15),
         TamanhoEquipe: 10,
-        ValorBuscado: 500_000m
+        ValorBuscado: 500_000m,
+        Setor: "FINANCAS"
     );
 
     public static EditarPerfilStartupDTO EditarStartup() => new(
@@ -37,7 +38,8 @@ public static class DtoBuilder
         Pitch: "Novo pitch.",
         DataFundacao: new DateOnly(2019, 6, 1),
         TamanhoEquipe: 25,
-        ValorBuscado: 1_500_000.50m
+        ValorBuscado: 1_500_000.50m,
+        Setor: "SAUDE"
     );
 
     public static CadastrarPerfilInvestidorDTO CadastrarInvestidor() => new(

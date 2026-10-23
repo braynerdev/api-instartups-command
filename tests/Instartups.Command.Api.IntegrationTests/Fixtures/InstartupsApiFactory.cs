@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Threading.RateLimiting;
 using Instartups.Command.Infrastructure.Persistence;
+using JasperFx.CommandLine;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -29,6 +30,11 @@ public class InstartupsApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
     public JwtTokenFactory Tokens { get; }
 
     protected virtual bool HabilitarRateLimiter => false;
+
+    static InstartupsApiFactory()
+    {
+        JasperFxEnvironment.AutoStartHost = true;
+    }
 
     public InstartupsApiFactory()
     {

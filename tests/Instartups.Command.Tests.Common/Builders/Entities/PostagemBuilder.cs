@@ -50,7 +50,7 @@ public sealed class PostagemBuilder
         var postagem = PostagemEntity.Criar(_descricao, _autor.Id);
 
         for (var i = 0; i < _quantidadeMidias; i++)
-            postagem.AdicionarMidiaPostagem($"https://cdn.instartups.com/midia-{i}.png", TiposMidiaEnum.FOTO);
+            postagem.AdicionarMidiaPostagem($"https://cdn.instartups.com/midia-{i}.png", TiposMidiaEnum.Foto);
 
         postagem
             .DefinirPropriedadePrivada(nameof(PostagemEntity.Autor), _autor)

@@ -13,15 +13,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instartups.Command.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261012020205_AlterandoOnDelete")]
-    partial class AlterandoOnDelete
+    [Migration("20261015003018_MigracaoInicial")]
+    partial class MigracaoInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
@@ -61,7 +61,8 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PerfilAutorCurtidaId");
 
-                    b.HasIndex("PostagemId");
+                    b.HasIndex("PostagemId", "PerfilAutorCurtidaId")
+                        .IsUnique();
 
                     b.ToTable("curtidas_postagens", (string)null);
                 });
@@ -334,6 +335,10 @@ namespace Instartups.Command.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(1000)")
                         .HasColumnName("pitch");
+
+                    b.Property<short>("Setor")
+                        .HasColumnType("smallint")
+                        .HasColumnName("setor");
 
                     b.Property<short>("TamanhoEquipe")
                         .HasColumnType("smallint")

@@ -97,7 +97,7 @@ public class ExceptionsMiddlewareTests
     [Fact]
     public async Task InvokeAsync_QuandoLimiteMidiasExcedido_DeveRetornar422()
     {
-        var contexto = await ExecutarLancando(new LimiteMidiasPostagemExcedidoException(5));
+        var contexto = await ExecutarLancando(new LimiteMidiasPostagemExcedidoException(10));
 
         contexto.Response.StatusCode.ShouldBe(StatusCodes.Status422UnprocessableEntity);
     }

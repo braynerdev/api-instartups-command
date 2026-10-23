@@ -1,4 +1,5 @@
 using Instartups.Command.Application.UseCases.CadastrarPerfilStartup;
+using Instartups.Command.Domain.Enums.Mapear;
 
 namespace Instartups.Command.Api.DTOs.Perfil.Startup;
 
@@ -7,7 +8,8 @@ public sealed record CadastrarPerfilStartupDTO(
     string Pitch,
     DateOnly DataFundacao,
     int TamanhoEquipe,
-    decimal ValorBuscado
+    decimal ValorBuscado,
+    string Setor
 )
 {
     public CadastrarPerfilStartupCommand ToCommand(Guid userId)
@@ -17,7 +19,8 @@ public sealed record CadastrarPerfilStartupDTO(
             Pitch,
             DataFundacao,
             TamanhoEquipe,
-            ValorBuscado
+            ValorBuscado,
+            Setor?.MapSetorStartup() ?? default
         );
     }
 }

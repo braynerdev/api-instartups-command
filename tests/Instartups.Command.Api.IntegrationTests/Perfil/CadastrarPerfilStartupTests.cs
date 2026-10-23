@@ -28,7 +28,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
             .SingleAsync(p => p.Id == id, Ct));
 
         perfil.UsuarioId.ShouldBe(_usuarioId);
-        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfil.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfil.Nome.Nome.ShouldBe(dto.Perfil.Nome);
         perfil.ImagemPerfilUrl.ShouldBe(dto.Perfil.ImagemPerfilUrl);
         perfil.ImagemFundoUrl.ShouldBe(dto.Perfil.ImagemFundoUrl);
@@ -46,6 +46,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
         startup.DataFundacao.ShouldBe(dto.DataFundacao);
         startup.TamanhoEquipe.ShouldBe(dto.TamanhoEquipe);
         startup.ValorBuscado.ShouldBe(dto.ValorBuscado);
+        startup.Setor.ShouldBe(SetorStartupEnum.Financas);
     }
 
     [Fact]
@@ -96,6 +97,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
     [InlineData("equipe-acima-de-smallint", "TamanhoEquipe", CodigosErroConst.ValorEntre)]
     [InlineData("valor-negativo", "ValorBuscado", CodigosErroConst.ValorMinimo)]
     [InlineData("valor-tres-casas", "ValorBuscado", CodigosErroConst.PrecisaoIncorreta)]
+    [InlineData("setor-invalido", "Setor", CodigosErroConst.ValorInvalidoEnum)]
     public async Task CadastrarStartup_ComPayloadInvalido_DeveRetornar400ENaoPersistir(string cenario, string campo, string codigo)
     {
         var resposta = await PostAsync(CriarCliente(_usuarioId), Rotas.Perfil.Startup, PayloadInvalido(cenario));
@@ -122,6 +124,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
             "equipe-acima-de-smallint" => valido with { TamanhoEquipe = short.MaxValue + 1 },
             "valor-negativo" => valido with { ValorBuscado = -10m },
             "valor-tres-casas" => valido with { ValorBuscado = 1_000.555m },
+            "setor-invalido" => valido with { Setor = "TECNOLOGIA" },
             _ => throw new ArgumentOutOfRangeException(nameof(cenario), cenario, null)
         };
     }

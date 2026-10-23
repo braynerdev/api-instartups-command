@@ -108,7 +108,7 @@ Dados específicos de cada tipo de perfil. Criadas e editadas apenas por `Perfil
 | --- | --- |
 | `Criar(descricao, autorId)` | Começa ativa e com `TotalCurtidas = 0`. |
 | `EditarDescricao` | Exige postagem ativa (`PostagemDesativadaException`, 422). |
-| `AdicionarMidiaPostagem(url, tipo)` | Exige postagem ativa; **máximo de 5 mídias** (`LimiteMidiasPostagemExcedidoException`, 422). |
+| `AdicionarMidiaPostagem(url, tipo)` | Exige postagem ativa; **máximo de 10 mídias** (`LimiteMidiasPostagemExcedidoException`, 422). |
 | `RemoverMidiaPostagem(id)` | Exige postagem ativa; a mídia precisa pertencer à postagem (`MidiaPostagemNaoEncontradaException`, 404). |
 | `Desativar()` / `Ativar()` | `PostagemJaDesativadaException` / `PostagemJaAtivaException` (409). |
 | `MidiasPostagem` | Coleção somente leitura; só muda pelos métodos acima. |
@@ -139,8 +139,8 @@ As faixas de latitude/longitude e os tamanhos máximos são validados na Applica
 
 | Enum | Valores | Persistência |
 | --- | --- | --- |
-| `TiposPerfisEnum` | `STARTUP = 1`, `INVESTIDOR = 2` | `smallint` |
-| `TiposMidiaEnum` | `FOTO = 1`, `VIDEO = 2` | `int` |
+| `TiposPerfisEnum` | `Startup = 1`, `Investidor = 2` | `smallint` |
+| `TiposMidiaEnum` | `Foto = 1`, `Video = 2` | `int` |
 
 Em `Enums/Mapear/`:
 
@@ -217,8 +217,8 @@ O mesmo vale para perfil e postagem. O que um registro desativado bloqueia:
 | Desativar / reativar perfil | Perfil existe (404), estado diferente do desejado (409) | Altera `Ativo`. |
 | Seguir | Ambos os perfis existem (404); ainda não segue (409); ambos ativos (422); não é o próprio perfil (422) | Cria relação, atualiza contadores. |
 | Deixar de seguir | Perfil existe (404); relação existe (404); ambos ativos (422) | Remove relação, atualiza contadores. |
-| Cadastrar postagem | Perfil existe (404) e ativo (422); até 5 mídias (422) | Cria postagem e mídias. |
-| Editar postagem | Perfil existe e ativo; postagem existe (404); é o autor (403); postagem ativa (422); mídias removidas pertencem à postagem (404); total ≤ 5 (422) | Troca descrição, remove e adiciona mídias. |
+| Cadastrar postagem | Perfil existe (404) e ativo (422); até 10 mídias (422) | Cria postagem e mídias. |
+| Editar postagem | Perfil existe e ativo; postagem existe (404); é o autor (403); postagem ativa (422); mídias removidas pertencem à postagem (404); total ≤ 10 (422) | Troca descrição, remove e adiciona mídias. |
 | Desativar / reativar postagem | Perfil e postagem existem (404); autor ativo (422); é o autor (403); estado diferente (409) | Altera `Ativo` e ajusta curtidas do autor. |
 | Curtir | Perfil e postagem existem (404); ainda não curtiu (409); postagem ativa, perfis ativos, não é o autor (422) | Cria curtida, `+1` nos contadores. |
 | Descurtir | Perfil existe (404); curtida existe (404); postagem ativa e perfis ativos (422) | Remove curtida, `−1` nos contadores. |

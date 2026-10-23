@@ -6,8 +6,8 @@ namespace Instartups.Command.Domain.UnitTests.Enums;
 public class TiposPerfisEnumMapTests
 {
     [Theory]
-    [InlineData(TiposPerfisEnum.STARTUP, "STARTUP")]
-    [InlineData(TiposPerfisEnum.INVESTIDOR, "INVESTIDOR")]
+    [InlineData(TiposPerfisEnum.Startup, "STARTUP")]
+    [InlineData(TiposPerfisEnum.Investidor, "INVESTIDOR")]
     public void Map_QuandoTipoValido_DeveRetornarDescricao(TiposPerfisEnum tipo, string esperado)
     {
         tipo.Map().ShouldBe(esperado);

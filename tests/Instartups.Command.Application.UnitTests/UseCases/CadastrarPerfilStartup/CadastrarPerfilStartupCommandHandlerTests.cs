@@ -29,7 +29,7 @@ public class CadastrarPerfilStartupCommandHandlerTests
         await _handler.Handle(command, _ct);
 
         perfilAdicionado.ShouldNotBeNull();
-        perfilAdicionado.TipoPerfil.ShouldBe(TiposPerfisEnum.STARTUP);
+        perfilAdicionado.TipoPerfil.ShouldBe(TiposPerfisEnum.Startup);
         perfilAdicionado.UsuarioId.ShouldBe(command.Perfil.UserId);
         perfilAdicionado.Nome.Nome.ShouldBe(command.Perfil.Nome);
         perfilAdicionado.Coordenada.ShouldBe(CoordenadaVO.Create(command.Perfil.Coordenada.Latitude, command.Perfil.Coordenada.Longitude));
@@ -40,6 +40,7 @@ public class CadastrarPerfilStartupCommandHandlerTests
         perfilAdicionado.Startup.DataFundacao.ShouldBe(command.DataFundacao);
         perfilAdicionado.Startup.TamanhoEquipe.ShouldBe(command.TamanhoEquipe);
         perfilAdicionado.Startup.ValorBuscado.ShouldBe(command.ValorBuscado);
+        perfilAdicionado.Startup.Setor.ShouldBe(command.Setor);
     }
 
     [Fact]

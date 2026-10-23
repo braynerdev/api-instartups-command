@@ -7,7 +7,7 @@ namespace Instartups.Command.Tests.Common.Builders.Commands;
 
 public static class PostagemCommandBuilder
 {
-    public static MidiaCommand Midia(int indice = 0, TiposMidiaEnum tipo = TiposMidiaEnum.FOTO) =>
+    public static MidiaCommand Midia(int indice = 0, TiposMidiaEnum tipo = TiposMidiaEnum.Foto) =>
         new($"https://cdn.instartups.com/nova-midia-{indice}.png", tipo);
 
     public static IReadOnlyList<MidiaCommand> Midias(int quantidade) =>

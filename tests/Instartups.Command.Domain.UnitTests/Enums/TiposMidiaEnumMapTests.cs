@@ -6,8 +6,8 @@ namespace Instartups.Command.Domain.UnitTests.Enums;
 public class TiposMidiaEnumMapTests
 {
     [Theory]
-    [InlineData(TiposMidiaEnum.FOTO, "FOTO")]
-    [InlineData(TiposMidiaEnum.VIDEO, "VÍDEO")]
+    [InlineData(TiposMidiaEnum.Foto, "FOTO")]
+    [InlineData(TiposMidiaEnum.Video, "VÍDEO")]
     public void Map_QuandoTipoValido_DeveRetornarDescricao(TiposMidiaEnum tipo, string esperado)
     {
         tipo.Map().ShouldBe(esperado);
@@ -22,12 +22,12 @@ public class TiposMidiaEnumMapTests
     }
 
     [Theory]
-    [InlineData("FOTO", TiposMidiaEnum.FOTO)]
-    [InlineData("foto", TiposMidiaEnum.FOTO)]
-    [InlineData("  Foto  ", TiposMidiaEnum.FOTO)]
-    [InlineData("VIDEO", TiposMidiaEnum.VIDEO)]
-    [InlineData("video", TiposMidiaEnum.VIDEO)]
-    [InlineData(" Video ", TiposMidiaEnum.VIDEO)]
+    [InlineData("FOTO", TiposMidiaEnum.Foto)]
+    [InlineData("foto", TiposMidiaEnum.Foto)]
+    [InlineData("  Foto  ", TiposMidiaEnum.Foto)]
+    [InlineData("VIDEO", TiposMidiaEnum.Video)]
+    [InlineData("video", TiposMidiaEnum.Video)]
+    [InlineData(" Video ", TiposMidiaEnum.Video)]
     public void MapTiposMidia_QuandoTextoValido_DeveIgnorarCaixaEEspacos(string texto, TiposMidiaEnum esperado)
     {
         texto.MapTiposMidia().ShouldBe(esperado);

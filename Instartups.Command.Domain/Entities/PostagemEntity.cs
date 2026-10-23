@@ -8,7 +8,7 @@ namespace Instartups.Command.Domain.Entities;
 
 public sealed class PostagemEntity : BaseEntity
 {
-    private const int MaxMidias = 5;
+    private const int MaxMidias = 10;
     public string Descricao { get; private set; } = null!;
     public TotalVO TotalCurtidas { get; private set; } = null!;
     public Guid AutorId { get; private set; }

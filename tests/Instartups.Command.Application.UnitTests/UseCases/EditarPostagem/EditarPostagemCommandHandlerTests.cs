@@ -64,19 +64,19 @@ public class EditarPostagemCommandHandlerTests
     {
         _uow.ComPerfilDoUsuario(_autor);
         var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(1));
-        var novaMidia = PostagemCommandBuilder.Midia(7, TiposMidiaEnum.VIDEO);
+        var novaMidia = PostagemCommandBuilder.Midia(7, TiposMidiaEnum.Video);
 
         await _handler.Handle(Command(postagem) with { MidiasAdicionadas = [novaMidia] }, _ct);
 
         postagem.MidiasPostagem.Count.ShouldBe(2);
-        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == novaMidia.Url && m.TipoMidia == TiposMidiaEnum.VIDEO);
+        postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == novaMidia.Url && m.TipoMidia == TiposMidiaEnum.Video);
     }
 
     [Fact]
     public async Task Handle_QuandoPostagemNoLimiteDeMidias_DeveRemoverAntesDeAdicionar()
     {
         _uow.ComPerfilDoUsuario(_autor);
-        var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(5));
+        var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(10));
         var command = Command(postagem) with
         {
             MidiasRemovidas = [postagem.MidiasPostagem.First().Id],
@@ -85,7 +85,7 @@ public class EditarPostagemCommandHandlerTests
 
         await _handler.Handle(command, _ct);
 
-        postagem.MidiasPostagem.Count.ShouldBe(5);
+        postagem.MidiasPostagem.Count.ShouldBe(10);
         postagem.MidiasPostagem.ShouldContain(m => m.UrlMidia == PostagemCommandBuilder.Midia(9).Url);
         await _uow.DeveTerCommitadoUmaVez(_ct);
     }
@@ -181,7 +181,7 @@ public class EditarPostagemCommandHandlerTests
     public async Task Handle_QuandoMidiasAdicionadasExcedemOLimite_DeveLancarLimiteMidiasPostagemExcedidoException()
     {
         _uow.ComPerfilDoUsuario(_autor);
-        var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(4));
+        var postagem = ConfigurarPostagem(PostagemBuilder.Nova().ComAutor(_autor).ComMidias(9));
 
         var acao = () => _handler.Handle(Command(postagem) with { MidiasAdicionadas = PostagemCommandBuilder.Midias(2) }, _ct);
 
