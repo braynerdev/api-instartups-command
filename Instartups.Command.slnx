@@ -11,7 +11,12 @@
     <File Path="docs\TESTES.md" />
     <File Path="docs\VALIDACOES-E-ERROS.md" />
   </Folder>
-  <Folder Name="/infra/" />
+  <Folder Name="/infra/">
+    <File Path="infra\.env.example" />
+    <File Path="infra\docker-compose.yml" />
+    <File Path="infra\Dockerfile" />
+    <File Path="infra\Dockerfile.dockerignore" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
