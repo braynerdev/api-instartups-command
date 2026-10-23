@@ -22,6 +22,7 @@ O sistema segue CQRS em serviços separados:
 | [Banco de dados](BANCO-DE-DADOS.md) | Tabelas, colunas, índices, relacionamentos e migrations. |
 | [Migrations](MIGRATE.md) | Comandos do `dotnet ef` para criar e aplicar migrations. |
 | [Testes](TESTES.md) | Projetos de teste, como rodar e a infraestrutura dos testes de integração. |
+| [CI/CD](CI-CD.md) | Pipeline do GitHub Actions, tags da imagem no GHCR e como publicar/puxar a imagem. |
 | [Contribuindo](CONTRIBUINDO.md) | Passo a passo para criar um novo caso de uso e as convenções do projeto. |
 
 ## Stack

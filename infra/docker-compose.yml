@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: infra/Dockerfile
-    image: instartups/api-command:latest
+    image: ghcr.io/braynerdev/api-instartups-command:${IMAGE_TAG:-latest}
     container_name: instartups-api-command
     restart: unless-stopped
     ports:
