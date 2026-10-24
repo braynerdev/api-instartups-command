@@ -41,7 +41,7 @@ services:
           memory: 512M
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.instartups-command.rule=Host(`${API_DOMAIN:?defina API_DOMAIN no .env}`) && PathPrefix(`/api/instartups/command`)"
+        - "traefik.http.routers.instartups-command.rule=Host(`${API_DOMAIN:?defina API_DOMAIN no .env}`)"
         - "traefik.http.routers.instartups-command.entrypoints=websecure"
         - "traefik.http.routers.instartups-command.tls.certresolver=letsencrypt"
         - "traefik.http.routers.instartups-command.service=instartups-command"
