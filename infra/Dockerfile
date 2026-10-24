@@ -14,15 +14,13 @@ COPY Instartups.Command.Domain/Instartups.Command.Domain.csproj Instartups.Comma
 COPY Instartups.Command.Application/Instartups.Command.Application.csproj Instartups.Command.Application/
 COPY Instartups.Command.Infrastructure/Instartups.Command.Infrastructure.csproj Instartups.Command.Infrastructure/
 COPY Instartups.Command.Api/Instartups.Command.Api.csproj Instartups.Command.Api/
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore Instartups.Command.Api/Instartups.Command.Api.csproj -a $TARGETARCH
+RUN dotnet restore Instartups.Command.Api/Instartups.Command.Api.csproj -a $TARGETARCH
 
 COPY Instartups.Command.Domain/ Instartups.Command.Domain/
 COPY Instartups.Command.Application/ Instartups.Command.Application/
 COPY Instartups.Command.Infrastructure/ Instartups.Command.Infrastructure/
 COPY Instartups.Command.Api/ Instartups.Command.Api/
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish Instartups.Command.Api/Instartups.Command.Api.csproj \
+RUN dotnet publish Instartups.Command.Api/Instartups.Command.Api.csproj \
         -c Release -a $TARGETARCH --no-restore --self-contained false \
         -o /app \
         -p:UseAppHost=false \
