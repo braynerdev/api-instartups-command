@@ -59,9 +59,9 @@ public class InstartupsApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
         builder.UseEnvironment("Development");
 
         builder.UseSetting("ConnectionStrings:PostgresConnection", ConnectionString);
-        builder.UseSetting("JWT:PublicKeyPath", _caminhoChavePublica);
-        builder.UseSetting("JWT:Issuer", Issuer);
-        builder.UseSetting("JWT:Audience", Audience);
+        builder.UseSetting("Jwt:PublicKeyPath", _caminhoChavePublica);
+        builder.UseSetting("Jwt:Issuer", Issuer);
+        builder.UseSetting("Jwt:Audience", Audience);
         builder.UseSetting("Serilog:MinimumLevel:Default", "Warning");
         builder.UseSetting("Serilog:MinimumLevel:Override:Instartups.Command.Api.Configurations", "Warning");
         builder.UseSetting("Serilog:MinimumLevel:Override:Instartups.Command.Infrastructure.Configurations", "Warning");
