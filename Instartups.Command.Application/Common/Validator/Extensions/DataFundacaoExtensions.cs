@@ -12,7 +12,8 @@ public static class DataFundacaoExtensions
             .NotEmpty()
                 .WithErrorCode(CodigosErroConst.CampoObrigatorio)
                 .WithMessage(MensagensErroConst.CampoObrigatorio)
-            .LessThanOrEqualTo(_ => DateOnly.FromDateTime(DateTime.UtcNow))
+            // Compara com a data de Brasília: com UtcNow, das 21h às 23h59 a data de amanhã passava.
+            .LessThanOrEqualTo(_ => DataReferencia.HojeBrasilia())
                 .WithErrorCode(CodigosErroConst.DataFutura)
                 .WithMessage(MensagensErroConst.DataFutura);
     }
