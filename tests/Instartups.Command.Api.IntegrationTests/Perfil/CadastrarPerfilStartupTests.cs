@@ -3,6 +3,7 @@ using Instartups.Command.Api.DTOs;
 using Instartups.Command.Api.DTOs.Perfil.Startup;
 using Instartups.Command.Api.IntegrationTests.Fixtures;
 using Instartups.Command.Api.UnitTests.Builders;
+using Instartups.Command.Application.Common;
 using Instartups.Command.Domain.Constants;
 using Instartups.Command.Domain.Enums;
 using Instartups.Command.Tests.Common.Builders.Entities;
@@ -52,7 +53,7 @@ public class CadastrarPerfilStartupTests(InstartupsApiFactory factory) : Integra
     [Fact]
     public async Task CadastrarStartup_FundadaHoje_DeveRetornar201()
     {
-        var dto = DtoBuilder.CadastrarStartup() with { DataFundacao = DateOnly.FromDateTime(DateTime.UtcNow) };
+        var dto = DtoBuilder.CadastrarStartup() with { DataFundacao = DataReferencia.HojeBrasilia() };
 
         var resposta = await PostAsync(CriarCliente(_usuarioId), Rotas.Perfil.Startup, dto);
 

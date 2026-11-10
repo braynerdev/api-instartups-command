@@ -1,6 +1,7 @@
 using System.Globalization;
 using FluentValidation;
 using FluentValidation.TestHelper;
+using Instartups.Command.Application.Common;
 using Instartups.Command.Domain.Constants;
 using Instartups.Command.Domain.Enums;
 
@@ -22,7 +23,7 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
 
     private TestValidationResult<TCommand> Validar(TCommand command) => Validator.TestValidate(command);
 
-    private static DateOnly HojeUtc => DateOnly.FromDateTime(DateTime.UtcNow);
+    private static DateOnly Hoje => DataReferencia.HojeBrasilia();
 
     private static decimal Decimal(string valor) => decimal.Parse(valor, CultureInfo.InvariantCulture);
 
@@ -92,7 +93,7 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
     [Fact]
     public void Validar_QuandoDataFundacaoHoje_NaoDeveRetornarErro()
     {
-        Validar(ComDataFundacao(HojeUtc)).ShouldNotHaveValidationErrorFor("DataFundacao");
+        Validar(ComDataFundacao(Hoje)).ShouldNotHaveValidationErrorFor("DataFundacao");
     }
 
     [Fact]
@@ -104,7 +105,7 @@ public abstract class StartupCommandValidatorTestsBase<TCommand>
     [Fact]
     public void Validar_QuandoDataFundacaoNoFuturo_DeveRetornarErroDataFutura()
     {
-        Validar(ComDataFundacao(HojeUtc.AddDays(1)))
+        Validar(ComDataFundacao(Hoje.AddDays(1)))
             .ShouldHaveValidationErrorFor("DataFundacao")
             .WithErrorCode(CodigosErroConst.DataFutura)
             .WithErrorMessage(MensagensErroConst.DataFutura);
